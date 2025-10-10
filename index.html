@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>وائل ♥ روان — وعدٌ على الخاتم</title>
+  <meta name="description" content="صفحة مخطوبان: وائل وروان — أسلوب عربي شاعري مع لعبة لطيفة ورسائل حب تعمل.">
+  <meta property="og:title" content="وائل ♥ روان — وعدٌ على الخاتم">
+  <meta property="og:description" content="لعبة بتلات، قصيدة حب، ورسائل تصل لوائل فوراً.">
+  <meta property="og:type" content="website">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <style>
+    :root{
+      --pink:#ff6b8b; --lav:#8b88ff; --cream:#fff7fb; --ink:#2b2530;
+    }
+    html,body{background:linear-gradient(180deg,var(--cream),#fff); color:var(--ink); font-family:"Tajawal",system-ui,-apple-system,Segoe UI,Arial}
+    .heart{display:inline-block; animation:beat 1.6s infinite ease-in-out}
+    @keyframes beat{0%,100%{transform:scale(1)} 18%{transform:scale(1.08)} 36%{transform:scale(1)} 54%{transform:scale(1.07)} 82%{transform:scale(1)}}
+    /* confetti overlay */
+    .confetti-layer{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:60}
+    /* poem */
+    .poem{line-height:2.2}
+    /* canvas fix for mobile */
+    #gameCanvas{display:block;width:100%;height:430px;border-radius:18px;background:linear-gradient(180deg,#fff0f6,#ffffff)}
+    /* bubbles */
+    .bubble{background:rgba(255,182,193,.18);border:1px solid rgba(255,182,193,.55);border-radius:16px;padding:.8rem 1rem}
+  </style>
+</head>
+<body class="min-h-screen selection:bg-pink-200/60 selection:text-pink-900">
+
+  <!-- Nav -->
+  <nav class="fixed z-40 w-full bg-white/80 backdrop-blur border-b border-pink-100">
+    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <div class="w-8 h-8 rounded-full bg-gradient-to-r from-[var(--pink)] to-[var(--lav)]"></div>
+        <span class="font-extrabold">وائل ♥ روان</span>
+      </div>
+      <div id="navLinks" class="hidden md:flex items-center gap-6">
+        <a href="#story" class="hover:text-pink-600">قصتنا</a>
+        <a href="#game" class="hover:text-pink-600">اللعبة</a>
+        <a href="#messages" class="hover:text-pink-600">الرسائل</a>
+        <a href="#gallery" class="hover:text-pink-600">الصور</a>
+      </div>
+      <button id="menuBtn" class="md:hidden p-2 rounded-lg border border-pink-200 hover:bg-pink-50" aria-label="القائمة">
+        <i data-feather="menu"></i>
+      </button>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <header class="pt-28 pb-10 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+      <span class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-pink-100 text-pink-700 border border-pink-200">خاتم الخطوبة ✧ أكتوبر ٢٠٢٥</span>
+      <h1 class="text-4xl md:text-5xl font-extrabold mt-5 mb-3">وائل <span class="heart text-pink-600">♥</span> روان</h1>
+      <p class="text-lg opacity-80 mb-6">قلبان ووعدٌ واحد — مخطوبان والحبّ يكبر كل يوم</p>
+
+      <!-- Controls -->
+      <div class="flex items-center justify-center gap-3 flex-wrap">
+        <a href="#game" class="px-6 py-3 rounded-full text-white bg-gradient-to-r from-[var(--pink)] to-[var(--lav)] shadow-lg hover:shadow-xl">اللعبة اللطيفة</a>
+        <a href="#messages" class="px-6 py-3 rounded-full border-2 border-pink-500 text-pink-700 hover:bg-pink-50">أرسلي رسالة حب</a>
+        <button id="playMusic" class="px-4 py-3 rounded-full border border-purple-200 text-purple-700 hover:bg-purple-50 flex items-center gap-2">
+          <i data-feather="music"></i><span>تشغيل موسيقى هادئة</span>
+        </button>
+        <button id="copyLink" class="px-4 py-3 rounded-full border border-gray-200 text-gray-700 hover:bg-gray-50 flex items-center gap-2">
+          <i data-feather="share-2"></i><span>نسخ رابط الصفحة</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Poem (Nizar-inspired, original) -->
+  <section class="px-4 pb-12">
+    <div class="max-w-4xl mx-auto bg-white/70 backdrop-blur border border-gray-100 shadow-md rounded-3xl p-7">
+      <h2 class="text-2xl font-bold text-pink-700 mb-4 text-center">قصيدة إلى روان</h2>
+      <div class="poem border-r-4 border-pink-300 pr-4 text-lg">
+        يا سيِدةً تُخمِّرُ اليومَ بخاتمها أصابعَ الغيمْ،<br>
+        وتَجعَلُ من مختبرِ القلبِ مِجهرًا لنبضتي وتعاليمْ؛<br>
+        ما اسمُكِ إلا نهرُ رِقَّةٍ—إذا نطقتُهُ<br>
+        تفتّحتْ في فمي أزهارُ سُكَّرٍ وياسمينْ.<br><br>
+        أقول: يا روان—<br>
+        في يدِكِ الكيمياءُ، وفي صوتكِ موسيقى العشّاقِ،<br>
+        فكيف لبيولوجيا الدنيا<br>
+        أن تشرحَ سرَّ ابتسامتكِ، وسرَّ ارتباكي حينَ تمرّينْ؟<br><br>
+        أعِدُكِ:<br>
+        سأكونُ دفءَ مختبرِكِ بعدَ يومٍ طويل،<br>
+        ومِظلَّةً للسكينةِ حينَ يَهطُلُ التعبُ،<br>
+        وبيتَ قلبٍ<br>
+        لا يسكنُهُ إلا اسمُكِ، ولا يُضيئُهُ إلا عينيكِ.
+      </div>
+    </div>
+  </section>
+
+  <!-- Game -->
+  <section id="game" class="px-4 pb-4">
+    <div class="max-w-3xl mx-auto bg-white border border-gray-100 rounded-3xl p-6 shadow-md">
+      <div class="flex items-center justify-between mb-3">
+        <h3 class="text-2xl font-bold text-pink-700">إمسكي البتلات 💕</h3>
+        <div class="flex items-center gap-2">
+          <span class="px-3 py-1 rounded-full bg-pink-100 text-pink-700 border border-pink-200">النقاط: <b id="score">0</b></span>
+          <span class="px-3 py-1 rounded-full bg-purple-100 text-purple-700 border border-purple-200">الوقت: <b id="time">30</b>ث</span>
+          <button id="startGame" class="px-4 py-2 rounded-full text-white bg-gradient-to-r from-[var(--pink)] to-[var(--lav)] shadow hover:shadow-lg">ابدئي</button>
+        </div>
+      </div>
+      <canvas id="gameCanvas" width="360" height="520" aria-label="Catch the petals game"></canvas>
+      <p id="winNote" class="text-center text-pink-700 mt-3 hidden">مبروك يا روان! فزتِ—تم فتح الرسالة المخبوءة أدناه ↓</p>
+    </div>
+
+    <div id="love-note" class="max-w-3xl mx-auto bg-white border border-gray-100 rounded-3xl p-6 shadow-md mt-4 hidden">
+      <h3 class="text-2xl font-bold text-pink-700 mb-2 text-center">رسالة صغيرة، بقلبٍ كبير</h3>
+      <p class="text-lg leading-relaxed">
+        يا روان، أنتِ برهانُ قلبي أن العِلمَ والحنانَ يمكنُ أن يسكُنا روحًا واحدة.
+        أَعِدُكِ أن أكونَ هدوءَكِ بعدَ الأيامِ المُزدحمة، وضحكتَكِ في الليالي الهادئة،
+        واليدَ التي لا تُفلِتُ يدَكِ ما حييت.
+      </p>
+      <p class="font-bold text-center mt-2">أختارُكِ—كلَّ يوم، دائماً.</p>
+    </div>
+  </section>
+
+  <!-- Story + Gallery -->
+  <section id="story" class="px-4 pt-8 pb-6">
+    <div class="max-w-6xl mx-auto grid gap-4 md:grid-cols-2">
+      <div class="bg-white border border-gray-100 rounded-3xl p-6 shadow-md">
+        <h3 class="text-2xl font-bold text-pink-700 mb-4">قصتنا في نبضات صغيرة</h3>
+        <div class="relative">
+          <div class="absolute right-3 top-0 bottom-0 w-1 bg-gradient-to-b from-pink-300 to-purple-300 rounded"></div>
+          <div class="space-y-5 pr-10">
+            <div class="relative">
+              <div class="absolute -right-1.5 top-1 w-3.5 h-3.5 rounded-full bg-pink-500 ring-4 ring-pink-200"></div>
+              <div class="bg-white/80 border rounded-2xl p-4 shadow-sm">
+                <div class="font-bold">أول «مرحباً»</div>
+                <div class="text-gray-600">رسالةٌ كانت كصباحٍ جديد.</div>
+                <div class="text-xs mt-1 text-pink-600">يناير 2023</div>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="absolute -right-1.5 top-1 w-3.5 h-3.5 rounded-full bg-purple-500 ring-4 ring-purple-200"></div>
+              <div class="bg-white/80 border rounded-2xl p-4 shadow-sm">
+                <div class="font-bold">أول ضحكة</div>
+                <div class="text-gray-600">نكاتٌ سرّيةٌ لا تنتهي.</div>
+                <div class="text-xs mt-1 text-purple-600">مارس 2023</div>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="absolute -right-1.5 top-1 w-3.5 h-3.5 rounded-full bg-pink-500 ring-4 ring-pink-200"></div>
+              <div class="bg-white/80 border rounded-2xl p-4 shadow-sm">
+                <div class="font-bold">أول وعد</div>
+                <div class="text-gray-600">سأختاركِ في كلّ حياة.</div>
+                <div class="text-xs mt-1 text-pink-600">يوليو 2023</div>
+              </div>
+            </div>
+            <div class="relative">
+              <div class="absolute -right-1.5 top-1 w-3.5 h-3.5 rounded-full bg-purple-500 ring-4 ring-purple-200"></div>
+              <div class="bg-white/80 border rounded-2xl p-4 shadow-sm">
+                <div class="font-bold">لحظة الخاتم</div>
+                <div class="text-gray-600">ارتجفتُ… وابتسامتُكِ قالت «نعم».</div>
+                <div class="text-xs mt-1 text-purple-600">أكتوبر 2025</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div id="gallery" class="bg-white border border-gray-100 rounded-3xl p-6 shadow-md">
+        <h3 class="text-2xl font-bold text-pink-700 mb-4">لحظات تلمع</h3>
+        <div class="grid grid-cols-2 md:grid-cols-2 gap-3">
+          <div class="aspect-square rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center bg-gradient-to-br from-pink-100 to-purple-100">
+            <i data-feather="image" class="w-10 h-10 text-pink-500"></i><span class="sr-only">صورة الخاتم</span>
+          </div>
+          <div class="aspect-square rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center bg-gradient-to-br from-purple-100 to-blue-100">
+            <i data-feather="image" class="w-10 h-10 text-purple-500"></i><span class="sr-only">ابتسامة التخرّج</span>
+          </div>
+          <div class="aspect-square rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center bg-gradient-to-br from-yellow-100 to-orange-100">
+            <i data-feather="image" class="w-10 h-10 text-orange-500"></i><span class="sr-only">نزهة الغروب</span>
+          </div>
+          <div class="aspect-square rounded-2xl border border-gray-100 shadow-sm flex items-center justify-center bg-gradient-to-br from-rose-100 to-red-100">
+            <i data-feather="image" class="w-10 h-10 text-rose-500"></i><span class="sr-only">أول قهوة</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Countdown -->
+  <section class="px-4 pb-10">
+    <div class="max-w-4xl mx-auto bg-white border border-gray-100 rounded-3xl p-6 shadow-md">
+      <h3 class="text-2xl font-bold text-pink-700 mb-3 text-center">نعدُّ الأيام إلى «إن شاء الله»</h3>
+      <p class="text-center text-gray-600 mb-4">عدّلي التاريخ بالأسفل</p>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-5">
+        <div class="text-center rounded-xl border bg-pink-50 p-4"><div id="d" class="text-3xl font-extrabold text-pink-700">--</div><small class="text-pink-800">أيام</small></div>
+        <div class="text-center rounded-xl border bg-purple-50 p-4"><div id="h" class="text-3xl font-extrabold text-purple-700">--</div><small class="text-purple-800">ساعات</small></div>
+        <div class="text-center rounded-xl border bg-pink-50 p-4"><div id="m" class="text-3xl font-extrabold text-pink-700">--</div><small class="text-pink-800">دقائق</small></div>
+        <div class="text-center rounded-xl border bg-purple-50 p-4"><div id="s" class="text-3xl font-extrabold text-purple-700">--</div><small class="text-purple-800">ثوانٍ</small></div>
+      </div>
+      <div class="text-center">
+        <label class="block mb-2 text-gray-700">تاريخ الحفل</label>
+        <input id="targetDate" type="date" value="2026-03-20" class="px-4 py-2 rounded-lg border focus:ring-2 focus:ring-pink-500">
+      </div>
+    </div>
+  </section>
+
+  <!-- Guestbook -->
+  <section id="messages" class="px-4 pb-16">
+    <div class="max-w-3xl mx-auto bg-white border border-gray-100 rounded-3xl p-6 shadow-md">
+      <h3 class="text-2xl font-bold text-pink-700 mb-4 text-center">أرسلي لوائل رسالة حب ✨</h3>
+      <form id="loveForm" class="space-y-4" method="POST" action="https://formspree.io/f/xjkaaerw" accept-charset="UTF-8">
+        <div>
+          <label class="block mb-1 text-gray-700" for="name">اسمك</label>
+          <input id="name" name="name" type="text" required class="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-pink-500">
+        </div>
+        <div>
+          <label class="block mb-1 text-gray-700" for="email">بريدك (اختياري)</label>
+          <input id="email" name="email" type="email" class="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-pink-500">
+        </div>
+        <div>
+          <label class="block mb-1 text-gray-700" for="message">رسالتك</label>
+          <textarea id="message" name="message" rows="4" required class="w-full px-4 py-2 rounded-lg border focus:ring-2 focus:ring-pink-500"></textarea>
+        </div>
+        <input type="text" name="_honeypot" style="display:none">
+        <input type="hidden" name="_subject" value="رسالة حب جديدة لوائل 💖">
+        <button class="w-full px-6 py-3 rounded-full text-white bg-gradient-to-r from-[var(--pink)] to-[var(--lav)] shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
+          <i data-feather="send"></i><span>أرسلي الدعاء والحب</span>
+        </button>
+        <p id="formStatus" class="text-center"></p>
+      </form>
+      <div id="messageList" class="mt-6 space-y-3"></div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="px-4 py-8 bg-white border-t">
+    <div class="max-w-6xl mx-auto text-center text-gray-700">
+      مصنوعٌ بالمحبة من <b class="text-pink-700">وائل</b> إلى <b class="text-purple-700">روان العُصَيمي</b> — زهرةُ البيوتكنولوجيا ✧
+    </div>
+  </footer>
+
+  <!-- Hidden audio (user-initiated) -->
+  <audio id="bgm" preload="auto">
+    <!-- Replace with your own MP3 URL if you want -->
+    <!-- <source src="assets/soft-anime-piano.mp3" type="audio/mpeg"> -->
+  </audio>
+
+  <script>
+    feather.replace();
+
+    // Mobile nav
+    const btn = document.getElementById('menuBtn');
+    const links = document.getElementById('navLinks');
+    btn.addEventListener('click', ()=> links.classList.toggle('hidden'));
+
+    // Copy link
+    document.getElementById('copyLink').addEventListener('click', async () => {
+      try { await navigator.clipboard.writeText(location.href);
+        toast('تم نسخ الرابط ✅');
+      } catch { toast('تعذّر نسخ الرابط'); }
+    });
+
+    // Music toggle (requires user gesture)
+    const bgm = document.getElementById('bgm');
+    document.getElementById('playMusic').addEventListener('click', async (e)=>{
+      if (!bgm.src) { toast('أضِف ملف موسيقى إلى &lt;audio&gt; لاستخدامها 🎶'); return; }
+      if (bgm.paused) { await bgm.play(); e.currentTarget.querySelector('span').textContent='إيقاف الموسيقى'; }
+      else { bgm.pause(); e.currentTarget.querySelector('span').textContent='تشغيل موسيقى هادئة'; }
+    });
+
+    // Tiny toast
+    function toast(text){
+      const t = document.createElement('div');
+      t.textContent = text;
+      t.className = 'fixed bottom-5 inset-x-0 mx-auto w-fit px-4 py-2 rounded-full bg-black/75 text-white text-sm z-50';
+      document.body.appendChild(t);
+      setTimeout(()=>t.remove(), 1800);
+    }
+
+    /* ---------- Petal Game ---------- */
+    (() => {
+      const c = document.getElementById('gameCanvas');
+      const ctx = c.getContext('2d');
+      const scoreEl = document.getElementById('score');
+      const timeEl  = document.getElementById('time');
+      const startBtn= document.getElementById('startGame');
+      const winNote = document.getElementById('winNote');
+      const hiddenNote = document.getElementById('love-note');
+
+      // fit canvas to CSS box
+      function size(){ const r=c.getBoundingClientRect(); c.width=r.width; c.height=r.height; }
+      size(); addEventListener('resize', size);
+
+      let petals=[], running=false, score=0, time=30, last=0;
+
+      function spawn(){
+        petals.push({
+          x: Math.random()*c.width, y: -20,
+          r: 12 + Math.random()*12,
+          vy: 1.2 + Math.random()*1.8,
+          vx: (Math.random()*1.2)-0.6,
+          rot: Math.random()*Math.PI
+        });
+      }
+      function draw(p){
+        ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
+        ctx.fillStyle='rgba(255,182,193,.92)';
+        ctx.beginPath();
+        ctx.moveTo(0,-p.r);
+        ctx.bezierCurveTo(p.r,-p.r, p.r,p.r/2, 0,p.r);
+        ctx.bezierCurveTo(-p.r,p.r/2, -p.r,-p.r, 0,-p.r);
+        ctx.fill(); ctx.restore();
+      }
+
+      function loop(ts){
+        if(!running) return;
+        if(!last) last=ts;
+        const dt=Math.min(.05,(ts-last)/1000); last=ts;
+
+        time -= dt;
+        if(time<=0){
+          timeEl.textContent='0';
+          running=false;
+          if(score>=20){ winNote.classList.remove('hidden'); hiddenNote.classList.remove('hidden'); confetti(); }
+          return;
+        }
+        timeEl.textContent = Math.ceil(time);
+
+        if(Math.random()<.04) spawn();
+
+        ctx.clearRect(0,0,c.width,c.height);
+        petals.forEach(p=>{ p.y+=p.vy; p.x+=p.vx; p.rot+=.01; draw(p); });
+        petals = petals.filter(p => p.y < c.height + 30);
+
+        requestAnimationFrame(loop);
+      }
+
+      function tap(x,y){
+        petals = petals.filter(p => {
+          const hit = Math.hypot(p.x-x, p.y-y) < p.r + 10;
+          if(hit){ score++; scoreEl.textContent=score; }
+          return !hit;
+        });
+      }
+
+      c.addEventListener('click', e=>{ const r=c.getBoundingClientRect(); tap(e.clientX-r.left, e.clientY-r.top); });
+      c.addEventListener('touchstart', e=>{
+        const r=c.getBoundingClientRect();
+        for(const t of e.touches) tap(t.clientX-r.left, t.clientY-r.top);
+      }, {passive:true});
+
+      startBtn.addEventListener('click', ()=>{
+        petals=[]; score=0; time=30; last=0;
+        scoreEl.textContent=score; timeEl.textContent=time;
+        winNote.classList.add('hidden'); hiddenNote.classList.add('hidden');
+        running=true; requestAnimationFrame(loop);
+      });
+
+      // DOM confetti overlay (doesn't touch canvas)
+      function confetti(){
+        const colors=['#FF6B8B','#8B88FF','#FFD166','#06D6A0','#118AB2'];
+        const N=120, dur=2200;
+        const layer=document.createElement('div'); layer.className='confetti-layer'; document.body.appendChild(layer);
+        for(let i=0;i<N;i++){
+          const s=document.createElement('span');
+          const size=6+Math.random()*8;
+          const startX=Math.random()*100; const endX = startX + (Math.random()*20-10);
+          const delay=Math.random()*200; const rot=Math.random()*360;
+          Object.assign(s.style,{
+            position:'absolute', width:size+'px', height:size+'px',
+            background: colors[Math.floor(Math.random()*colors.length)],
+            top:'-10px', left:startX+'vw', transform:`rotate(${rot}deg)`, opacity:.95, borderRadius:'2px',
+            animation:`fall ${dur}ms cubic-bezier(.2,.6,.2,1) ${delay}ms forwards`
+          });
+          s.style.setProperty('--endx', endX+'vw');
+          layer.appendChild(s);
+        }
+        if(!document.getElementById('confetti-kf')){
+          const st=document.createElement('style'); st.id='confetti-kf'; st.textContent=`
+            @keyframes fall{
+              0%{ transform: translate3d(0,-80px,0) rotate(0deg); }
+              100%{ transform: translate3d(calc(var(--endx) - 0vw),110vh,0) rotate(720deg); }
+            }`; document.head.appendChild(st);
+        }
+        setTimeout(()=>layer.remove(), dur+500);
+      }
+    })();
+
+    /* ---------- Countdown ---------- */
+    (() => {
+      const d=document.getElementById('d'), h=document.getElementById('h'),
+            m=document.getElementById('m'), s=document.getElementById('s'),
+            input=document.getElementById('targetDate');
+      function tick(){
+        const target=new Date((input.value||'2026-03-20')+'T00:00:00');
+        const now=new Date(); let diff=Math.max(0,target-now);
+        const dd=Math.floor(diff/86400000); diff-=dd*86400000;
+        const hh=Math.floor(diff/3600000);  diff-=hh*3600000;
+        const mm=Math.floor(diff/60000);    diff-=mm*60000;
+        const ss=Math.floor(diff/1000);
+        d.textContent=dd; h.textContent=hh; m.textContent=mm; s.textContent=ss;
+        requestAnimationFrame(tick);
+      }
+      input.addEventListener('change',()=>{});
+      tick();
+    })();
+
+    /* ---------- Formspree Guestbook ---------- */
+    (() => {
+      const form=document.getElementById('loveForm');
+      const status=document.getElementById('formStatus');
+      const list=document.getElementById('messageList');
+
+      form.addEventListener('submit', async (e)=>{
+        e.preventDefault();
+        status.textContent='جارٍ الإرسال...'; status.className='text-center text-blue-700';
+        try{
+          const res=await fetch(form.action,{method:'POST', headers:{'Accept':'application/json'}, body:new FormData(form)});
+          if(res.ok){
+            status.textContent='تم الإرسال ✨ (أكِّد أول رسالة من بريدك لتفعيل الفورم)'; status.className='text-center text-green-700';
+            const name=form.name.value?.trim()||'شخص ما';
+            const msg=form.message.value?.trim();
+            if(msg){
+              const div=document.createElement('div'); div.className='bubble';
+              div.innerHTML=`<b class="text-pink-700">${name}:</b> <span>${msg}</span>`;
+              list.prepend(div);
+            }
+            form.reset();
+          }else{
+            status.textContent='تعذّر الإرسال. حاولي مجددًا.'; status.className='text-center text-red-700';
+          }
+        }catch{
+          status.textContent='خطأ في الشبكة.'; status.className='text-center text-red-700';
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
