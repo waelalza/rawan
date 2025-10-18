@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#FF6B8B" />
 <title>وائل ♥ روان — قصيدة تمشي على أطراف الضوء</title>
-<meta name="description" content="Animated poem film with dramatic petals, glowing effects, and a romantic heart game." />
-<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<meta name="description" content="Animated poem film with dramatic petals, glowing effects, a romantic heart game, and our first date constellation map." />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Caveat:wght@400&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#FF6B8B;--lav:#8B88FF;--cream:#FFF7FB;--ink:#2B2530;--glass:rgba(255,255,255,.6);--glass-border:rgba(255,255,255,.28);--shadow:0 12px 40px rgba(43,37,48,.15);--radius:20px}
   *{box-sizing:border-box}html,body{height:100%}
@@ -68,6 +68,17 @@
   .comment-name{font-weight:700;font-size:16px;color:var(--pink)}
   .comment-text{font-size:14px;line-height:1.6}
   @keyframes commentPop{0%{transform:scale(0.9);opacity:0}100%{transform:scale(1);opacity:1}}
+
+  /* Constellation Map Styles */
+  #constellation-map {
+    width: 100%; height: 400px; background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); position: relative; overflow: hidden; border-radius: var(--radius); margin: 10px 0;
+  }
+  #stars { display: block; }
+  .star-label {
+    position: absolute; color: #fff; font-family: 'Caveat', cursive; cursor: pointer; font-size: 14px; text-shadow: 0 0 5px rgba(255,255,255,0.8); transition: transform 0.3s ease;
+  }
+  .star-label:hover { transform: scale(1.1); text-shadow: 0 0 10px var(--pink); }
+  .constellation-line { position: absolute; background: rgba(255,255,255,0.3); height: 1px; transform-origin: left center; }
 </style>
 </head>
 <body>
@@ -86,6 +97,20 @@
         <button class="btn outline" id="copyLink">نسخ الرابط</button>
       </div>
       <div class="hint" id="musicHint">نحاول تشغيل الموسيقى تلقائيًا. إن لم تُسمَع، لمسة واحدة تكفي ✨</div>
+    </section>
+
+    <!-- CONSTELLATION MAP: Our First Date Sky -->
+    <section class="stanza" id="stars">
+      <span class="badge">سماءنا في ٢٨ سبتمبر ٢٠٢٤ — أول موعدنا تحت النجوم</span>
+      <p style="text-align: center; font-style: italic; opacity: 0.9; margin-bottom: 15px;">هنا رسمت النجوم قصتنا الأولى في الرياض... أنتِ نجمي الشمالي، وأنا أدور حولكِ إلى الأبد. اضغطي على النجوم للذكريات 💫</p>
+      <div id="constellation-map">
+        <canvas id="stars" width="800" height="400"></canvas>
+        <div class="star-label" style="top:20%; left:30%;" onclick="showMemory('ويغا — النجم الذي أضاء عينيكِ في تلك الليلة الساحرة')">ويغا (Lyra) — النجم الذي أضاء عينيكِ</div>
+        <div class="star-label" style="top:15%; right:25%;" onclick="showMemory('دنيب — رمز قوتنا المشتركة، كالأجنحة التي تحملنا')">دنيب (Cygnus) — قوتنا المشتركة</div>
+        <div class="star-label" style="bottom:30%; left:40%;" onclick="showMemory('الطائر — حيث وعدتُكِ بالحرية والحب الأبدي')">الطائر (Aquila) — وعدنا الأول</div>
+        <div class="star-label" style="top:60%; left:10%;" onclick="showMemory('عرق الجاثا — دفء يديكِ في برد الشتاء القادم')">عرق الجاثا (Boötes) — دفء يديكِ</div>
+        <div class="star-label" style="bottom:40%; right:35%;" onclick="showMemory('سبيكا — البريق الذي يشبه ابتسامتكِ')">سبيكا (Virgo) — ابتسامتكِ الساحرة</div>
+      </div>
     </section>
 
     <!-- STANZAS -->
@@ -258,6 +283,56 @@
   },{threshold:.3});
   qsa('.stanza').forEach(s=> io.observe(s));
 
+  /* ---------- Constellation Map ---------- */
+  const canvas = document.getElementById('stars');
+  const ctx = canvas.getContext('2d');
+  // Stars based on September 28, 2024 evening sky over Riyadh (approximate positions: x=azimuth normalized, y=90-alt for top-down view)
+  const stars = [
+    {x: 150, y: 100, label: 'Vega', special: true}, // High in north-east
+    {x: 500, y: 80, label: 'Deneb', special: true}, // Zenith area
+    {x: 300, y: 250, label: 'Altair', special: true}, // South-east
+    {x: 100, y: 300, label: 'Arcturus', special: false}, // West
+    {x: 250, y: 350, label: 'Spica', special: false}, // South-west
+    {x: 400, y: 200, label: 'Antares', special: false} // South
+  ];
+
+  function drawStars() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    stars.forEach(star => {
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.special ? 3 : 2, 0, 2 * Math.PI);
+      ctx.fillStyle = star.special ? '#FFD166' : '#fff';
+      ctx.fill();
+      // Twinkle
+      ctx.globalAlpha = Math.random() * 0.5 + 0.5;
+      ctx.beginPath();
+      ctx.arc(star.x, star.y, star.special ? 4 : 3, 0, 2 * Math.PI);
+      ctx.strokeStyle = 'rgba(255, 107, 139, 0.5)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    });
+    // Simple constellation lines (e.g., Summer Triangle: Vega-Deneb-Altair)
+    ctx.beginPath();
+    ctx.moveTo(stars[0].x, stars[0].y); // Vega
+    ctx.lineTo(stars[1].x, stars[1].y); // Deneb
+    ctx.lineTo(stars[2].x, stars[2].y); // Altair
+    ctx.closePath();
+    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    requestAnimationFrame(drawStars);
+  }
+  drawStars();
+
+  function showMemory(message) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+    // Optional: Play a soft sound or add hearts
+    launchConfetti(20); // Small burst
+  }
+
   /* ---------- Comments Section ---------- */
   const commentForm = qs('#commentForm');
   const commentName = qs('#commentName');
@@ -306,7 +381,7 @@
   /* =========================
         ROMANTIC HEART GAME
      ========================= */
-  const cvs = qs('#gameCanvas'), ctx = cvs.getContext('2d');
+  const cvs = qs('#gameCanvas'), ctx2 = cvs.getContext('2d');
   const gStart=qs('#gStart'), gReset=qs('#gReset'), gScore=qs('#gScore'), gTime=qs('#gTime'), gCombo=qs('#gCombo'), gMsg=qs('#gMsg');
 
   let dpr=1; 
@@ -316,7 +391,7 @@
     cvs.style.height=h+'px'; 
     cvs.width=Math.round(w*dpr); 
     cvs.height=Math.round(h*dpr); 
-    ctx.setTransform(dpr,0,0,dpr,0,0); 
+    ctx2.setTransform(dpr,0,0,dpr,0,0); 
   } 
   fit(); 
   addEventListener('resize', fit);
@@ -332,18 +407,18 @@
     hearts.push({x,y,vx,vy, s: 16+Math.random()*14, life:1, special, glow:0});
   }
   function drawHeart(x,y,s,color){
-    ctx.save(); 
-    ctx.translate(x,y); 
-    ctx.scale(s/20,s/20); 
-    ctx.fillStyle=color; 
-    ctx.beginPath();
-    ctx.moveTo(0,-6); 
-    ctx.bezierCurveTo(8,-18,28,-10,28,6); 
-    ctx.bezierCurveTo(28,22,14,30,0,38);
-    ctx.bezierCurveTo(-14,30,-28,22,-28,6); 
-    ctx.bezierCurveTo(-28,-10,-8,-18,0,-6); 
-    ctx.fill(); 
-    ctx.restore();
+    ctx2.save(); 
+    ctx2.translate(x,y); 
+    ctx2.scale(s/20,s/20); 
+    ctx2.fillStyle=color; 
+    ctx2.beginPath();
+    ctx2.moveTo(0,-6); 
+    ctx2.bezierCurveTo(8,-18,28,-10,28,6); 
+    ctx2.bezierCurveTo(28,22,14,30,0,38);
+    ctx2.bezierCurveTo(-14,30,-28,22,-28,6); 
+    ctx2.bezierCurveTo(-28,-10,-8,-18,0,-6); 
+    ctx2.fill(); 
+    ctx2.restore();
   }
   function popAt(x,y){
     for(let i=0;i<20;i++){ 
@@ -370,7 +445,7 @@
 
   function loop(ts){
     raf=requestAnimationFrame(loop);
-    ctx.clearRect(0,0,cvs.clientWidth,cvs.clientHeight);
+    ctx2.clearRect(0,0,cvs.clientWidth,cvs.clientHeight);
 
     // spawn
     spawnAcc += 16;
@@ -385,11 +460,11 @@
       const color = h.special ? '#FFD166' : '#FF6B8B';
       drawHeart(h.x, h.y, h.s, color);
       if(h.special){ 
-        ctx.globalAlpha=0.5 + 0.3*Math.sin(h.glow); 
+        ctx2.globalAlpha=0.5 + 0.3*Math.sin(h.glow); 
         drawHeart(h.x, h.y, h.s*1.4, '#FFE9A6'); 
-        ctx.globalAlpha=0.3; 
+        ctx2.globalAlpha=0.3; 
         drawHeart(h.x, h.y, h.s*1.7, '#FFF7D1'); 
-        ctx.globalAlpha=1; 
+        ctx2.globalAlpha=1; 
       }
       if(h.y < -40 || h.life<=0){ hearts.splice(i,1); }
     }
