@@ -64,6 +64,10 @@
   @keyframes chipSurge{0%,100%{transform:scale(1);box-shadow:0 6px 20px rgba(255,107,139,.2)}50%{transform:scale(1.1);box-shadow:0 8px 25px rgba(255,107,139,.4)}}
   #gameCanvas{width:100%;height:auto;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(139,136,255,.15));box-shadow:0 0 25px rgba(255,107,139,.3)}
   .center{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+  .comment{display:grid;gap:8px;padding:12px;border-radius:12px;background:rgba(255,255,255,.9);box-shadow:0 6px 20px rgba(255,107,139,.2);margin-top:10px;animation:commentPop 0.8s ease-out}
+  .comment-name{font-weight:700;font-size:16px;color:var(--pink)}
+  .comment-text{font-size:14px;line-height:1.6}
+  @keyframes commentPop{0%{transform:scale(0.9);opacity:0}100%{transform:scale(1);opacity:1}}
 </style>
 </head>
 <body>
@@ -78,7 +82,7 @@
       <div class="btns">
         <button class="btn pink" id="startBtn">ابدئي الرحلة</button>
         <button class="btn" id="musicBtn" aria-pressed="false" title="تشغيل/إيقاف الموسيقى">تشغيل الموسيقى</button>
-        <button class="btn outline" id="toGuest">أرسلي رسالة حب</button>
+        <button class="btn outline" id="toGuest">أضيفي تعليقكِ</button>
         <button class="btn outline" id="copyLink">نسخ الرابط</button>
       </div>
       <div class="hint" id="musicHint">نحاول تشغيل الموسيقى تلقائيًا. إن لم تُسمَع، لمسة واحدة تكفي ✨</div>
@@ -129,19 +133,18 @@
       <div class="hint">إلمسي/اضغطي القلوب قبل أن تهرب. القلب الذهبي = +5 ونبضة حب ✨</div>
     </section>
 
-    <!-- Guestbook -->
+    <!-- Comments Section -->
     <section id="guest">
-      <span class="badge">أرسلي لوائل رسالة حب ✨</span>
-      <form id="guestForm" action="https://formspree.io/f/xjkaaerw" method="POST">
-        <input type="text" name="name" class="input" placeholder="اسمكِ (إلزامي)" required>
-        <div class="form-row"><input type="email" name="email" class="input" placeholder="بريدكِ (اختياري)"></div>
-        <textarea name="message" class="input" placeholder="اكتبي رسالتكِ هنا (إلزامي)" required></textarea>
-        <input type="text" name="_honeypot" style="display:none">
-        <input type="hidden" name="_subject" value="رسالة حب جديدة لوائل 💖">
-        <div class="btns" style="justify-content:flex-start"><button class="btn pink" type="submit">إرسال</button></div>
-      </form>
+      <span class="badge">أضيفي تعليقكِ لـ وائل ✨</span>
+      <div id="commentForm">
+        <input type="text" id="commentName" class="input" placeholder="اسمكِ (إلزامي)" required>
+        <textarea id="commentText" class="input" placeholder="اكتبي تعليقكِ هنا (إلزامي)" required></textarea>
+        <div class="btns" style="justify-content:flex-start">
+          <button class="btn pink" id="submitComment">إرسال التعليق</button>
+        </div>
+      </div>
       <div id="guestMsg" class="hint" style="margin-top:8px"></div>
-      <div class="bubbles" id="bubbles"></div>
+      <div id="comments" class="bubbles"></div>
     </section>
 
     <!-- Countdown -->
@@ -254,6 +257,37 @@
     }); 
   },{threshold:.3});
   qsa('.stanza').forEach(s=> io.observe(s));
+
+  /* ---------- Comments Section ---------- */
+  const commentForm = qs('#commentForm');
+  const commentName = qs('#commentName');
+  const commentText = qs('#commentText');
+  const commentsContainer = qs('#comments');
+  const guestMsg = qs('#guestMsg');
+
+  function addComment(name, text) {
+    const comment = document.createElement('div');
+    comment.className = 'comment';
+    comment.innerHTML = `
+      <div class="comment-name">${name}</div>
+      <div class="comment-text">${text}</div>
+    `;
+    commentsContainer.prepend(comment);
+    guestMsg.textContent = 'تم إضافة التعليق بنجاح! ✨';
+    setTimeout(() => guestMsg.textContent = '', 3000);
+  }
+
+  qs('#submitComment').addEventListener('click', (e) => {
+    e.preventDefault();
+    if (!commentName.value.trim() || !commentText.value.trim()) {
+      guestMsg.textContent = 'يرجى ملء جميع الحقول!';
+      setTimeout(() => guestMsg.textContent = '', 3000);
+      return;
+    }
+    addComment(commentName.value.trim(), commentText.value.trim());
+    commentName.value = '';
+    commentText.value = '';
+  });
 
   /* ---------- Countdown ---------- */
   const dd=qs('#dd'),hh=qs('#hh'),mm=qs('#mm'),ss=qs('#ss'),dateInput=qs('#dateInput');
