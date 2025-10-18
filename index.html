@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#FF6B8B" />
 <title>وائل ♥ روان — قصيدة تمشي على أطراف الضوء</title>
-<meta name="description" content="Animated poem film with petals, glowing effects, a romantic heart game, a sky map, music, and persistent comments via GitHub.">
+<meta name="description" content="Animated poem film with petals, glowing effects, a romantic heart game, a sky map, music, and AI-powered poems with persistent comments via GitHub.">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Caveat:wght@400&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#FF6B8B;--lav:#8B88FF;--cream:#FFF7FB;--ink:#2B2530;--glass:rgba(255,255,255,.6);--glass-border:rgba(255,255,255,.28);--shadow:0 12px 40px rgba(43,37,48,.15);--radius:20px}
@@ -20,6 +20,7 @@
   .wrap{max-width:900px;margin-inline:auto;padding:20px 20px 120px}
   section{margin:24px auto;background:var(--glass);border:1px solid var(--glass-border);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:24px 18px}
   @media (min-width:520px){section{padding:32px 28px;margin:32px auto}}
+
   .hero{text-align:center;padding:60px 18px 24px;background:linear-gradient(180deg, rgba(255,255,255,.7), rgba(255,255,255,.5));position:relative;overflow:hidden}
   .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 20%, rgba(255,107,139,.4), transparent 65%);animation:heroPulse 6s ease-in-out infinite}
   @keyframes heroPulse{0%,100%{opacity:0.4;transform:scale(1);filter:blur(0px)}50%{opacity:0.8;transform:scale(1.15);filter:blur(3px)}}
@@ -34,18 +35,26 @@
   .btn.outline{background:transparent;color:var(--ink);border:1px solid #d8d1dc}
   @keyframes btnFlare{0%,100%{box-shadow:0 0 15px rgba(255,107,139,.4)}50%{box-shadow:0 0 30px rgba(255,107,139,.7)}}
   .hint{font-size:12px;opacity:.75;margin-top:8px}
-  .stanza .lines{font-size:22px;line-height:1.95}
-  .line{opacity:0;transform:translateY(30px) scale(0.9);transition:opacity 1s ease,transform 1s cubic-bezier(.3,0,.2,1)}
-  .line.show{opacity:1;transform:translateY(0) scale(1)}
+
+  /* AI poem section */
+  .poem-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .poem-box{position:relative;border-radius:18px;border:1px solid #eeddf0;background:#fff;box-shadow:var(--shadow);padding:18px}
+  .poem-line{opacity:0;transform:translateY(10px);transition:opacity .45s ease, transform .45s ease;font-size:22px;line-height:1.95}
+  .poem-line.show{opacity:1;transform:translateY(0)}
+  .mini{font-size:13px;opacity:.75}
+
   .badge{font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pink),var(--lav));padding:8px 12px;border-radius:999px;font-size:14px;box-shadow:0 8px 20px rgba(255,107,139,.3);margin-bottom:10px;display:inline-block;animation:badgeBurst 1.2s ease-out}
   @keyframes badgeBurst{0%{transform:scale(0) rotate(10deg);opacity:0}70%{transform:scale(1.15) rotate(-5deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
+
   /* sky map */
   #skyWrap{position:relative}
   #skyCanvas{width:100%;height:auto;border-radius:var(--radius);background:radial-gradient(ellipse at bottom,#1b2735 0%,#090a0f 100%);box-shadow:0 0 25px rgba(255,107,139,.25)}
   .star-label{position:absolute;color:#fff;font-family:'Caveat',cursive;font-size:14px;text-shadow:0 0 6px rgba(255,255,255,.9);cursor:pointer;transition:transform .2s}
   .star-label:hover{transform:scale(1.08)}
+
   .pill{background:#fff;border:1px solid #efe5f3;padding:10px 12px;border-radius:12px;min-width:70px;text-align:center;box-shadow:var(--shadow);font-weight:800;font-size:18px}
-  /* toasts and vinyl */
+
+  /* toast + vinyl */
   .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 16px;border-radius:999px;font-weight:700;opacity:0;transition:.35s;box-shadow:0 10px 25px rgba(0,0,0,.4);z-index:50}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .vinyl{position:fixed;left:14px;bottom:18px;z-index:40;width:56px;height:56px;border-radius:50%;background:
@@ -88,38 +97,21 @@
       </div>
     </section>
 
-    <!-- STANZAS -->
-    <section class="stanza" id="s1"><span class="badge">المشهد ١ — اكتشاف</span>
-      <div class="lines">
-        <div class="line">يا سيدتي،</div>
-        <div class="line">في مختبر عينيك تبدأ تجاربي الأولى في الدهشة،</div>
-        <div class="line">وأقيس نبضي كلما نادى اسمك خلايا دمي.</div>
+    <!-- AI-POWERED POEMS -->
+    <section id="poems">
+      <span class="badge">قصائد ذكية — AI</span>
+      <div class="poem-controls">
+        <input id="herName" class="pill" style="min-width:140px" placeholder="اكتبي الاسم" value="روان" />
+        <select id="poemMode" class="pill">
+          <option value="qabbani">أسلوب نزار</option>
+          <option value="free">غزل حر</option>
+          <option value="pledge">عهد حب</option>
+          <option value="science">غزل علمي</option>
+        </select>
+        <button class="btn pink" id="newPoem">قصيدة جديدة</button>
       </div>
-    </section>
-
-    <section class="stanza" id="s2"><span class="badge">المشهد ٢ — اسم يذوب سكرا</span>
-      <div class="lines">
-        <div class="line">اسمك يا روان ليس حروفا،</div>
-        <div class="line">بل معادلة حنان تنحل على لساني،</div>
-        <div class="line">وتزهر أبجدية ياسمين.</div>
-      </div>
-    </section>
-
-    <section class="stanza" id="s3"><span class="badge">المشهد ٣ — علم حائر</span>
-      <div class="lines">
-        <div class="line">في يدك كيمياء الأشياء،</div>
-        <div class="line">تحولين العادي إلى معجزة،</div>
-        <div class="line">ويتعثر العلم أمام ابتسامتك.</div>
-      </div>
-    </section>
-
-    <section class="stanza" id="s4"><span class="badge">المشهد ٤ — عهد</span>
-      <div class="lines">
-        <div class="line">أقسم لك،</div>
-        <div class="line">سأكون دفء مختبرك بعد تعب طويل،</div>
-        <div class="line">ومظلة إذا أثقلتك الأضواء،</div>
-        <div class="line">وبيت قلب لا يسكنه إلا أنفاسك.</div>
-      </div>
+      <div class="poem-box" id="poemBox" aria-live="polite"></div>
+      <p class="mini" style="margin-top:10px;text-align:center">القصيدة تتكون سطرا بعد سطر مع تأثير بصري</p>
     </section>
 
     <!-- HEART GAME -->
@@ -138,7 +130,16 @@
       </div>
     </section>
 
-    <!-- COMMENTS (UTTERANCES) -->
+    <!-- FORTUNE HEARTS -->
+    <section id="fortune">
+      <span class="badge">تنبؤات الحب (AI)</span>
+      <p style="text-align:center;opacity:.9;margin:8px 0 14px">اضغطي لتري المستقبل الرومانسي الذي ينتظرنا</p>
+      <div style="text-align:center">
+        <button class="btn pink" id="fortuneBtn">تنبؤ حبنا</button>
+      </div>
+    </section>
+
+    <!-- COMMENTS -->
     <section id="guest">
       <span class="badge">أضيفي تعليقك لـ وائل</span>
       <div style="margin-top:10px">
@@ -180,46 +181,62 @@
   const audio = qs('#audio'), musicBtn = qs('#musicBtn'), vinyl = qs('#vinylBtn');
   const toast = qs('#toast'), petalsLayer = qs('#petals'), musicHint=qs('#musicHint');
 
-  /* ---------- Music: mobile-safe autoplay with gesture unlock ---------- */
+  /* ---------- Music ---------- */
   async function attemptAutoplay(){
     try{ audio.muted=false; audio.volume=1; await audio.play(); afterPlay(true); }
-    catch{ try{ audio.muted=true; audio.volume=0; await audio.play(); hint('الصوت يعمل بصمت. اضغطي لتفعيل'); armUnlock(true); }
-           catch{ hint('اضغطي لتشغيل الصوت'); armUnlock(true); } }
+    catch{
+      try{ audio.muted=true; audio.volume=0; await audio.play(); hint('الصوت يعمل بصمت. اضغطي لتفعيل'); armUnlock(true); }
+      catch{ hint('اضغطي لتشغيل الصوت'); armUnlock(true); }
+    }
   }
   function hint(t){ if(musicHint) musicHint.textContent=t||''; }
   function afterPlay(playing){ syncUI(playing); hint(''); }
-  function fadeTo(target=1,ms=700){ const steps=14,dt=ms/steps; let i=0,from=audio.volume,d=target-from; const id=setInterval(()=>{ i++; audio.volume=Math.max(0,Math.min(1,from+d*(i/steps))); if(i>=steps) clearInterval(id);},dt); }
-  function armUnlock(start){ const unlock=async()=>{ try{ if(start && audio.paused) await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true); }catch{} 
-    off(); }; const evs=['touchstart','pointerdown','click','keydown','scroll']; const off=()=>evs.forEach(e=>window.removeEventListener(e,unlock,{capture:true}));
-    evs.forEach(e=>window.addEventListener(e,unlock,{once:true,capture:true,passive:e==='scroll'})); }
-  function syncUI(p){ if(musicBtn){ musicBtn.textContent=p?'إيقاف الموسيقى':'تشغيل الموسيقى'; musicBtn.setAttribute('aria-pressed',p?'true':'false'); } if(vinyl) vinyl.classList.toggle('playing',p); }
+  function fadeTo(target=1,ms=700){
+    const steps=14,dt=ms/steps; let i=0,from=audio.volume,d=target-from;
+    const id=setInterval(()=>{ i++; audio.volume=Math.max(0,Math.min(1,from+d*(i/steps))); if(i>=steps) clearInterval(id);},dt);
+  }
+  function armUnlock(start){
+    const unlock=async()=>{ try{ if(start && audio.paused) await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true); }catch{} off(); };
+    const evs=['touchstart','pointerdown','click','keydown','scroll'];
+    const off=()=>evs.forEach(e=>window.removeEventListener(e,unlock,{capture:true}));
+    evs.forEach(e=>window.addEventListener(e,unlock,{once:true,capture:true,passive:e==='scroll'}));
+  }
+  function syncUI(p){
+    if(musicBtn){ musicBtn.textContent=p?'إيقاف الموسيقى':'تشغيل الموسيقى'; musicBtn.setAttribute('aria-pressed',p?'true':'false'); }
+    if(vinyl) vinyl.classList.toggle('playing',p);
+  }
   window.addEventListener('load', attemptAutoplay);
-  musicBtn?.addEventListener('click', async ()=>{ if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true);}catch{ armUnlock(true); hint('اضغطي مرة أخرى'); } } else { audio.pause(); syncUI(false);} });
-  vinyl?.addEventListener('click', async ()=>{ if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true);}catch{ armUnlock(true); hint('اضغطي مرة أخرى'); } } else { audio.pause(); syncUI(false);} });
+  musicBtn?.addEventListener('click', async ()=>{
+    if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true);}catch{ armUnlock(true); hint('اضغطي مرة أخرى'); } }
+    else { audio.pause(); syncUI(false);}
+  });
+  vinyl?.addEventListener('click', async ()=>{
+    if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true);}catch{ armUnlock(true); hint('اضغطي مرة أخرى'); } }
+    else { audio.pause(); syncUI(false);}
+  });
   document.addEventListener('visibilitychange', ()=>{ if(document.hidden && !audio.paused) audio.pause(); });
 
   /* ---------- Buttons ---------- */
-  qs('#startBtn').onclick=()=> qs('#s1').scrollIntoView({behavior:'smooth'});
+  qs('#startBtn').onclick=()=> qs('#poems').scrollIntoView({behavior:'smooth'});
   qs('#toGuest').onclick=()=> qs('#guest').scrollIntoView({behavior:'smooth'});
-  qs('#copyLink').onclick=async()=>{ try{ await navigator.clipboard.writeText(location.href); toast.textContent='تم نسخ الرابط'; } catch{ toast.textContent='جرّب يدويا'; } toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600); };
+  qs('#copyLink').onclick=async()=>{
+    try{ await navigator.clipboard.writeText(location.href); toast.textContent=' تم نسخ الرابط '; }
+    catch{ toast.textContent='جرّب يدويا'; }
+    toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600);
+  };
 
   /* ---------- Petals ---------- */
-  function createPetal(){ 
+  function createPetal(){
     const p=document.createElement('div'), size=10+Math.random()*16;
     const colors=['#FF6B8B','#8B88FF','#FFD166','#FF99CC'], shape=['100% 0 100% 100%','50% 0 50% 100%','100% 100% 0 100%','50% 50% 50% 50%'];
     p.style.cssText=`position:absolute;width:${size}px;height:${size*0.8}px;right:${Math.random()*100}%;top:${-30-Math.random()*50}px;background:linear-gradient(135deg,${colors[(Math.random()*4)|0]},rgba(255,255,255,.7));border-radius:${shape[(Math.random()*4)|0]};box-shadow:0 10px 20px rgba(255,107,139,.4),0 0 30px rgba(255,107,139,.3);opacity:.95`;
-    petalsLayer.appendChild(p); 
+    petalsLayer.appendChild(p);
     const fall=7000+Math.random()*5000, drift=40+Math.random()*50;
     p.animate([{transform:'translate3d(0,0,0) rotate(0deg)' ,opacity:0},{transform:`translate3d(${drift}px,20vh,0) rotate(180deg)`,opacity:.95},{transform:`translate3d(${drift*1.8}px,105vh,0) rotate(${360+Math.random()*360}deg)`,opacity:0}],{duration:fall,easing:'cubic-bezier(.3,.8,.2,1)'});
     setTimeout(()=>p.remove(),fall+60);
   }
   setInterval(()=>{ if(document.hasFocus()) createPetal(); },320);
   for(let i=0;i<36;i++) setTimeout(createPetal,50*i);
-
-  /* ---------- Scroll reveals ---------- */
-  function sparkle(x,y,host){ for(let i=0;i<8;i++){ const s=document.createElement('span'); s.style.cssText=`position:absolute;left:${x}px;top:${y}px;width:6px;height:6px;background:${i%3? '#FF6B8B':'#8B88FF'};border-radius:${i%2?'999px':'4px'};z-index:10;pointer-events:none`; host.appendChild(s); const dx=(Math.random()-0.5)*100,dy=(Math.random()-0.5)*100; s.animate([{transform:'translate(0,0) scale(1)',opacity:1},{transform:`translate(${dx}px,${dy}px) scale(.3)`,opacity:0}],{duration:650+Math.random()*300,easing:'cubic-bezier(.3,.7,.2,1)'}); setTimeout(()=>s.remove(),950);} }
-  const io=new IntersectionObserver(ents=>ents.forEach(ent=>{ if(ent.isIntersecting){ ent.target.querySelectorAll('.line').forEach((l,i)=>{ setTimeout(()=>{ l.classList.add('show'); const r=l.getBoundingClientRect(); sparkle(r.left+r.width/2,r.top+r.height/2,ent.target); },200*i); }); } }),{threshold:.3});
-  qsa('.stanza').forEach(s=>io.observe(s));
 
   /* ---------- Sky map ---------- */
   const sky = qs('#skyCanvas'); const skctx = sky.getContext('2d');
@@ -228,17 +245,14 @@
     skctx.clearRect(0,0,sky.width,sky.height);
     skyStars.forEach(st=>{ skctx.beginPath(); skctx.arc(st.x,st.y,st.s,0,Math.PI*2); skctx.fillStyle='#fff'; skctx.fill();
       skctx.globalAlpha=Math.random()*0.5+0.5; skctx.beginPath(); skctx.arc(st.x,st.y,st.s+1,0,2*Math.PI); skctx.strokeStyle='rgba(255,107,139,.45)'; skctx.lineWidth=1; skctx.stroke(); skctx.globalAlpha=1; });
-    // summer triangle
     skctx.beginPath(); skctx.moveTo(150,100); skctx.lineTo(500,80); skctx.lineTo(300,250); skctx.closePath();
     skctx.strokeStyle='rgba(255,255,255,.28)'; skctx.lineWidth=1; skctx.stroke();
     requestAnimationFrame(drawSky);
   } drawSky();
   qsa('.star-label').forEach(el=> el.addEventListener('click',()=> toastShow(el.dataset.m || 'ذكرى')));
 
-  /* ---------- Comments: handled by Utterances embed ---------- */
-
   /* ---------- Countdown ---------- */
-  const dd=qs('#dd'),hh=qs('#hh'),mm=qs('#mm'),ss=qs('#ss'),dateInput=qs('#dateInput'); 
+  const dd=qs('#dd'),hh=qs('#hh'),mm=qs('#mm'),ss=qs('#ss'),dateInput=qs('#dateInput');
   let target=new Date((dateInput?.value||'2026-03-20')+'T00:00:00');
   function tick(){ const t=target-new Date(); if(t<=0){ dd.textContent=hh.textContent=mm.textContent=ss.textContent='0'; return; }
     dd.textContent=Math.floor(t/86400000); hh.textContent=Math.floor((t%86400000)/3600000); mm.textContent=Math.floor((t%3600000)/60000); ss.textContent=Math.floor((t%60000)/1000); }
@@ -256,11 +270,106 @@
   function loop(){ raf=requestAnimationFrame(loop); ctx2.clearRect(0,0,cvs.clientWidth,cvs.clientHeight); spawnAcc+=16; const rate=Math.max(350,800-score*15); if(spawnAcc>rate){ spawnAcc=0; spawnHeart(Math.random()<0.18); } for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i]; h.x+=h.vx; h.y+=h.vy; h.vy-=0.003; h.glow=(h.glow+0.06)%(2*Math.PI); const col=h.special?'#FFD166':'#FF6B8B'; drawHeart(h.x,h.y,h.s,col); if(h.special){ ctx2.globalAlpha=0.5+0.3*Math.sin(h.glow); drawHeart(h.x,h.y,h.s*1.4,'#FFE9A6'); ctx2.globalAlpha=1; } if(h.y<-40||h.life<=0) hearts.splice(i,1); }
     if(running){ loop.t=(loop.t||performance.now()); const now=performance.now(); if(now-loop.t>=1000){ loop.t=now; tLeft--; gTime.textContent=tLeft; if(tLeft<=0) endGame(); } } }
   function startGame(){ if(running) return; resetGame(); running=true; cancelAnimationFrame(raf); loop.t=performance.now(); raf=requestAnimationFrame(loop); }
-  function endGame(){ running=false; cancelAnimationFrame(raf); gMsg.style.display='inline-block'; gMsg.textContent=score>=25?'فوز جميل ورسالة حب تنتظرك':'جميل، حاولي مرة أخرى'; if(score>=25){ toastShow('أختارك كل يوم'); setTimeout(()=>qs('#s4').scrollIntoView({behavior:'smooth'}),900); } }
+  function endGame(){ running=false; cancelAnimationFrame(raf); gMsg.style.display='inline-block'; gMsg.textContent=score>=25?'فوز جميل ورسالة حب تنتظرك':'جميل، حاولي مرة أخرى'; if(score>=25){ toastShow('أختارك كل يوم'); setTimeout(()=>qs('#poems').scrollIntoView({behavior:'smooth'}),900); } }
   function hit(x,y){ const r=cvs.getBoundingClientRect(),px=x-r.left,py=y-r.top; let hitAny=false; for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i],dx=px-h.x,dy=py-h.y,R=h.s*0.9; if(dx*dx+dy*dy<=R*R*1.2){ hearts.splice(i,1); hitAny=true; const now=performance.now(); combo=(now-lastTap<900)?Math.min(combo+1,9):1; lastTap=now; const add=(h.special?5:1)*combo; score+=add; gScore.textContent=score; gCombo.textContent=`x${combo}`; popAt(x,y); gMsg.style.display='inline-block'; gMsg.textContent=h.special?'قلب ذهبي':'رائع'; clearTimeout(hit._t); hit._t=setTimeout(()=>gMsg.style.display='none',900); break; } } if(!hitAny){ combo=1; gCombo.textContent='x1'; } }
   cvs.addEventListener('pointerdown',e=>hit(e.clientX,e.clientY),{passive:true}); gStart.addEventListener('click',startGame); gReset.addEventListener('click',resetGame);
 
-  /* ---------- Tiny helpers ---------- */
+  /* ---------- AI Poems via Pipedream proxy ---------- */
+  const WORKER_URL = "https://eo9tkviosfwos3e.m.pipedream.net";
+  async function hfGenerate(prompt){
+    const res = await fetch(WORKER_URL, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        inputs: prompt,
+        parameters: { max_new_tokens: 90, temperature: 0.9, return_full_text: false }
+      })
+    });
+    const data = await res.json().catch(()=>[]);
+    return (Array.isArray(data) && data[0]?.generated_text) ? data[0].generated_text.trim() : "";
+  }
+
+  const poemBox=qs('#poemBox'), newPoemBtn=qs('#newPoem'), herName=qs('#herName'), poemMode=qs('#poemMode');
+  const templates = {
+    qabbani: (n)=>[
+      `يا ${n}، هل تعلمين بأن اسمي يتهجّاك إذا جئتِ؟`,
+      `ألمسكِ فأتعلم كيف يشرح الضوء نفسه.`,
+      `بين كفّيكِ ينضبط قلبي مثل ساعة مكة.`,
+      `وأقول: أحبكِ، فتخجل شرفات الرياض.`,
+      `وأعاهدك: ما حييت، لن أسكن إلا في اسمك.`
+    ],
+    free: (n)=>[
+      `${n}، اسمك قصير لكن طريقه طويل في صدري.`,
+      `خطوتكِ تغيّر اتجاه الممرات في رأسي.`,
+      `ضحكتكِ تشرح قوانين الجاذبية بدون طباشير.`,
+      `إذا ناديتكِ، يزهر الشارع نخلاً.`,
+      `أعدك: سأكون ظلّك إن تعبت الشمس.`
+    ],
+    pledge: (n)=>[
+      `أقسم يا ${n}: لا صباح يكتمل إن لم يمر على جبينك.`,
+      `ولا ليلة تُقفل دون سلام على يديك.`,
+      `سأحرس تعبك من مفاصل الضوء.`,
+      `سأرتّب فوضاي على حرفك.`,
+      `وسأبقى بيت قلبك مهما تغيّر الطقس.`
+    ],
+    science: (n)=>[
+      `${n}، كيمياء ابتسامتكِ تذيب أملاح أي حزن.`,
+      `فيزياؤكِ تميل بالخطوط المستقيمة نحو صدري.`,
+      `بيولوجيا يدكِ توقظ خلاياي الكسولة.`,
+      `والكونيات تقول: مدار قلبي قطع ناقص حول عينيك.`,
+      `خاتمة: ثابت عشقي لكِ يساوي اللانهاية.`
+    ]
+  };
+  function clearPoem(){ poemBox.innerHTML=''; }
+  function addLine(text, delay=0){
+    const d=document.createElement('div'); d.className='poem-line'; d.textContent=text;
+    poemBox.appendChild(d);
+    setTimeout(()=>d.classList.add('show'), delay);
+  }
+  async function composePoem(){
+    clearPoem();
+    const name = (herName.value||'روان').trim();
+    const mode = poemMode.value;
+    const prompt = `اكتب قصيدة قصيرة رومانسية بالعربية بأسلوب ${mode==='qabbani'?'نزار قباني':'حر رومانسي'} عن ${name}. خمس أسطر. نهاية بوعد حب.`;
+    let text = await hfGenerate(prompt);
+    if(!text){
+      const lines = templates[mode](name);
+      lines.forEach((ln,i)=> addLine(ln, i*220));
+      return;
+    }
+    text = text.replace(/\r/g,'').replace(/\n{3,}/g,'\n').trim();
+    const rawLines = text.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,6);
+    const lines = rawLines.length ? rawLines : templates[mode](name);
+    lines.forEach((ln,i)=> addLine(ln, i*220));
+  }
+  newPoemBtn.addEventListener('click', ()=>{
+    popAt(innerWidth/2, innerHeight/2);
+    composePoem();
+  });
+  composePoem(); // first render
+
+  /* ---------- Fortune Hearts ---------- */
+  const fortunesFallback = [
+    'سأكتب اسمك كل صباح على نافذة الغرفة.',
+    'سنضحك حتى تتعب النجوم.',
+    'سأختارك كل يوم حتى آخر يوم.'
+  ];
+  async function generateFortune(){
+    const out = await hfGenerate('سطر شعري رومانسي واحد بالعربية يبدأ بـ"يا روان" وينتهي بنقطة.');
+    return out || fortunesFallback[(Math.random()*fortunesFallback.length)|0];
+  }
+  qs('#fortuneBtn').onclick = async () => {
+    const btnRect = qs('#fortuneBtn').getBoundingClientRect();
+    popAt(btnRect.left + btnRect.width / 2, btnRect.top + btnRect.height / 2);
+    const card = document.createElement('div');
+    card.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--pink);color:white;padding:20px;border-radius:20px;z-index:100;text-align:center;max-width:320px;box-shadow:var(--shadow);';
+    card.innerHTML='<p id="fortuneText" style="font-style:italic;margin-bottom:10px;">جاري التنبؤ...</p><button onclick="this.parentNode.remove()" style="background:transparent;border:1px solid white;color:white;padding:8px;border-radius:20px;cursor:pointer;">أغلق</button>';
+    document.body.appendChild(card);
+    const textEl = qs('#fortuneText');
+    textEl.textContent = await generateFortune();
+  };
+
+  /* ---------- Utilities ---------- */
   function toastShow(t){ toast.textContent=t; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600); }
 })();
 </script>
