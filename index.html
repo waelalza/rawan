@@ -4,8 +4,8 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
 <meta name="theme-color" content="#FF6B8B" />
-<title>وائل ♥ روان — قصيدة تمشي على أطراف الضوء</title>
-<meta name="description" content="Animated poem film with petals, glowing effects, a romantic heart game, a sky map, music, and AI-powered poems with persistent comments via GitHub.">
+<title>وائل ♥ روان — صفحة قصائد مدعومة بالذكاء الاصطناعي</title>
+<meta name="description" content="All visible texts are AI-generated via a secure proxy. No static fallbacks.">
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Caveat:wght@400&display=swap" rel="stylesheet">
 <style>
   :root{--pink:#FF6B8B;--lav:#8B88FF;--cream:#FFF7FB;--ink:#2B2530;--glass:rgba(255,255,255,.6);--glass-border:rgba(255,255,255,.28);--shadow:0 12px 40px rgba(43,37,48,.15);--radius:20px}
@@ -26,8 +26,8 @@
   @keyframes heroPulse{0%,100%{opacity:0.4;transform:scale(1);filter:blur(0px)}50%{opacity:0.8;transform:scale(1.15);filter:blur(3px)}}
   .title{font-size:clamp(30px,7.5vw,60px);font-weight:800;letter-spacing:.6px;animation:titleGlow 4s ease-in-out infinite}
   @keyframes titleGlow{0%,100%{text-shadow:0 0 15px rgba(255,107,139,.6),0 0 30px rgba(255,107,139,.3)}50%{text-shadow:0 0 25px rgba(255,107,139,.9),0 0 50px rgba(255,107,139,.5)}}
-  .tag{margin-top:12px;font-size:clamp(18px,4vw,24px);opacity:.9;animation:tagDrift 5s ease-in-out infinite}
-  @keyframes tagDrift{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.03)}}
+  .tag{margin-top:12px;font-size:clamp(18px,4vw,24px);opacity:.9;animation:tagDrift 5s ease-in-out infinite;min-height:1.6em}
+
   .btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
   .btn{border:none;border-radius:999px;padding:14px 18px;font-weight:700;cursor:pointer;background:var(--ink);color:#fff;box-shadow:var(--shadow);transition:transform .2s ease,box-shadow .3s ease}
   .btn:hover{transform:scale(1.06);box-shadow:0 10px 30px rgba(255,107,139,.5)}
@@ -36,25 +36,28 @@
   @keyframes btnFlare{0%,100%{box-shadow:0 0 15px rgba(255,107,139,.4)}50%{box-shadow:0 0 30px rgba(255,107,139,.7)}}
   .hint{font-size:12px;opacity:.75;margin-top:8px}
 
-  /* AI poem section */
-  .poem-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
-  .poem-box{position:relative;border-radius:18px;border:1px solid #eeddf0;background:#fff;box-shadow:var(--shadow);padding:18px}
-  .poem-line{opacity:0;transform:translateY(10px);transition:opacity .45s ease, transform .45s ease;font-size:22px;line-height:1.95}
-  .poem-line.show{opacity:1;transform:translateY(0)}
-  .mini{font-size:13px;opacity:.75}
+  /* Lines reveal */
+  .lines{font-size:22px;line-height:1.95;min-height:6.5em}
+  .line{opacity:0;transform:translateY(10px);transition:opacity .45s ease, transform .45s ease}
+  .line.show{opacity:1;transform:translateY(0)}
 
-  .badge{font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pink),var(--lav));padding:8px 12px;border-radius:999px;font-size:14px;box-shadow:0 8px 20px rgba(255,107,139,.3);margin-bottom:10px;display:inline-block;animation:badgeBurst 1.2s ease-out}
+  .badge{font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pink),var(--lav));padding:8px 12px;border-radius:999px;font-size:14px;box-shadow:0 8px 20px rgba(255,107,139,.3);margin-bottom:10px;display:inline-block;animation:badgeBurst 1.2s ease-out;min-height:1.6em}
   @keyframes badgeBurst{0%{transform:scale(0) rotate(10deg);opacity:0}70%{transform:scale(1.15) rotate(-5deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
 
-  /* sky map */
+  /* Sky */
   #skyWrap{position:relative}
   #skyCanvas{width:100%;height:auto;border-radius:var(--radius);background:radial-gradient(ellipse at bottom,#1b2735 0%,#090a0f 100%);box-shadow:0 0 25px rgba(255,107,139,.25)}
-  .star-label{position:absolute;color:#fff;font-family:'Caveat',cursive;font-size:14px;text-shadow:0 0 6px rgba(255,255,255,.9);cursor:pointer;transition:transform .2s}
+  .star-label{position:absolute;color:#fff;font-family:'Caveat',cursive;font-size:14px;text-shadow:0 0 6px rgba(255,255,255,.9);cursor:pointer;transition:transform .2s;min-height:1.2em}
   .star-label:hover{transform:scale(1.08)}
 
   .pill{background:#fff;border:1px solid #efe5f3;padding:10px 12px;border-radius:12px;min-width:70px;text-align:center;box-shadow:var(--shadow);font-weight:800;font-size:18px}
 
-  /* toast + vinyl */
+  /* Poem box */
+  .poem-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .poem-box{position:relative;border-radius:18px;border:1px solid #eeddf0;background:#fff;box-shadow:var(--shadow);padding:18px;min-height:7em}
+  .poem-line{opacity:0;transform:translateY(10px);transition:opacity .45s ease, transform .45s ease;font-size:22px;line-height:1.95}
+  .poem-line.show{opacity:1;transform:translateY(0)}
+
   .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 16px;border-radius:999px;font-weight:700;opacity:0;transition:.35s;box-shadow:0 10px 25px rgba(0,0,0,.4);z-index:50}
   .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
   .vinyl{position:fixed;left:14px;bottom:18px;z-index:40;width:56px;height:56px;border-radius:50%;background:
@@ -73,75 +76,75 @@
     <!-- HERO -->
     <section class="hero" id="hero">
       <h1 class="title">وائل <span style="color:#FF6B8B">♥</span> روان</h1>
-      <div class="tag">قصيدة تمشي على أطراف الضوء</div>
+      <div class="tag" id="heroTag"></div>
       <div class="btns">
-        <button class="btn pink" id="startBtn">ابدئي الرحلة</button>
-        <button class="btn" id="musicBtn" aria-pressed="false" title="تشغيل/إيقاف الموسيقى">تشغيل الموسيقى</button>
-        <button class="btn outline" id="toGuest">أضيفي تعليقك</button>
-        <button class="btn outline" id="copyLink">نسخ الرابط</button>
+        <button class="btn pink" id="startBtn">ابدئي</button>
+        <button class="btn" id="musicBtn" aria-pressed="false" title="تشغيل/إيقاف الموسيقى">الموسيقى</button>
+        <button class="btn outline" id="toGuest">تعليق</button>
+        <button class="btn outline" id="copyLink">نسخ</button>
       </div>
-      <div class="hint" id="musicHint">إن لم يعمل الصوت فورا، لمسة واحدة تكفي</div>
+      <div class="hint" id="musicHint"></div>
     </section>
 
     <!-- SKY MAP -->
     <section id="sky" class="stanza">
-      <span class="badge">سماءنا في ٢٨ سبتمبر ٢٠٢٤</span>
-      <p style="text-align:center;opacity:.9;margin:8px 0 14px">اضغطي على النجوم لاسترجاع ذكرى</p>
+      <span class="badge" id="skyBadge"></span>
+      <p style="text-align:center;opacity:.9;margin:8px 0 14px" id="skyNote"></p>
       <div id="skyWrap">
         <canvas id="skyCanvas" width="800" height="380"></canvas>
-        <span class="star-label" style="top:18%;left:30%" data-m="ويغا — النجم الذي أضاء عينيك">ويغا</span>
-        <span class="star-label" style="top:10%;right:25%" data-m="دنيب — قوتنا المشتركة">دنيب</span>
-        <span class="star-label" style="bottom:28%;left:42%" data-m="الطائر — وعدنا الأول">الطائر</span>
-        <span class="star-label" style="top:60%;left:12%" data-m="عرق الجاثا — دفء يديك">عرق الجاثا</span>
-        <span class="star-label" style="bottom:40%;right:35%" data-m="سبيكا — بريق ابتسامتك">سبيكا</span>
+        <span class="star-label" style="top:18%;left:30%" id="star1"></span>
+        <span class="star-label" style="top:10%;right:25%" id="star2"></span>
+        <span class="star-label" style="bottom:28%;left:42%" id="star3"></span>
+        <span class="star-label" style="top:60%;left:12%" id="star4"></span>
+        <span class="star-label" style="bottom:40%;right:35%" id="star5"></span>
       </div>
     </section>
 
-    <!-- AI-POWERED POEMS -->
+    <!-- SCENES (All AI) -->
+    <section class="stanza" id="s1">
+      <span class="badge" id="b1"></span>
+      <div class="lines" id="l1"></div>
+    </section>
+    <section class="stanza" id="s2">
+      <span class="badge" id="b2"></span>
+      <div class="lines" id="l2"></div>
+    </section>
+    <section class="stanza" id="s3">
+      <span class="badge" id="b3"></span>
+      <div class="lines" id="l3"></div>
+    </section>
+    <section class="stanza" id="s4">
+      <span class="badge" id="b4"></span>
+      <div class="lines" id="l4"></div>
+    </section>
+
+    <!-- AI POEMS -->
     <section id="poems">
-      <span class="badge">قصائد ذكية — AI</span>
+      <span class="badge">قصائد (AI)</span>
       <div class="poem-controls">
-        <input id="herName" class="pill" style="min-width:140px" placeholder="اكتبي الاسم" value="روان" />
+        <input id="herName" class="pill" style="min-width:140px" placeholder="الاسم" value="روان" />
         <select id="poemMode" class="pill">
           <option value="qabbani">أسلوب نزار</option>
           <option value="free">غزل حر</option>
-          <option value="pledge">عهد حب</option>
+          <option value="pledge">عهد</option>
           <option value="science">غزل علمي</option>
         </select>
-        <button class="btn pink" id="newPoem">قصيدة جديدة</button>
+        <button class="btn pink" id="newPoem">إنشاء قصيدة</button>
       </div>
       <div class="poem-box" id="poemBox" aria-live="polite"></div>
-      <p class="mini" style="margin-top:10px;text-align:center">القصيدة تتكون سطرا بعد سطر مع تأثير بصري</p>
     </section>
 
-    <!-- HEART GAME -->
-    <section id="loveGame">
-      <span class="badge">لعبة القلوب</span>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px">
-        <div class="pill">النتيجة: <span id="gScore">0</span></div>
-        <div class="pill">الوقت: <span id="gTime">30</span>s</div>
-        <div class="pill">التسلسل: <span id="gCombo">x1</span></div>
-        <div class="pill" id="gMsg" style="display:none">جميل</div>
-      </div>
-      <canvas id="gameCanvas" width="720" height="380" style="width:100%;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(139,136,255,.15));box-shadow:0 0 25px rgba(255,107,139,.25)"></canvas>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:10px">
-        <button class="btn pink" id="gStart">ابدئي اللعب</button>
-        <button class="btn outline" id="gReset">إعادة</button>
-      </div>
-    </section>
-
-    <!-- FORTUNE HEARTS -->
+    <!-- FORTUNE -->
     <section id="fortune">
-      <span class="badge">تنبؤات الحب (AI)</span>
-      <p style="text-align:center;opacity:.9;margin:8px 0 14px">اضغطي لتري المستقبل الرومانسي الذي ينتظرنا</p>
+      <span class="badge">تنبؤ (AI)</span>
       <div style="text-align:center">
-        <button class="btn pink" id="fortuneBtn">تنبؤ حبنا</button>
+        <button class="btn pink" id="fortuneBtn">سطر حب</button>
       </div>
     </section>
 
     <!-- COMMENTS -->
     <section id="guest">
-      <span class="badge">أضيفي تعليقك لـ وائل</span>
+      <span class="badge">التعليقات</span>
       <div style="margin-top:10px">
         <script src="https://utteranc.es/client.js"
           repo="waelalza/rawan"
@@ -154,9 +157,9 @@
       </div>
     </section>
 
-    <!-- COUNTDOWN -->
+    <!-- COUNTDOWN (utility, not AI text) -->
     <section id="count">
-      <span class="badge">نعد الأيام</span>
+      <span class="badge">عداد</span>
       <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
         <input id="dateInput" style="max-width:170px" type="date" value="2026-03-20" class="pill">
         <div class="pill"><span id="dd">0</span><div style="font-size:11px;opacity:.65">أيام</div></div>
@@ -165,80 +168,70 @@
         <div class="pill"><span id="ss">0</span><div style="font-size:11px;opacity:.65">ثوان</div></div>
       </div>
     </section>
-
-    <section style="text-align:center">مصنوع بالمحبة من وائل إلى روان العصيمي</section>
   </div>
 
   <!-- AUDIO -->
   <audio id="audio" preload="auto" playsinline webkit-playsinline src="./assets/audio/rawan-theme.mp3" loop></audio>
   <button class="vinyl" id="vinylBtn" aria-label="تشغيل/إيقاف"><span class="vinyl-label">R♥W</span></button>
-  <div class="toast" id="toast" role="status" aria-live="polite">تم نسخ الرابط</div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
 (function(){
+  // ===== Config =====
+  const API_URL = "https://eo9tkviosfwos3e.m.pipedream.net";
+
+  // ===== Helpers =====
   const qs = s => document.querySelector(s);
   const qsa = s => Array.from(document.querySelectorAll(s));
-  const audio = qs('#audio'), musicBtn = qs('#musicBtn'), vinyl = qs('#vinylBtn');
-  const toast = qs('#toast'), petalsLayer = qs('#petals'), musicHint=qs('#musicHint');
+  function toastShow(t){ const toast=qs('#toast'); toast.textContent=t||''; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600); }
+  function addLine(container, text, i=0){ const d=document.createElement('div'); d.className='line'; d.textContent=text; container.appendChild(d); setTimeout(()=>d.classList.add('show'), 160*i); }
+  function splitLines(s){ return (s||'').replace(/\r/g,'').split('\n').map(v=>v.trim()).filter(Boolean); }
 
-  /* ---------- Music ---------- */
-  async function attemptAutoplay(){
-    try{ audio.muted=false; audio.volume=1; await audio.play(); afterPlay(true); }
-    catch{
-      try{ audio.muted=true; audio.volume=0; await audio.play(); hint('الصوت يعمل بصمت. اضغطي لتفعيل'); armUnlock(true); }
-      catch{ hint('اضغطي لتشغيل الصوت'); armUnlock(true); }
+  async function ai(prompt, params={ max_new_tokens: 120, temperature: 0.9, return_full_text: false }){
+    try{
+      const res = await fetch(API_URL, {
+        method: "POST",
+        headers: { "Content-Type":"application/json" },
+        body: JSON.stringify({ inputs: prompt, parameters: params })
+      });
+      const j = await res.json();
+      if (Array.isArray(j) && j[0]?.generated_text) return j[0].generated_text.trim();
+      if (j?.data && j.data[0]?.generated_text) return j.data[0].generated_text.trim();
+      console.warn("Unexpected response shape:", j);
+      return "";
+    }catch(e){
+      console.error("AI error:", e);
+      return "";
     }
   }
-  function hint(t){ if(musicHint) musicHint.textContent=t||''; }
-  function afterPlay(playing){ syncUI(playing); hint(''); }
-  function fadeTo(target=1,ms=700){
-    const steps=14,dt=ms/steps; let i=0,from=audio.volume,d=target-from;
-    const id=setInterval(()=>{ i++; audio.volume=Math.max(0,Math.min(1,from+d*(i/steps))); if(i>=steps) clearInterval(id);},dt);
-  }
-  function armUnlock(start){
-    const unlock=async()=>{ try{ if(start && audio.paused) await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true); }catch{} off(); };
-    const evs=['touchstart','pointerdown','click','keydown','scroll'];
-    const off=()=>evs.forEach(e=>window.removeEventListener(e,unlock,{capture:true}));
-    evs.forEach(e=>window.addEventListener(e,unlock,{once:true,capture:true,passive:e==='scroll'}));
-  }
-  function syncUI(p){
-    if(musicBtn){ musicBtn.textContent=p?'إيقاف الموسيقى':'تشغيل الموسيقى'; musicBtn.setAttribute('aria-pressed',p?'true':'false'); }
-    if(vinyl) vinyl.classList.toggle('playing',p);
-  }
-  window.addEventListener('load', attemptAutoplay);
-  musicBtn?.addEventListener('click', async ()=>{
-    if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true);}catch{ armUnlock(true); hint('اضغطي مرة أخرى'); } }
-    else { audio.pause(); syncUI(false);}
-  });
-  vinyl?.addEventListener('click', async ()=>{
-    if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlay(true);}catch{ armUnlock(true); hint('اضغطي مرة أخرى'); } }
-    else { audio.pause(); syncUI(false);}
-  });
-  document.addEventListener('visibilitychange', ()=>{ if(document.hidden && !audio.paused) audio.pause(); });
 
-  /* ---------- Buttons ---------- */
+  // ===== Music + basic UI =====
+  const audio = qs('#audio'), musicBtn = qs('#musicBtn'), vinyl = qs('#vinylBtn');
+  const musicHint = qs('#musicHint');
+  function hint(t){ if(musicHint) musicHint.textContent=t||''; }
+  function syncUI(p){ if(musicBtn){ musicBtn.textContent=p?'إيقاف':'الموسيقى'; musicBtn.setAttribute('aria-pressed', p?'true':'false'); } vinyl?.classList.toggle('playing',p); }
+  async function attemptAutoplay(){ try{ audio.muted=false; audio.volume=1; await audio.play(); syncUI(true); hint(''); } catch{ hint('انقري للتشغيل'); } }
+  window.addEventListener('load', attemptAutoplay);
+  musicBtn?.addEventListener('click', async ()=>{ if(audio.paused){ try{ await audio.play(); syncUI(true);}catch{} } else { audio.pause(); syncUI(false); }});
+  vinyl?.addEventListener('click', async ()=>{ if(audio.paused){ try{ await audio.play(); syncUI(true);}catch{} } else { audio.pause(); syncUI(false);} });
   qs('#startBtn').onclick=()=> qs('#poems').scrollIntoView({behavior:'smooth'});
   qs('#toGuest').onclick=()=> qs('#guest').scrollIntoView({behavior:'smooth'});
-  qs('#copyLink').onclick=async()=>{
-    try{ await navigator.clipboard.writeText(location.href); toast.textContent=' تم نسخ الرابط '; }
-    catch{ toast.textContent='جرّب يدويا'; }
-    toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600);
-  };
+  qs('#copyLink').onclick=async()=>{ try{ await navigator.clipboard.writeText(location.href); toastShow('تم النسخ'); }catch{ toastShow('لم ينسخ'); } };
 
-  /* ---------- Petals ---------- */
+  // ===== Petals =====
+  const petalsLayer = qs('#petals');
   function createPetal(){
     const p=document.createElement('div'), size=10+Math.random()*16;
     const colors=['#FF6B8B','#8B88FF','#FFD166','#FF99CC'], shape=['100% 0 100% 100%','50% 0 50% 100%','100% 100% 0 100%','50% 50% 50% 50%'];
     p.style.cssText=`position:absolute;width:${size}px;height:${size*0.8}px;right:${Math.random()*100}%;top:${-30-Math.random()*50}px;background:linear-gradient(135deg,${colors[(Math.random()*4)|0]},rgba(255,255,255,.7));border-radius:${shape[(Math.random()*4)|0]};box-shadow:0 10px 20px rgba(255,107,139,.4),0 0 30px rgba(255,107,139,.3);opacity:.95`;
     petalsLayer.appendChild(p);
     const fall=7000+Math.random()*5000, drift=40+Math.random()*50;
-    p.animate([{transform:'translate3d(0,0,0) rotate(0deg)' ,opacity:0},{transform:`translate3d(${drift}px,20vh,0) rotate(180deg)`,opacity:.95},{transform:`translate3d(${drift*1.8}px,105vh,0) rotate(${360+Math.random()*360}deg)`,opacity:0}],{duration:fall,easing:'cubic-bezier(.3,.8,.2,1)'});
+    p.animate([{transform:'translate3d(0,0,0)',opacity:0},{transform:`translate3d(${drift}px,20vh,0)`,opacity:.95},{transform:`translate3d(${drift*1.8}px,105vh,0)`,opacity:0}],{duration:fall,easing:'cubic-bezier(.3,.8,.2,1)'});
     setTimeout(()=>p.remove(),fall+60);
   }
   setInterval(()=>{ if(document.hasFocus()) createPetal(); },320);
-  for(let i=0;i<36;i++) setTimeout(createPetal,50*i);
 
-  /* ---------- Sky map ---------- */
+  // ===== Sky map drawing =====
   const sky = qs('#skyCanvas'); const skctx = sky.getContext('2d');
   const skyStars=[{x:150,y:100,s:3},{x:500,y:80,s:3},{x:300,y:250,s:2},{x:100,y:300,s:2},{x:250,y:330,s:2},{x:400,y:200,s:2}];
   function drawSky(){
@@ -249,128 +242,121 @@
     skctx.strokeStyle='rgba(255,255,255,.28)'; skctx.lineWidth=1; skctx.stroke();
     requestAnimationFrame(drawSky);
   } drawSky();
-  qsa('.star-label').forEach(el=> el.addEventListener('click',()=> toastShow(el.dataset.m || 'ذكرى')));
 
-  /* ---------- Countdown ---------- */
+  // ===== AI: Hero, Sky, Stars =====
+  async function fillHero(){
+    const tag = await ai('اكتب سطرًا عربيًا رومانسيًا قصيرًا جدًا كتعريف للصفحة. أقل من ٧ كلمات.');
+    qs('#heroTag').textContent = tag || '';
+  }
+  async function fillSky(){
+    const badge = await ai('اكتب شارة عربية قصيرة تشبه ذكرى تاريخ. مثال: سماؤنا في ٢٨ سبتمبر ٢٠٢٤. ٥ كلمات كحد أقصى.');
+    const note  = await ai('اكتب سطرًا عربيًا قصيرًا يطلب الضغط على النجوم لاسترجاع ذكرى رومانسية.');
+    qs('#skyBadge').textContent = badge || '';
+    qs('#skyNote').textContent  = note || '';
+  }
+  async function fillStars(){
+    const names = ['ويغا','دنيب','الطائر','عرق الجاثا','سبيكا'];
+    const ids   = ['#star1','#star2','#star3','#star4','#star5'];
+    for(let i=0;i<ids.length;i++){
+      const el = qs(ids[i]);
+      const label = await ai(`اكتب وسمًا عربيًا قصيرًا من ٣ إلى ٦ كلمات لنجمة باسم "${names[i]}". استخدم شرطة طويلة — بين الاسم والذكرى.`);
+      el.textContent = names[i];
+      el.dataset.m = label || '';
+      el.addEventListener('click',()=> toastShow(el.dataset.m||''));
+    }
+  }
+
+  // ===== AI: Scenes =====
+  async function fillScene(badgeId, linesId, badgePrompt, linesPrompt, maxLines=4){
+    const b = await ai(badgePrompt);
+    qs(badgeId).textContent = b || '';
+    const txt = await ai(linesPrompt);
+    const lines = splitLines(txt).slice(0,maxLines);
+    const box = qs(linesId); box.innerHTML='';
+    lines.forEach((ln,i)=> addLine(box, ln, i));
+  }
+
+  // ===== AI: Poem =====
+  const poemBox=qs('#poemBox'), herName=qs('#herName'), poemMode=qs('#poemMode');
+  async function composePoem(){
+    poemBox.innerHTML='';
+    const loading=document.createElement('div'); loading.className='poem-line show'; loading.textContent='…'; poemBox.appendChild(loading);
+    const name=(herName.value||'روان').trim();
+    const style = poemMode.value==='qabbani'?'نزار قباني':
+                  poemMode.value==='free'   ?'غزل عربي حديث':
+                  poemMode.value==='pledge' ?'عهد رومانسي':
+                  poemMode.value==='science'?'غزل علمي':'غزل عربي';
+    const prompt = `اكتب قصيدة عربية قصيرة بأسلوب ${style} عن ${name}. خمسة أسطر كحد أقصى. افصل الأسطر بـ \\n. اختم بوعد.`;
+    const txt = await ai(prompt, { max_new_tokens: 140, temperature: 0.95, return_full_text: false });
+    poemBox.innerHTML='';
+    const lines = splitLines(txt).slice(0,6);
+    lines.forEach((ln,i)=>{ const d=document.createElement('div'); d.className='poem-line'; d.textContent=ln; poemBox.appendChild(d); setTimeout(()=>d.classList.add('show'), 160*i); });
+  }
+  qs('#newPoem')?.addEventListener('click', composePoem);
+
+  // ===== AI: Fortune =====
+  qs('#fortuneBtn')?.addEventListener('click', async ()=>{
+    const card=document.createElement('div');
+    card.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--pink);color:white;padding:20px;border-radius:20px;z-index:100;text-align:center;max-width:320px;box-shadow:0 20px 50px rgba(0,0,0,.25)';
+    card.innerHTML='<p id="fortuneText">…</p><button onclick="this.parentNode.remove()" style="background:transparent;border:1px solid white;color:white;padding:8px;border-radius:20px;cursor:pointer;margin-top:6px">إغلاق</button>';
+    document.body.appendChild(card);
+    const txt = await ai('سطر شعري رومانسي واحد بالعربية يبدأ بـ"يا روان" وينتهي بنقطة. أقل من ١٤ كلمة.');
+    qs('#fortuneText').textContent = txt || '';
+  });
+
+  // ===== Countdown (utility) =====
   const dd=qs('#dd'),hh=qs('#hh'),mm=qs('#mm'),ss=qs('#ss'),dateInput=qs('#dateInput');
   let target=new Date((dateInput?.value||'2026-03-20')+'T00:00:00');
   function tick(){ const t=target-new Date(); if(t<=0){ dd.textContent=hh.textContent=mm.textContent=ss.textContent='0'; return; }
     dd.textContent=Math.floor(t/86400000); hh.textContent=Math.floor((t%86400000)/3600000); mm.textContent=Math.floor((t%3600000)/60000); ss.textContent=Math.floor((t%60000)/1000); }
   setInterval(tick,1000); tick(); dateInput?.addEventListener('change',()=>{ target=new Date(dateInput.value+'T00:00:00'); tick(); });
 
-  /* ---------- Heart game ---------- */
-  const cvs=qs('#gameCanvas'), ctx2=cvs.getContext('2d');
-  let dpr=1; function fit(){ dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1)); const w=cvs.clientWidth,h=Math.round(w*0.53); cvs.style.height=h+'px'; cvs.width=Math.round(w*dpr); cvs.height=Math.round(h*dpr); ctx2.setTransform(dpr,0,0,dpr,0,0);} fit(); addEventListener('resize',fit);
-  const gStart=qs('#gStart'),gReset=qs('#gReset'),gScore=qs('#gScore'),gTime=qs('#gTime'),gCombo=qs('#gCombo'),gMsg=qs('#gMsg');
+  // ===== Heart game (uses AI messages if set) =====
+  const cvs=qs('#gameCanvas'); if(cvs){
+    const ctx2=cvs.getContext('2d'); let dpr=1;
+    function fit(){ dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1)); const w=cvs.clientWidth,h=Math.round(w*0.53); cvs.style.height=h+'px'; cvs.width=Math.round(w*dpr); cvs.height=Math.round(h*dpr); ctx2.setTransform(dpr,0,0,dpr,0,0);} fit(); addEventListener('resize',fit);
+  }
+  const gStart=qs('#gStart'),gReset=qs('#gReset'),gScore=qs('#gScore'),gTime=qs('#gTime'),gCombo=qs('#gCombo'),gMsg=qs('#gMsg'); const cvs2=qs('#gameCanvas'); const ctx2=cvs2?.getContext('2d');
   let hearts=[],running=false,tLeft=30,score=0,combo=1,lastTap=0,spawnAcc=0,raf=0;
-  function spawnHeart(special=false){ const w=cvs.clientWidth,h=cvs.clientHeight; const x=20+Math.random()*(w-40),y=h+30,vy=-(1.8+Math.random()*2.2),vx=(Math.random()-0.5)*1.0; hearts.push({x,y,vx,vy,s:16+Math.random()*14,life:1,special,glow:0}); }
   function drawHeart(x,y,s,color){ ctx2.save(); ctx2.translate(x,y); ctx2.scale(s/20,s/20); ctx2.fillStyle=color; ctx2.beginPath(); ctx2.moveTo(0,-6); ctx2.bezierCurveTo(8,-18,28,-10,28,6); ctx2.bezierCurveTo(28,22,14,30,0,38); ctx2.bezierCurveTo(-14,30,-28,22,-28,6); ctx2.bezierCurveTo(-28,-10,-8,-18,0,-6); ctx2.fill(); ctx2.restore(); }
-  function popAt(x,y){ for(let i=0;i<18;i++){ const s=document.createElement('span'); const c=['#FF6B8B','#8B88FF','#FFD166','#FF99CC']; s.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:10px;height:10px;background:${c[i%4]};border-radius:${i%3?'999px':'5px'};z-index:30;pointer-events:none`; document.body.appendChild(s); const dx=(Math.random()-0.5)*180,dy=(Math.random()-0.7)*230,rot=900*Math.random(); s.animate([{transform:'translate(0,0) rotate(0deg) scale(1)',opacity:1},{transform:`translate(${dx}px,${dy}px) rotate(${rot}deg) scale(.4)`,opacity:0}],{duration:520+Math.random()*380,easing:'cubic-bezier(.3,.7,.2,1)'}); setTimeout(()=>s.remove(),900);} }
+  function popAt(x,y){ for(let i=0;i<16;i++){ const s=document.createElement('span'); const c=['#FF6B8B','#8B88FF','#FFD166','#FF99CC']; s.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:10px;height:10px;background:${c[i%4]};border-radius:${i%3?'999px':'5px'};z-index:30;pointer-events:none`; document.body.appendChild(s); const dx=(Math.random()-0.5)*180,dy=(Math.random()-0.7)*230,rot=900*Math.random(); s.animate([{transform:'translate(0,0) rotate(0deg) scale(1)',opacity:1},{transform:`translate(${dx}px,${dy}px) rotate(${rot}deg) scale(.4)`,opacity:0}],{duration:520+Math.random()*380,easing:'cubic-bezier(.3,.7,.2,1)'}); setTimeout(()=>s.remove(),900);} }
+  function fit2(){ if(!cvs2) return; const w=cvs2.clientWidth,h=Math.round(w*0.53); cvs2.style.height=h+'px'; }
+  fit2(); addEventListener('resize',fit2);
+  function spawnHeart(special=false){ if(!cvs2) return; const w=cvs2.clientWidth,h=cvs2.clientHeight; const x=20+Math.random()*(w-40),y=h+30,vy=-(1.8+Math.random()*2.2),vx=(Math.random()-0.5)*1.0; hearts.push({x,y,vx,vy,s:16+Math.random()*14,life:1,special,glow:0}); }
   function resetGame(){ hearts=[];tLeft=30;score=0;combo=1; gScore.textContent=score; gCombo.textContent='x1'; gTime.textContent=tLeft; gMsg.style.display='none'; }
-  function loop(){ raf=requestAnimationFrame(loop); ctx2.clearRect(0,0,cvs.clientWidth,cvs.clientHeight); spawnAcc+=16; const rate=Math.max(350,800-score*15); if(spawnAcc>rate){ spawnAcc=0; spawnHeart(Math.random()<0.18); } for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i]; h.x+=h.vx; h.y+=h.vy; h.vy-=0.003; h.glow=(h.glow+0.06)%(2*Math.PI); const col=h.special?'#FFD166':'#FF6B8B'; drawHeart(h.x,h.y,h.s,col); if(h.special){ ctx2.globalAlpha=0.5+0.3*Math.sin(h.glow); drawHeart(h.x,h.y,h.s*1.4,'#FFE9A6'); ctx2.globalAlpha=1; } if(h.y<-40||h.life<=0) hearts.splice(i,1); }
+  function loop(){ if(!ctx2||!cvs2){ cancelAnimationFrame(raf); return; } raf=requestAnimationFrame(loop); ctx2.clearRect(0,0,cvs2.clientWidth,cvs2.clientHeight); spawnAcc+=16; const rate=Math.max(350,800-score*15); if(spawnAcc>rate){ spawnAcc=0; spawnHeart(Math.random()<0.18); } for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i]; h.x+=h.vx; h.y+=h.vy; h.vy-=0.003; h.glow=(h.glow+0.06)%(2*Math.PI); const col=h.special?'#FFD166':'#FF6B8B'; drawHeart(h.x,h.y,h.s,col); if(h.y<-40||h.life<=0) hearts.splice(i,1); }
     if(running){ loop.t=(loop.t||performance.now()); const now=performance.now(); if(now-loop.t>=1000){ loop.t=now; tLeft--; gTime.textContent=tLeft; if(tLeft<=0) endGame(); } } }
   function startGame(){ if(running) return; resetGame(); running=true; cancelAnimationFrame(raf); loop.t=performance.now(); raf=requestAnimationFrame(loop); }
-  function endGame(){ running=false; cancelAnimationFrame(raf); gMsg.style.display='inline-block'; gMsg.textContent=score>=25?'فوز جميل ورسالة حب تنتظرك':'جميل، حاولي مرة أخرى'; if(score>=25){ toastShow('أختارك كل يوم'); setTimeout(()=>qs('#poems').scrollIntoView({behavior:'smooth'}),900); } }
-  function hit(x,y){ const r=cvs.getBoundingClientRect(),px=x-r.left,py=y-r.top; let hitAny=false; for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i],dx=px-h.x,dy=py-h.y,R=h.s*0.9; if(dx*dx+dy*dy<=R*R*1.2){ hearts.splice(i,1); hitAny=true; const now=performance.now(); combo=(now-lastTap<900)?Math.min(combo+1,9):1; lastTap=now; const add=(h.special?5:1)*combo; score+=add; gScore.textContent=score; gCombo.textContent=`x${combo}`; popAt(x,y); gMsg.style.display='inline-block'; gMsg.textContent=h.special?'قلب ذهبي':'رائع'; clearTimeout(hit._t); hit._t=setTimeout(()=>gMsg.style.display='none',900); break; } } if(!hitAny){ combo=1; gCombo.textContent='x1'; } }
-  cvs.addEventListener('pointerdown',e=>hit(e.clientX,e.clientY),{passive:true}); gStart.addEventListener('click',startGame); gReset.addEventListener('click',resetGame);
+  function endGame(){ running=false; cancelAnimationFrame(raf); gMsg.style.display='inline-block'; const winTxt=gMsg.dataset.win||''; const againTxt=gMsg.dataset.again||''; gMsg.textContent=score>=25?winTxt:againTxt; }
+  function hit(x,y){ if(!cvs2) return; const r=cvs2.getBoundingClientRect(),px=x-r.left,py=y-r.top; let hitAny=false; for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i],dx=px-h.x,dy=py-h.y,R=h.s*0.9; if(dx*dx+dy*dy<=R*R*1.2){ hearts.splice(i,1); hitAny=true; const now=performance.now(); combo=(now-lastTap<900)?Math.min(combo+1,9):1; lastTap=now; const add=combo; score+=add; gScore.textContent=score; gCombo.textContent=`x${combo}`; popAt(x,y); gMsg.style.display='inline-block'; gMsg.textContent=''; clearTimeout(hit._t); hit._t=setTimeout(()=>gMsg.style.display='none',900); break; } } if(!hitAny){ combo=1; gCombo.textContent='x1'; } }
+  cvs2?.addEventListener('pointerdown',e=>hit(e.clientX,e.clientY),{passive:true}); gStart?.addEventListener('click',startGame); gReset?.addEventListener('click',resetGame);
 
-  /* ---------- AI Poems via Pipedream proxy ---------- */
-  const WORKER_URL = "https://eo9tkviosfwos3e.m.pipedream.net";
-  async function hfGenerate(prompt){
-    const res = await fetch(WORKER_URL, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        inputs: prompt,
-        parameters: { max_new_tokens: 90, temperature: 0.9, return_full_text: false }
-      })
-    });
-    const data = await res.json().catch(()=>[]);
-    return (Array.isArray(data) && data[0]?.generated_text) ? data[0].generated_text.trim() : "";
+  // ===== AI: Game messages =====
+  async function setGameMessages(){
+    const win = await ai('اكتب عبارة فوز عربية قصيرة جدًا للعبة قلوب. أقل من ٥ كلمات.');
+    const again = await ai('اكتب عبارة تشجيع عربية قصيرة جدًا لإعادة المحاولة. أقل من ٥ كلمات.');
+    if (gMsg){ if(win) gMsg.dataset.win=win; if(again) gMsg.dataset.again=again; }
   }
 
-  const poemBox=qs('#poemBox'), newPoemBtn=qs('#newPoem'), herName=qs('#herName'), poemMode=qs('#poemMode');
-  const templates = {
-    qabbani: (n)=>[
-      `يا ${n}، هل تعلمين بأن اسمي يتهجّاك إذا جئتِ؟`,
-      `ألمسكِ فأتعلم كيف يشرح الضوء نفسه.`,
-      `بين كفّيكِ ينضبط قلبي مثل ساعة مكة.`,
-      `وأقول: أحبكِ، فتخجل شرفات الرياض.`,
-      `وأعاهدك: ما حييت، لن أسكن إلا في اسمك.`
-    ],
-    free: (n)=>[
-      `${n}، اسمك قصير لكن طريقه طويل في صدري.`,
-      `خطوتكِ تغيّر اتجاه الممرات في رأسي.`,
-      `ضحكتكِ تشرح قوانين الجاذبية بدون طباشير.`,
-      `إذا ناديتكِ، يزهر الشارع نخلاً.`,
-      `أعدك: سأكون ظلّك إن تعبت الشمس.`
-    ],
-    pledge: (n)=>[
-      `أقسم يا ${n}: لا صباح يكتمل إن لم يمر على جبينك.`,
-      `ولا ليلة تُقفل دون سلام على يديك.`,
-      `سأحرس تعبك من مفاصل الضوء.`,
-      `سأرتّب فوضاي على حرفك.`,
-      `وسأبقى بيت قلبك مهما تغيّر الطقس.`
-    ],
-    science: (n)=>[
-      `${n}، كيمياء ابتسامتكِ تذيب أملاح أي حزن.`,
-      `فيزياؤكِ تميل بالخطوط المستقيمة نحو صدري.`,
-      `بيولوجيا يدكِ توقظ خلاياي الكسولة.`,
-      `والكونيات تقول: مدار قلبي قطع ناقص حول عينيك.`,
-      `خاتمة: ثابت عشقي لكِ يساوي اللانهاية.`
-    ]
-  };
-  function clearPoem(){ poemBox.innerHTML=''; }
-  function addLine(text, delay=0){
-    const d=document.createElement('div'); d.className='poem-line'; d.textContent=text;
-    poemBox.appendChild(d);
-    setTimeout(()=>d.classList.add('show'), delay);
-  }
-  async function composePoem(){
-    clearPoem();
-    const name = (herName.value||'روان').trim();
-    const mode = poemMode.value;
-    const prompt = `اكتب قصيدة قصيرة رومانسية بالعربية بأسلوب ${mode==='qabbani'?'نزار قباني':'حر رومانسي'} عن ${name}. خمس أسطر. نهاية بوعد حب.`;
-    let text = await hfGenerate(prompt);
-    if(!text){
-      const lines = templates[mode](name);
-      lines.forEach((ln,i)=> addLine(ln, i*220));
-      return;
-    }
-    text = text.replace(/\r/g,'').replace(/\n{3,}/g,'\n').trim();
-    const rawLines = text.split('\n').map(s=>s.trim()).filter(Boolean).slice(0,6);
-    const lines = rawLines.length ? rawLines : templates[mode](name);
-    lines.forEach((ln,i)=> addLine(ln, i*220));
-  }
-  newPoemBtn.addEventListener('click', ()=>{
-    popAt(innerWidth/2, innerHeight/2);
-    composePoem();
-  });
-  composePoem(); // first render
+  // ===== Boot: generate everything with AI (no fallbacks) =====
+  (async function boot(){
+    // Top
+    await fillHero();
+    await fillSky();
+    await fillStars();
 
-  /* ---------- Fortune Hearts ---------- */
-  const fortunesFallback = [
-    'سأكتب اسمك كل صباح على نافذة الغرفة.',
-    'سنضحك حتى تتعب النجوم.',
-    'سأختارك كل يوم حتى آخر يوم.'
-  ];
-  async function generateFortune(){
-    const out = await hfGenerate('سطر شعري رومانسي واحد بالعربية يبدأ بـ"يا روان" وينتهي بنقطة.');
-    return out || fortunesFallback[(Math.random()*fortunesFallback.length)|0];
-  }
-  qs('#fortuneBtn').onclick = async () => {
-    const btnRect = qs('#fortuneBtn').getBoundingClientRect();
-    popAt(btnRect.left + btnRect.width / 2, btnRect.top + btnRect.height / 2);
-    const card = document.createElement('div');
-    card.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--pink);color:white;padding:20px;border-radius:20px;z-index:100;text-align:center;max-width:320px;box-shadow:var(--shadow);';
-    card.innerHTML='<p id="fortuneText" style="font-style:italic;margin-bottom:10px;">جاري التنبؤ...</p><button onclick="this.parentNode.remove()" style="background:transparent;border:1px solid white;color:white;padding:8px;border-radius:20px;cursor:pointer;">أغلق</button>';
-    document.body.appendChild(card);
-    const textEl = qs('#fortuneText');
-    textEl.textContent = await generateFortune();
-  };
+    // Scenes
+    await fillScene('#b1','#l1','اكتب شارة عربية من كلمتين لمشهد اكتشاف حب.','اكتب ٣ أسطر عربية قصيرة عن لحظة اكتشاف الحب. افصل الأسطر بـ \\n.',3);
+    await fillScene('#b2','#l2','اكتب شارة عربية من كلمتين عن اسم يذوب سكرًا.','اكتب ٣ أسطر عربية قصيرة عن اسمها الذي يذوب سكرًا. افصل الأسطر بـ \\n.',3);
+    await fillScene('#b3','#l3','اكتب شارة عربية من كلمتين عن علم حائر.','اكتب ٣ أسطر عربية قصيرة تمزج العلم بالحنان. افصل الأسطر بـ \\n.',3);
+    await fillScene('#b4','#l4','اكتب شارة عربية من كلمتين عن عهد.','اكتب ٤ أسطر عربية قصيرة على شكل وعد. افصل الأسطر بـ \\n.',4);
 
-  /* ---------- Utilities ---------- */
-  function toastShow(t){ toast.textContent=t; toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1600); }
+    // Poem once
+    await composePoem();
+
+    // Game text
+    await setGameMessages();
+  })();
 })();
 </script>
 </body>
