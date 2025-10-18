@@ -39,50 +39,10 @@
   .line.show{opacity:1;transform:translateY(0) scale(1)}
   .badge{font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pink),var(--lav));padding:8px 12px;border-radius:999px;font-size:14px;box-shadow:0 8px 20px rgba(255,107,139,.3);margin-bottom:10px;display:inline-block;animation:badgeBurst 1.2s ease-out}
   @keyframes badgeBurst{0%{transform:scale(0) rotate(10deg);opacity:0}70%{transform:scale(1.15) rotate(-5deg)}100%{transform:scale(1) rotate(0deg);opacity:1}}
-  .dna-wrap{position:relative;height:120px;opacity:.1;margin:-8px 0}
-  .dna{position:absolute;inset:0;margin:auto;width:240px;height:120px;transform-origin:50% 50%;animation:dnaThrob 3.5s ease-in-out infinite}
-  @keyframes dnaThrob{0%,100%{transform:scale(1) rotate(0deg);filter:brightness(1)}50%{transform:scale(1.15) rotate(8deg);filter:brightness(1.3)}}
-  .input,textarea{width:100%;border-radius:12px;border:1px solid #e9e2ee;padding:12px 12px;font-family:inherit;background:rgba(255,255,255,.9);outline:none;transition:border-color .3s ease,box-shadow .3s ease}
-  .input:focus,textarea:focus{border-color:var(--pink);box-shadow:0 0 15px rgba(255,107,139,.4)}
-  .form-row{display:flex;gap:10px;flex-wrap:wrap}
-  .bubbles,.grid{display:grid;gap:10px}
-  .pill{background:#fff;border:1px solid #efe5f3;padding:10px 12px;border-radius:12px;min-width:70px;text-align:center;box-shadow:var(--shadow);font-weight:800;font-size:18px;animation:pillThrob 2.2s ease-in-out infinite}
-  @keyframes pillThrob{0%,100%{transform:scale(1);box-shadow:0 6px 20px rgba(255,107,139,.2)}50%{transform:scale(1.08);box-shadow:0 8px 25px rgba(255,107,139,.4)}}
-  .label{font-size:11px;opacity:.65;display:block;font-weight:600}
-  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:14px 18px;border-radius:999px;font-weight:700;opacity:0;transition:opacity .4s ease,transform .4s ease;box-shadow:0 10px 25px rgba(0,0,0,.4);z-index:50}
-  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
-  .vinyl{position:fixed;left:14px;bottom:18px;z-index:40;width:60px;height:60px;border-radius:50%;background:
-    radial-gradient(circle at 30% 30%, #333 20%, #111 60%, #000 61%),
-    conic-gradient(#000 0 25%, #111 0 50%, #000 0 75%, #111 0);box-shadow:0 12px 25px rgba(0,0,0,.25);border:2px solid #222;display:grid;place-items:center;color:#fff}
-  .vinyl.playing{animation:spin 5s linear infinite}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .vinyl-label{width:26px;height:26px;border-radius:50%;background:#FF6B8B;display:grid;place-items:center;font-weight:900;font-size:13px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7);animation:vinylBeat 1.8s ease-in-out infinite}
-  @keyframes vinylBeat{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
-  #audioHint{position:fixed;right:12px;bottom:12px;background:#2B2530;color:#fff;border-radius:12px;padding:8px 10px;font-weight:700;font-size:12px;opacity:.9;z-index:60}
-  #gameHUD{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:12px}
-  .chip{background:#fff;border:1px solid #efe5f3;padding:8px 12px;border-radius:999px;box-shadow:var(--shadow);font-weight:800;animation:chipSurge 2s ease-in-out infinite}
-  @keyframes chipSurge{0%,100%{transform:scale(1);box-shadow:0 6px 20px rgba(255,107,139,.2)}50%{transform:scale(1.1);box-shadow:0 8px 25px rgba(255,107,139,.4)}}
-  #gameCanvas{width:100%;height:auto;border-radius:14px;background:linear-gradient(180deg,rgba(255,255,255,.6),rgba(139,136,255,.15));box-shadow:0 0 25px rgba(255,107,139,.3)}
-  .center{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-  .comment{display:grid;gap:8px;padding:12px;border-radius:12px;background:rgba(255,255,255,.9);box-shadow:0 6px 20px rgba(255,107,139,.2);margin-top:10px;animation:commentPop 0.8s ease-out}
-  .comment-name{font-weight:700;font-size:16px;color:var(--pink)}
-  .comment-text{font-size:14px;line-height:1.6}
-  @keyframes commentPop{0%{transform:scale(0.9);opacity:0}100%{transform:scale(1);opacity:1}}
-
-  /* Constellation Map Styles */
-  #constellation-map {
-    width: 100%; height: 400px; background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%); position: relative; overflow: hidden; border-radius: var(--radius); margin: 10px 0;
-  }
-  #stars { display: block; }
-  .star-label {
-    position: absolute; color: #fff; font-family: 'Caveat', cursive; cursor: pointer; font-size: 14px; text-shadow: 0 0 5px rgba(255,255,255,0.8); transition: transform 0.3s ease;
-  }
-  .star-label:hover { transform: scale(1.1); text-shadow: 0 0 10px var(--pink); }
-  .constellation-line { position: absolute; background: rgba(255,255,255,0.3); height: 1px; transform-origin: left center; }
 </style>
 </head>
 <body>
-  <div class="bg-grad" id="bg"></div>
+  <div class="bg-grad"></div>
   <div class="petals" id="petals"></div>
 
   <div class="wrap">
@@ -92,95 +52,29 @@
       <div class="tag">«قصيدةٌ تمشي على أطراف الضوء… إليكِ.»</div>
       <div class="btns">
         <button class="btn pink" id="startBtn">ابدئي الرحلة</button>
-        <button class="btn" id="musicBtn" aria-pressed="false" title="تشغيل/إيقاف الموسيقى">تشغيل الموسيقى</button>
+        <button class="btn" id="musicBtn" aria-pressed="false">تشغيل الموسيقى</button>
         <button class="btn outline" id="toGuest">أضيفي تعليقكِ</button>
-        <button class="btn outline" id="copyLink">نسخ الرابط</button>
       </div>
-      <div class="hint" id="musicHint">نحاول تشغيل الموسيقى تلقائيًا. إن لم تُسمَع، لمسة واحدة تكفي ✨</div>
+      <div class="hint">نحاول تشغيل الموسيقى تلقائيًا. إن لم تُسمَع، لمسة واحدة تكفي ✨</div>
     </section>
 
-    <!-- CONSTELLATION MAP: Our First Date Sky -->
-    <section class="stanza" id="stars">
-      <span class="badge">سماءنا في ٢٨ سبتمبر ٢٠٢٤ — أول موعدنا تحت النجوم</span>
-      <p style="text-align: center; font-style: italic; opacity: 0.9; margin-bottom: 15px;">هنا رسمت النجوم قصتنا الأولى في الرياض... أنتِ نجمي الشمالي، وأنا أدور حولكِ إلى الأبد. اضغطي على النجوم للذكريات 💫</p>
-      <div id="constellation-map">
-        <canvas id="stars" width="800" height="400"></canvas>
-        <div class="star-label" style="top:20%; left:30%;" onclick="showMemory('ويغا — النجم الذي أضاء عينيكِ في تلك الليلة الساحرة')">ويغا (Lyra) — النجم الذي أضاء عينيكِ</div>
-        <div class="star-label" style="top:15%; right:25%;" onclick="showMemory('دنيب — رمز قوتنا المشتركة، كالأجنحة التي تحملنا')">دنيب (Cygnus) — قوتنا المشتركة</div>
-        <div class="star-label" style="bottom:30%; left:40%;" onclick="showMemory('الطائر — حيث وعدتُكِ بالحرية والحب الأبدي')">الطائر (Aquila) — وعدنا الأول</div>
-        <div class="star-label" style="top:60%; left:10%;" onclick="showMemory('عرق الجاثا — دفء يديكِ في برد الشتاء القادم')">عرق الجاثا (Boötes) — دفء يديكِ</div>
-        <div class="star-label" style="bottom:40%; right:35%;" onclick="showMemory('سبيكا — البريق الذي يشبه ابتسامتكِ')">سبيكا (Virgo) — ابتسامتكِ الساحرة</div>
-      </div>
-    </section>
-
-    <!-- STANZAS -->
+    <!-- Example Stanza -->
     <section class="stanza" id="s1"><span class="badge">المشهد ١ — اكتشاف</span>
       <div class="lines"><div class="line">يا سيّدتي،</div><div class="line">في مختبرِ عينيكِ تبدأ تجاربي الأولى في الدهشة،</div><div class="line">وأقيسُ نبضي كلما نادى اسمُكِ خلايا دمي.</div></div>
-    </section>
-    <section class="stanza" id="s2"><span class="badge">المشهد ٢ — اسمٌ يذوب سكّرًا</span>
-      <div class="dna-wrap" aria-hidden="true"><svg class="dna" viewBox="0 0 400 200">
-        <defs><linearGradient id="g1" x1="0" x2="1"><stop offset="0%" stop-color="#FF6B8B"/><stop offset="100%" stop-color="#8B88FF"/></linearGradient></defs>
-        <path d="M50,20 C120,20 120,180 190,180 S260,20 330,20" fill="none" stroke="url(#g1)" stroke-width="6" opacity=".7"/>
-        <path d="M50,180 C120,180 120,20 190,20 S260,180 330,180" fill="none" stroke="url(#g1)" stroke-width="6" opacity=".7"/>
-        <g opacity=".7">
-          <line x1="80" y1="50" x2="110" y2="150" stroke="#FF6B8B" stroke-width="4"/>
-          <line x1="120" y1="40" x2="140" y2="160" stroke="#8B88FF" stroke-width="4"/>
-          <line x1="160" y1="30" x2="170" y2="170" stroke="#FF6B8B" stroke-width="4"/>
-          <line x1="200" y1="30" x2="200" y2="170" stroke="#8B88FF" stroke-width="4"/>
-          <line x1="240" y1="40" x2="230" y2="160" stroke="#FF6B8B" stroke-width="4"/>
-          <line x1="280" y1="50" x2="260" y2="150" stroke="#8B88FF" stroke-width="4"/>
-        </g>
-        <path d="M200,100 c0,-12 18,-22 28,-10 c10,-12 28,-2 28,10 c0,18 -28,28 -28,36 c0,-8 -28,-18 -28,-36z" fill="#FF6B8B"/>
-      </svg></div>
-      <div class="lines"><div class="line">اسمُكِ – يا روان – ليس حروفًا،</div><div class="line">بل معادلةُ حنانٍ تنحلُّ في فمي سكّرًا،</div><div class="line">وتُزهِرُ على لساني أبجديةَ ياسمين.</div></div>
-    </section>
-    <section class="stanza" id="s3"><span class="badge">المشهد ٣ — علمٌ حائرٌ أمام ابتسامتكِ</span>
-      <div class="lines"><div class="line">في يدِكِ كيمياءُ الأشياء،</div><div class="line">تُحوّلين العاديَّ إلى معجزة،</div><div class="line">فكيف لعلمِ الأحياءِ أن يُفسِّرَ</div><div class="line">ارتجافَ قلبي حين تمرّين؟</div></div>
-    </section>
-    <section class="stanza" id="s4"><span class="badge">المشهد ٤ — عهد</span>
-      <div class="lines"><div class="line">أُقسمُ لكِ:</div><div class="line">سأكونُ دفءَ مختبرِكِ بعدَ تعبٍ طويل،</div><div class="line">ومظلّةً إذا أثقلتْكِ الأضواء،</div><div class="line">وبيتَ قلبٍ لا يسكنُهُ إلا أنفاسُكِ،</div><div class="line">ولا يُضيئُهُ سوى عينيكِ.</div></div>
-    </section>
-
-    <!-- ROMANTIC HEART GAME -->
-    <section id="loveGame">
-      <span class="badge">لعبة القلوب ♥</span>
-      <div id="gameHUD">
-        <div class="chip">النتيجة: <span id="gScore">0</span></div>
-        <div class="chip">الوقت: <span id="gTime">30</span>s</div>
-        <div class="chip">التسلسل: <span id="gCombo">x1</span></div>
-        <div class="chip" id="gMsg" style="display:none">✨ رائع!</div>
-      </div>
-      <canvas id="gameCanvas" width="720" height="380"></canvas>
-      <div class="center" style="margin-top:10px">
-        <button class="btn pink" id="gStart">ابدئي اللعب</button>
-        <button class="btn outline" id="gReset">إعادة</button>
-      </div>
-      <div class="hint">إلمسي/اضغطي القلوب قبل أن تهرب. القلب الذهبي = +5 ونبضة حب ✨</div>
     </section>
 
     <!-- Comments Section -->
     <section id="guest">
       <span class="badge">أضيفي تعليقكِ لـ وائل ✨</span>
-      <div id="commentForm">
-        <input type="text" id="commentName" class="input" placeholder="اسمكِ (إلزامي)" required>
-        <textarea id="commentText" class="input" placeholder="اكتبي تعليقكِ هنا (إلزامي)" required></textarea>
-        <div class="btns" style="justify-content:flex-start">
-          <button class="btn pink" id="submitComment">إرسال التعليق</button>
-        </div>
-      </div>
-      <div id="guestMsg" class="hint" style="margin-top:8px"></div>
-      <div id="comments" class="bubbles"></div>
-    </section>
-
-    <!-- Countdown -->
-    <section id="count">
-      <span class="badge">نعدُّ الأيام إلى «إن شاء الله»</span>
-      <div style="display:flex;align-items:center;gap:12px;flex-wrap:wrap">
-        <input id="dateInput" class="input" type="date" value="2026-03-20" style="max-width:160px">
-        <div class="pill"><span id="dd">0</span><span class="label">أيام</span></div>
-        <div class="pill"><span id="hh">0</span><span class="label">ساعات</span></div>
-        <div class="pill"><span id="mm">0</span><span class="label">دقائق</span></div>
-        <div class="pill"><span id="ss">0</span><span class="label">ثوانٍ</span></div>
+      <div style="margin-top:10px">
+        <script src="https://utteranc.es/client.js"
+          repo="waelalza/rawan"
+          issue-term="pathname"
+          label="comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
       </div>
     </section>
 
@@ -188,370 +82,18 @@
   </div>
 
   <!-- AUDIO -->
-  <audio id="audio" preload="auto" playsinline webkit-playsinline src="./assets/audio/rawan-theme.mp3" loop></audio>
-  <button class="vinyl" id="vinylBtn" aria-label="تشغيل/إيقاف"><span class="vinyl-label">R♥W</span></button>
-  <div class="toast" id="toast" role="status" aria-live="polite">تم نسخ الرابط ✅</div>
-  <div id="audioHint">🎧 نحاول التشغيل تلقائيًا… لمسة واحدة إن لزم</div>
+  <audio id="audio" preload="auto" src="./assets/audio/rawan-theme.mp3" loop></audio>
 
 <script>
-(function(){
-  const qs = s => document.querySelector(s);
-  const qsa = s => Array.from(document.querySelectorAll(s));
-  const audio = qs('#audio'), musicBtn = qs('#musicBtn'), vinyl = qs('#vinylBtn');
-  const musicHint = qs('#musicHint'), audioHint = qs('#audioHint'), toast = qs('#toast');
-  const petalsLayer = qs('#petals');
-
-  /* ---------- Autoplay engine (sound -> muted -> gesture unmute) ---------- */
-  async function attemptAutoplay(){
-    try{ audio.muted=false; audio.volume=1.0; await audio.play(); afterPlaySuccess(); }
-    catch{ try{ audio.muted=true; audio.volume=0.0; await audio.play(); showHint("الموسيقى تعمل بصمت — لمسة واحدة لتفعيل الصوت ✨"); armFirstGestureUnmute(); }
-           catch{ showHint("تعذّر التشغيل التلقائي. اضغطي لتشغيل الموسيقى ✨"); armFirstGestureUnmute(true); } }
-  }
-  function showHint(m){ if(musicHint) musicHint.textContent=m||''; if(audioHint) audioHint.style.display='block'; }
-  function hideHint(){ if(audioHint) audioHint.style.display='none'; if(musicHint) musicHint.textContent=''; }
-  function afterPlaySuccess(){ syncMusicUI(true); hideHint(); }
-  function fadeTo(target=1,ms=700){ const steps=14,dt=ms/steps; let i=0,from=audio.volume,diff=target-from; const id=setInterval(()=>{ i++; audio.volume=Math.max(0,Math.min(1,from+diff*(i/steps))); if(i>=steps) clearInterval(id);},dt); }
-  function armFirstGestureUnmute(startIfPaused=false){
-    const unlock=async()=>{ try{ const AC=window.AudioContext||window.webkitAudioContext; if(AC){ const ctx=new AC(); if(ctx.state==='suspended') await ctx.resume(); if(ctx.close) ctx.close(); } }catch{}
-      try{ if(startIfPaused && audio.paused) await audio.play(); audio.muted=false; if(audio.volume<1) fadeTo(1,700); afterPlaySuccess(); }
-      catch{ window.open(audio.src,'_blank','noopener'); showHint("اسمحي للصوت في التبويب ثم عودي ♥"); }
-      ['touchstart','pointerdown','click','keydown','scroll'].forEach(e=>window.removeEventListener(e,unlock,{capture:true}));
-    };
-    ['touchstart','pointerdown','click','keydown','scroll'].forEach(e=>window.addEventListener(e,unlock,{once:true,capture:true,passive:(e==='scroll')}));
-  }
-  function syncMusicUI(playing){ if(musicBtn){ musicBtn.textContent = playing?'إيقاف الموسيقى':'تشغيل الموسيقى'; musicBtn.setAttribute('aria-pressed',playing?'true':'false'); } if(vinyl) vinyl.classList.toggle('playing',playing); }
-  window.addEventListener('load', attemptAutoplay);
-  if(musicBtn){ musicBtn.addEventListener('click', async ()=>{ if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlaySuccess(); }catch{ armFirstGestureUnmute(true); showHint("اضغطي مرة أخرى للسماع"); } } else { audio.pause(); syncMusicUI(false); } });}
-  if(vinyl){ vinyl.addEventListener('click', async ()=>{ if(audio.paused){ try{ await audio.play(); audio.muted=false; fadeTo(1,600); afterPlaySuccess(); }catch{ armFirstGestureUnmute(true); showHint("اضغطي مرة أخرى للسماع"); } } else { audio.pause(); syncMusicUI(false); } });}
-  document.addEventListener('visibilitychange', ()=>{ if(document.hidden && !audio.paused) audio.pause(); });
-
-  /* ---------- UI bits ---------- */
-  qs('#startBtn').onclick=()=> qs('#s1').scrollIntoView({behavior:'smooth'});
-  qs('#toGuest').onclick=()=> qs('#guest').scrollIntoView({behavior:'smooth'});
-  qs('#copyLink').onclick=async()=>{ try{ await navigator.clipboard.writeText(location.href); toast.textContent='تم نسخ الرابط ✅'; } catch{ toast.textContent='لم ينجح النسخ، جرّبي يدويًا'; } toast.classList.add('show'); setTimeout(()=>toast.classList.remove('show'),1800); };
-
-  /* ---------- Dramatic Petal Drizzle ---------- */
-  function createPetal(){ 
-    const p=document.createElement('div'), size=10+Math.random()*16;
-    const colors = ['#FF6B8B', '#8B88FF', '#FFD166', '#FF99CC'];
-    const shapes = ['100% 0 100% 100%', '50% 0 50% 100%', '100% 100% 0 100%', '50% 50% 50% 50%'];
-    p.style.cssText=`position:absolute;width:${size}px;height:${size*0.8}px;right:${Math.random()*100}%;top:${-30-Math.random()*50}px;background:linear-gradient(135deg,${colors[Math.floor(Math.random()*4)]},rgba(255,255,255,.7));border-radius:${shapes[Math.floor(Math.random()*4)]};box-shadow:0 10px 20px rgba(255,107,139,.4),0 0 30px rgba(255,107,139,.3);opacity:.95;transform:rotate(${Math.random()*360}deg) scale(0)`;
-    petalsLayer.appendChild(p); 
-    const fall=7000+Math.random()*5000, drift=40+Math.random()*50;
-    p.animate([
-      {transform:'translate3d(0,0,0) rotate(0deg) scale(0)', opacity:0, boxShadow:'0 10px 20px rgba(255,107,139,.4),0 0 30px rgba(255,107,139,.3)'},
-      {transform:`translate3d(${drift}px,20vh,0) rotate(180deg) scale(1.2)`, opacity:0.95, boxShadow:'0 15px 30px rgba(255,107,139,.5),0 0 50px rgba(255,107,139,.4)'},
-      {transform:`translate3d(${drift*1.8}px,105vh,0) rotate(${360+Math.random()*360}deg) scale(0.7)`, opacity:0, boxShadow:'0 10px 20px rgba(255,107,139,.3),0 0 20px rgba(255,107,139,.2)'}
-    ],{duration:fall,easing:'cubic-bezier(.3,.8,.2,1)'});
-    setTimeout(()=>p.remove(),fall+60);
-  }
-  setInterval(()=>{ if(document.hasFocus()) createPetal(); },300); 
-  for(let i=0;i<40;i++) setTimeout(createPetal,60*i);
-
-  /* ---------- Stanza Reveals with Particles ---------- */
-  function createSparkle(x, y, stanza) {
-    for(let i=0;i<8;i++){
-      const s=document.createElement('span');
-      const colors = ['#FF6B8B', '#8B88FF', '#FFD166'];
-      s.style.cssText=`position:absolute;left:${x}px;top:${y}px;width:6px;height:6px;background:${colors[i%3]};border-radius:${i%2?'999px':'4px'};z-index:10;pointer-events:none`;
-      stanza.appendChild(s);
-      const dx=(Math.random()-0.5)*100, dy=(Math.random()-0.5)*100;
-      s.animate([
-        {transform:'translate(0,0) scale(1)', opacity:1},
-        {transform:`translate(${dx}px,${dy}px) scale(0.3)`, opacity:0}
-      ],{duration:600+Math.random()*300,easing:'cubic-bezier(.3,.7,.2,1)'});
-      setTimeout(()=>s.remove(),900);
-    }
-  }
-  const io=new IntersectionObserver((ents)=>{ 
-    ents.forEach(ent=>{ 
-      if(ent.isIntersecting) {
-        ent.target.querySelectorAll('.line').forEach((line,i)=> {
-          setTimeout(()=>{ 
-            line.classList.add('show'); 
-            const rect = line.getBoundingClientRect();
-            createSparkle(rect.left + rect.width/2, rect.top + rect.height/2, ent.target);
-            line.animate([
-              {opacity:0, transform:'translateY(40px) scale(0.85)', textShadow:'none'},
-              {opacity:1, transform:'translateY(0) scale(1.1)', textShadow:'0 0 20px rgba(255,107,139,.5)', offset:0.7},
-              {opacity:1, transform:'translateY(0) scale(1)', textShadow:'0 0 10px rgba(255,107,139,.3)'}
-            ],{duration:1200, easing:'cubic-bezier(.3,0,.2,1)', delay:i*200});
-          },200*i);
-        });
-      }
-    }); 
-  },{threshold:.3});
-  qsa('.stanza').forEach(s=> io.observe(s));
-
-  /* ---------- Constellation Map ---------- */
-  const canvas = document.getElementById('stars');
-  const ctx = canvas.getContext('2d');
-  // Stars based on September 28, 2024 evening sky over Riyadh (approximate positions: x=azimuth normalized, y=90-alt for top-down view)
-  const stars = [
-    {x: 150, y: 100, label: 'Vega', special: true}, // High in north-east
-    {x: 500, y: 80, label: 'Deneb', special: true}, // Zenith area
-    {x: 300, y: 250, label: 'Altair', special: true}, // South-east
-    {x: 100, y: 300, label: 'Arcturus', special: false}, // West
-    {x: 250, y: 350, label: 'Spica', special: false}, // South-west
-    {x: 400, y: 200, label: 'Antares', special: false} // South
-  ];
-
-  function drawStars() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    stars.forEach(star => {
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.special ? 3 : 2, 0, 2 * Math.PI);
-      ctx.fillStyle = star.special ? '#FFD166' : '#fff';
-      ctx.fill();
-      // Twinkle
-      ctx.globalAlpha = Math.random() * 0.5 + 0.5;
-      ctx.beginPath();
-      ctx.arc(star.x, star.y, star.special ? 4 : 3, 0, 2 * Math.PI);
-      ctx.strokeStyle = 'rgba(255, 107, 139, 0.5)';
-      ctx.lineWidth = 1;
-      ctx.stroke();
-      ctx.globalAlpha = 1;
-    });
-    // Simple constellation lines (e.g., Summer Triangle: Vega-Deneb-Altair)
-    ctx.beginPath();
-    ctx.moveTo(stars[0].x, stars[0].y); // Vega
-    ctx.lineTo(stars[1].x, stars[1].y); // Deneb
-    ctx.lineTo(stars[2].x, stars[2].y); // Altair
-    ctx.closePath();
-    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-    ctx.lineWidth = 1;
-    ctx.stroke();
-    requestAnimationFrame(drawStars);
-  }
-  drawStars();
-
-  function showMemory(message) {
-    toast.textContent = message;
-    toast.classList.add('show');
-    setTimeout(() => toast.classList.remove('show'), 3000);
-    // Optional: Play a soft sound or add hearts
-    launchConfetti(20); // Small burst
-  }
-
-  /* ---------- Comments Section ---------- */
-  const commentForm = qs('#commentForm');
-  const commentName = qs('#commentName');
-  const commentText = qs('#commentText');
-  const commentsContainer = qs('#comments');
-  const guestMsg = qs('#guestMsg');
-
-  function addComment(name, text) {
-    const comment = document.createElement('div');
-    comment.className = 'comment';
-    comment.innerHTML = `
-      <div class="comment-name">${name}</div>
-      <div class="comment-text">${text}</div>
-    `;
-    commentsContainer.prepend(comment);
-    guestMsg.textContent = 'تم إضافة التعليق بنجاح! ✨';
-    setTimeout(() => guestMsg.textContent = '', 3000);
-  }
-
-  qs('#submitComment').addEventListener('click', (e) => {
-    e.preventDefault();
-    if (!commentName.value.trim() || !commentText.value.trim()) {
-      guestMsg.textContent = 'يرجى ملء جميع الحقول!';
-      setTimeout(() => guestMsg.textContent = '', 3000);
-      return;
-    }
-    addComment(commentName.value.trim(), commentText.value.trim());
-    commentName.value = '';
-    commentText.value = '';
-  });
-
-  /* ---------- Countdown ---------- */
-  const dd=qs('#dd'),hh=qs('#hh'),mm=qs('#mm'),ss=qs('#ss'),dateInput=qs('#dateInput');
-  let target=new Date(dateInput.value+'T00:00:00');
-  function tick(){ 
-    const t=target-new Date(); 
-    if(t<=0){ dd.textContent=hh.textContent=mm.textContent=ss.textContent='0'; return; }
-    dd.textContent=Math.floor(t/86400000); 
-    hh.textContent=Math.floor((t%86400000)/3600000); 
-    mm.textContent=Math.floor((t%3600000)/60000); 
-    ss.textContent=Math.floor((t%60000)/1000); 
-  }
-  setInterval(tick,1000); tick(); 
-  dateInput.addEventListener('change',()=>{ target=new Date(dateInput.value+'T00:00:00'); tick(); });
-
-  /* =========================
-        ROMANTIC HEART GAME
-     ========================= */
-  const cvs = qs('#gameCanvas'), ctx2 = cvs.getContext('2d');
-  const gStart=qs('#gStart'), gReset=qs('#gReset'), gScore=qs('#gScore'), gTime=qs('#gTime'), gCombo=qs('#gCombo'), gMsg=qs('#gMsg');
-
-  let dpr=1; 
-  function fit(){ 
-    dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1)); 
-    const w=cvs.clientWidth, h=Math.round(w*0.53); 
-    cvs.style.height=h+'px'; 
-    cvs.width=Math.round(w*dpr); 
-    cvs.height=Math.round(h*dpr); 
-    ctx2.setTransform(dpr,0,0,dpr,0,0); 
-  } 
-  fit(); 
-  addEventListener('resize', fit);
-
-  let hearts=[], running=false, tLeft=30, score=0, combo=1, lastTap=0, spawnAcc=0, raf=0;
-
-  function spawnHeart(special=false){
-    const w=cvs.clientWidth, h=cvs.clientHeight;
-    const x = 20 + Math.random()*(w-40);
-    const y = h + 30;
-    const vy = - (1.8 + Math.random()*2.2);
-    const vx = (Math.random()-0.5)*1.0;
-    hearts.push({x,y,vx,vy, s: 16+Math.random()*14, life:1, special, glow:0});
-  }
-  function drawHeart(x,y,s,color){
-    ctx2.save(); 
-    ctx2.translate(x,y); 
-    ctx2.scale(s/20,s/20); 
-    ctx2.fillStyle=color; 
-    ctx2.beginPath();
-    ctx2.moveTo(0,-6); 
-    ctx2.bezierCurveTo(8,-18,28,-10,28,6); 
-    ctx2.bezierCurveTo(28,22,14,30,0,38);
-    ctx2.bezierCurveTo(-14,30,-28,22,-28,6); 
-    ctx2.bezierCurveTo(-28,-10,-8,-18,0,-6); 
-    ctx2.fill(); 
-    ctx2.restore();
-  }
-  function popAt(x,y){
-    for(let i=0;i<20;i++){ 
-      const s=document.createElement('span'); 
-      const colors = ['#FF6B8B', '#8B88FF', '#FFD166', '#FF99CC'];
-      s.style.cssText=`position:fixed;left:${x}px;top:${y}px;width:10px;height:10px;background:${colors[i%4]};border-radius:${i%3?'999px':'5px'};z-index:30;pointer-events:none`;
-      document.body.appendChild(s); 
-      const dx=(Math.random()-0.5)*200, dy=(Math.random()-0.7)*250, rot=900*Math.random();
-      s.animate([
-        {transform:'translate(0,0) rotate(0deg) scale(1)', opacity:1},
-        {transform:`translate(${dx}px,${dy}px) rotate(${rot}deg) scale(0.4)`, opacity:0}
-      ],{duration:500+Math.random()*400,easing:'cubic-bezier(.3,.7,.2,1)'});
-      setTimeout(()=>s.remove(),900);
-    }
-  }
-  function bumpPetalsQuick(){ for(let i=0;i<10;i++) setTimeout(createPetal, i*40); }
-
-  function resetGame(){ 
-    hearts=[]; tLeft=30; score=0; combo=1; 
-    gScore.textContent=score; gCombo.textContent='x1'; gTime.textContent=tLeft; 
-    gMsg.style.display='none'; 
-  }
-  resetGame();
-
-  function loop(ts){
-    raf=requestAnimationFrame(loop);
-    ctx2.clearRect(0,0,cvs.clientWidth,cvs.clientHeight);
-
-    // spawn
-    spawnAcc += 16;
-    const rate = Math.max(350, 800 - score*15);
-    if(spawnAcc > rate){ spawnAcc = 0; spawnHeart(Math.random()<0.18); }
-
-    // update
-    for(let i=hearts.length-1;i>=0;i--){
-      const h=hearts[i]; 
-      h.x += h.vx; h.y += h.vy; h.vy -= 0.003; 
-      h.glow = (h.glow + 0.06) % (2*Math.PI);
-      const color = h.special ? '#FFD166' : '#FF6B8B';
-      drawHeart(h.x, h.y, h.s, color);
-      if(h.special){ 
-        ctx2.globalAlpha=0.5 + 0.3*Math.sin(h.glow); 
-        drawHeart(h.x, h.y, h.s*1.4, '#FFE9A6'); 
-        ctx2.globalAlpha=0.3; 
-        drawHeart(h.x, h.y, h.s*1.7, '#FFF7D1'); 
-        ctx2.globalAlpha=1; 
-      }
-      if(h.y < -40 || h.life<=0){ hearts.splice(i,1); }
-    }
-
-    // timer
-    if(running){
-      if(!loop.last) loop.last = performance.now();
-      const now = performance.now();
-      if(now - loop.last >= 1000){ 
-        loop.last = now; tLeft--; gTime.textContent=tLeft; 
-        if(tLeft<=0) endGame(); 
-      }
-    }
-  }
-
-  function startGame(){ 
-    if(running) return; 
-    resetGame(); 
-    running=true; 
-    cancelAnimationFrame(raf); 
-    loop.last=performance.now(); 
-    raf=requestAnimationFrame(loop); 
-    showHint(''); 
-  }
-  function endGame(){
-    running=false;
-    cancelAnimationFrame(raf);
-    gMsg.style.display='inline-block';
-    gMsg.textContent = score>=25 ? '✨ فزتِ! رسالة حب بانتظارك' : 'جميل! حاولي مرة أخرى ♥';
-    if(score>=25){
-      launchConfetti(400);
-      toast.textContent='أختارُكِ—كلَّ يوم، دائمًا. ♥'; 
-      toast.classList.add('show'); 
-      setTimeout(()=>toast.classList.remove('show'),3000);
-      setTimeout(()=> qs('#s4').scrollIntoView({behavior:'smooth'}), 1000);
-    }
-  }
-
-  // input (tap/click)
-  function hit(x,y){
-    const rect = cvs.getBoundingClientRect(), px = (x-rect.left), py = (y-rect.top);
-    let hitAny=false;
-    for(let i=hearts.length-1;i>=0;i--){
-      const h=hearts[i], dx=px - h.x, dy=py - h.y, r = h.s*0.9;
-      if(dx*dx + dy*dy <= r*r*1.2){
-        hearts[i].life=0; hearts.splice(i,1); hitAny=true;
-        const now=performance.now();
-        combo = (now-lastTap<900) ? Math.min(combo+1, 9) : 1;
-        lastTap = now;
-        const add = (h.special?5:1) * combo;
-        score += add; gScore.textContent=score; gCombo.textContent=`x${combo}`;
-        popAt(x,y); 
-        bumpPetalsQuick();
-        gMsg.style.display='inline-block'; 
-        gMsg.textContent = h.special? 'قلب ذهبي! ✨' : (combo>1? `تسلسل مذهل x${combo} ♥` : 'رائع!');
-        clearTimeout(hit._t); 
-        hit._t=setTimeout(()=> gMsg.style.display='none', 1000);
-        break;
-      }
-    }
-    if(!hitAny) combo = 1, gCombo.textContent='x1';
-  }
-  cvs.addEventListener('pointerdown', e=> hit(e.clientX,e.clientY), {passive:true});
-
-  gStart.addEventListener('click', ()=>{ startGame(); });
-  gReset.addEventListener('click', ()=>{ resetGame(); });
-
-  // Dramatic confetti
-  const confetti = document.createElement('div'); 
-  confetti.className='confetti'; 
-  confetti.style.cssText='position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden';
-  document.body.appendChild(confetti);
-  function launchConfetti(n=400){
-    for(let i=0;i<n;i++){
-      const c=document.createElement('div'), s=10+Math.random()*14;
-      const colors = ['#FF6B8B', '#8B88FF', '#FFD166', '#FF99CC'];
-      c.style.cssText=`position:fixed;width:${s}px;height:${s}px;background:${colors[i%4]};border-radius:${(i%3===0)?'5px':'999px'};left:${Math.random()*100}%;top:-15px;z-index:20;box-shadow:0 0 20px ${colors[i%4]}`;
-      confetti.appendChild(c);
-      const fall=900+Math.random()*700, drift=-80+Math.random()*160;
-      c.animate([
-        {transform:'translate3d(0,0,0) rotate(0deg) scale(1)', opacity:1},
-        {transform:`translate3d(${drift}px,120vh,0) rotate(${900*Math.random()}deg) scale(0.4)`, opacity:0.6}
-      ],{duration:fall,easing:'cubic-bezier(.3,.8,.2,1)'});
-      setTimeout(()=> c.remove(), fall+60);
-    }
-  }
-})();
+  // Simple audio toggle
+  const audio=document.getElementById('audio');
+  const btn=document.getElementById('musicBtn');
+  btn.onclick=async()=>{
+    if(audio.paused){await audio.play();btn.textContent='إيقاف الموسيقى';}
+    else{audio.pause();btn.textContent='تشغيل الموسيقى';}
+  };
+  document.getElementById('startBtn').onclick=()=>document.getElementById('s1').scrollIntoView({behavior:'smooth'});
+  document.getElementById('toGuest').onclick=()=>document.getElementById('guest').scrollIntoView({behavior:'smooth'});
 </script>
 </body>
 </html>
