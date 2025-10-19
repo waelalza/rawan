@@ -1,511 +1,558 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وائل ♥ روان — دَوْنَكَِ الأبجدية</title>
-    <meta name="description" content="ديوانٌ موجزٌ مُولّدٌ لحظيًا بروحِ نزار قباني، يتنقلُ بينَ الحبِّ والوعدِ على إيقاعِ النبضِ السريّ. كلُّ حرفٍ هنا شهادةُ وائل لروان.">
-    <style>
-        :root {
-            --pink: #FF6B8B;
-            --lav: #8B88FF;
-            --ink: #2B2530;
-            --glass: rgba(255, 255, 255, 0.64);
-            --glass-b: rgba(255, 255, 255, 0.28);
-            --shadow: 0 12px 40px rgba(43, 37, 48, 0.15);
-            --r: 20px;
-        }
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#FF6B8B" />
+<title>وائل ♥ روان — دَوْنَكَِ الأبجدية</title>
+<meta name="description" content="ديوانٌ موجزٌ مُولّدٌ لحظيًا بروحِ نزار قباني، يتنقلُ بينَ الحبِّ والوعدِ على إيقاعِ النبضِ السريّ. كلُّ حرفٍ هنا شهادةُ وائل لروان." />
+<link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Caveat:wght@400&display=swap" rel="stylesheet">
+<style>
+  :root{--pink:#FF6B8B;--lav:#8B88FF;--ink:#2B2530;--glass:rgba(255,255,255,.64);--glass-b:rgba(255,255,255,.28);--shadow:0 12px 40px rgba(43,37,48,.15);--r:20px}
+  *{box-sizing:border-box}html,body{height:100%}
+  body{margin:0;font-family:"Tajawal",system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:linear-gradient(140deg,#FFE5EE 0%,#F0ECFF 100%);-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
+  .bg{position:fixed;inset:0;z-index:-3;background:
+    radial-gradient(1200px 800px at 80% -20%, rgba(255,107,139,.45), transparent 55%),
+    radial-gradient(900px 700px at 10% 120%, rgba(139,136,255,.45), transparent 55%),
+    linear-gradient(140deg,#FFE9F3 0%,#EFEAFF 100%)}
+  .wrap{max-width:900px;margin:auto;padding:20px 20px 120px;position:relative;z-index:2}
+  section{margin:26px auto;background:var(--glass);border:1px solid var(--glass-b);border-radius:var(--r);box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:26px 20px}
+  .hero{text-align:center;padding:58px 18px 24px}
+  .title{font-size:clamp(30px,7.5vw,60px);font-weight:800}
+  .tag{margin-top:10px;font-size:clamp(18px,4vw,24px);min-height:1.6em}
+  .btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:18px}
+  .btn{border:none;border-radius:999px;padding:12px 16px;font-weight:700;cursor:pointer;background:#2B2530;color:#fff;box-shadow:var(--shadow)}
+  .btn.pink{background:var(--pink)}
+  .btn.outline{background:transparent;color:#2B2530;border:1px solid #d8d1dc}
+  .hint{font-size:12px;opacity:.78;margin-top:8px}
+  .badge{font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pink),var(--lav));padding:8px 12px;border-radius:999px;font-size:14px;box-shadow:0 8px 20px rgba(255,107,139,.28);margin-bottom:10px;display:inline-block;min-height:1.6em}
+  .lines{font-size:22px;line-height:1.95;min-height:6em}
+  .line{opacity:0;transform:translateY(10px);transition:opacity .45s ease, transform .45s ease}
+  .line.show{opacity:1;transform:translateY(0)}
+  #skyWrap{position:relative}
+  #skyCanvas{width:100%;height:auto;border-radius:var(--r);background:radial-gradient(ellipse at bottom,#1b2735 0%,#090a0f 100%);box-shadow:0 0 25px rgba(255,107,139,.25)}
+  .star-label{position:absolute;color:#fff;font-family:'Caveat',cursive;font-size:14px;text-shadow:0 0 6px rgba(255,255,255,.9);cursor:pointer;min-height:1.2em}
+  .pill{background:#fff;border:1px solid #efe5f3;padding:10px 12px;border-radius:12px;min-width:70px;text-align:center;box-shadow:var(--shadow);font-weight:800;font-size:18px}
+  .poem-controls{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:12px 0}
+  .poem-box{border-radius:18px;border:1px solid #eeddf0;background:#fff;box-shadow:var(--shadow);padding:18px;min-height:7em}
+  .poem-line{opacity:0;transform:translateY(10px);transition:opacity .45s ease, transform .45s ease;font-size:22px;line-height:1.95}
+  .poem-line.show{opacity:1;transform:translateY(0)}
+  .toast{position:fixed;left:50%;bottom:20px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:12px 16px;border-radius:999px;font-weight:700;opacity:0;transition:.35s;box-shadow:0 10px 25px rgba(0,0,0,.4);z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  .vinyl{position:fixed;left:14px;bottom:18px;z-index:40;width:56px;height:56px;border-radius:50%;background:
+    radial-gradient(circle at 30% 30%, #333 20%, #111 60%, #000 61%),
+    conic-gradient(#000 0 25%, #111 0 50%, #000 0 75%, #111 0);box-shadow:0 12px 25px rgba(0,0,0,.25);border:2px solid #222;display:grid;place-items:center;color:#fff}
+  .vinyl.playing{animation:spin 5s linear infinite}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .vinyl-label{width:24px;height:24px;border-radius:50%;background:#FF6B8B;display:grid;place-items:center;font-weight:900;font-size:12px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
+  /* Game (optional minimal) */
+  #gameCanvas{width:100%;height:auto;border-radius:var(--r);background:#fff;box-shadow:var(--shadow);border:1px solid #eeddf0}
+  .game-ui{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:10px}
+  .game-pill{background:#fff;border:1px solid #efe5f3;padding:8px 12px;border-radius:999px;min-width:64px;text-align:center;font-weight:800}
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
+  /* Countdown Style */
+  #countdown{display:flex;justify-content:center;gap:10px;margin-top:20px;font-weight:800}
+  .c-unit{text-align:center;background:#fff;padding:8px 12px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.08);min-width:60px}
+  .c-val{font-size:24px;color:var(--pink)}
+  .c-label{font-size:12px;opacity:.7}
+  
+  /* Confetti Button Style */
+  #unlockBtn.success{background:#4CAF50;}
 
-        html, body {
-            height: 100%;
-            font-family: "Tajawal", system-ui, -apple-system, Segoe UI, Roboto, Arial;
-            color: var(--ink);
-            background: linear-gradient(140deg, #FFE5EE 0%, #F0ECFF 100%);
-            -webkit-font-smoothing: antialiased;
-            line-height: 1.6;
-        }
-
-        .bg {
-            position: fixed;
-            inset: 0;
-            z-index: -3;
-            background:
-                radial-gradient(1200px 800px at 80% -20%, rgba(255, 107, 139, 0.45), transparent 55%),
-                radial-gradient(900px 700px at 10% 120%, rgba(139, 136, 255, 0.45), transparent 55%),
-                linear-gradient(140deg, #FFE9F3 0%, #EFEAFF 100%);
-        }
-
-        .wrap {
-            max-width: 900px;
-            margin: auto;
-            padding: 20px 20px 120px;
-        }
-
-        section {
-            margin: 26px auto;
-            background: var(--glass);
-            border: 1px solid var(--glass-b);
-            border-radius: var(--r);
-            box-shadow: var(--shadow);
-            backdrop-filter: blur(14px);
-            -webkit-backdrop-filter: blur(14px);
-            padding: 26px 20px;
-        }
-
-        .hero {
-            text-align: center;
-            padding: 58px 18px 24px;
-        }
-
-        .title {
-            font-size: clamp(30px, 7.5vw, 60px);
-            font-weight: 800;
-            margin-bottom: 10px;
-        }
-
-        .tag {
-            margin-top: 10px;
-            font-size: clamp(18px, 4vw, 24px);
-            min-height: 1.6em;
-            color: #5a4a6a;
-        }
-
-        .btns {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin-top: 18px;
-        }
-
-        .btn {
-            border: none;
-            border-radius: 999px;
-            padding: 12px 16px;
-            font-weight: 700;
-            cursor: pointer;
-            background: #2B2530;
-            color: #fff;
-            box-shadow: var(--shadow);
-            transition: all 0.3s ease;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(43, 37, 48, 0.25);
-        }
-
-        .btn.pink {
-            background: var(--pink);
-        }
-
-        .btn.outline {
-            background: transparent;
-            color: #2B2530;
-            border: 1px solid #d8d1dc;
-        }
-
-        .hint {
-            font-size: 12px;
-            opacity: .78;
-            margin-top: 8px;
-        }
-
-        .badge {
-            font-weight: 800;
-            color: #fff;
-            background: linear-gradient(135deg, var(--pink), var(--lav));
-            padding: 8px 12px;
-            border-radius: 999px;
-            font-size: 14px;
-            box-shadow: 0 8px 20px rgba(255, 107, 139, 0.28);
-            margin-bottom: 10px;
-            display: inline-block;
-            min-height: 1.6em;
-        }
-
-        .lines {
-            font-size: 22px;
-            line-height: 1.95;
-            min-height: 6em;
-        }
-
-        .line {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.45s ease, transform 0.45s ease;
-            margin-bottom: 12px;
-        }
-
-        .line.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .pill {
-            background: #fff;
-            border: 1px solid #efe5f3;
-            padding: 10px 12px;
-            border-radius: 12px;
-            min-width: 70px;
-            text-align: center;
-            box-shadow: var(--shadow);
-            font-weight: 800;
-            font-size: 18px;
-        }
-
-        .poem-controls {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            justify-content: center;
-            margin: 12px 0;
-        }
-
-        .poem-box {
-            border-radius: 18px;
-            border: 1px solid #eeddf0;
-            background: #fff;
-            box-shadow: var(--shadow);
-            padding: 18px;
-            min-height: 7em;
-            text-align: center;
-        }
-
-        .poem-line {
-            opacity: 0;
-            transform: translateY(10px);
-            transition: opacity 0.45s ease, transform 0.45s ease;
-            font-size: 22px;
-            line-height: 1.95;
-            margin-bottom: 10px;
-        }
-
-        .poem-line.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .toast {
-            position: fixed;
-            left: 50%;
-            bottom: 20px;
-            transform: translateX(-50%) translateY(20px);
-            background: #111;
-            color: #fff;
-            padding: 12px 16px;
-            border-radius: 999px;
-            font-weight: 700;
-            opacity: 0;
-            transition: 0.35s;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            z-index: 50;
-        }
-
-        .toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
-        .loading {
-            display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255, 255, 255, 0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-            margin-right: 10px;
-        }
-
-        @keyframes spin {
-            to {
-                transform: rotate(360deg);
-            }
-        }
-
-        .quote {
-            font-style: italic;
-            color: #6d5a7a;
-            border-right: 3px solid var(--pink);
-            padding-right: 15px;
-            margin: 15px 0;
-        }
-
-        .footer {
-            text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #7a6a85;
-            font-size: 14px;
-        }
-    </style>
+  /* Cherry Blossom Canvas */
+  #blossomCanvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none;}
+</style>
 </head>
 <body>
-    <div class="bg"></div>
-    <div class="wrap">
-        <section class="hero" id="hero">
-            <h1 class="title">وائل <span style="color:#FF6B8B">♥</span> روان</h1>
-            <div class="tag" id="heroTag">أنتِ يا روان.. حروفي تتجسدُ شعراً</div>
-            <div class="btns">
-                <button class="btn pink" id="startBtn">ابدأ الرحلة</button>
-                <button class="btn" id="inspireBtn">ألهمني قصيدة</button>
-                <button class="btn outline" id="aboutBtn">عن هذه الصفحة</button>
-            </div>
-        </section>
+  <div class="bg"></div>
+  <canvas id="blossomCanvas"></canvas> <div class="wrap">
+    <section class="hero" id="hero">
+      <h1 class="title">وائل <span style="color:#FF6B8B">♥</span> روان</h1>
+      <div class="tag" id="heroTag">أُغنّيكِ يا امرأتي.. بأسلوب نزار.</div>
+      <div id="countdown">
+        <div class="c-unit"><div class="c-val" id="cDays">00</div><div class="c-label">يوماً</div></div>
+        <div class="c-unit"><div class="c-val" id="cHrs">00</div><div class="c-label">ساعة</div></div>
+        <div class="c-unit"><div class="c-val" id="cMins">00</div><div class="c-label">دقيقة</div></div>
+        <div class="c-unit"><div class="c-val" id="cSeds">00</div><div class="c-label">ثانية</div></div>
+      </div>
+      <div class="btns">
+        <button class="btn pink" id="startBtn">اسْكُبي القهوة</button>
+        <button class="btn" id="musicBtn" aria-pressed="false">إيقاعُ الروح</button>
+        <button class="btn outline" id="toGuest">أُمنيةٌ عابرة</button>
+        <button class="btn outline" id="copyLink">اقتباسٌ موجز</button>
+      </div>
+      <div class="hint" id="musicHint"></div>
+    </section>
 
-        <section id="intro">
-            <span class="badge">بداية القصيدة</span>
-            <div class="lines" id="introLines">
-                <div class="line show">في البدء كانتِ العيونُ.. نافذةُ الروحِ إلى الروحِ</div>
-                <div class="line show">ثمّ كانتِ الهمساتُ.. تتراقصُ بين الشفاهِ كالفراشاتِ</div>
-                <div class="line show">وأخيراً.. كانتِ القلوبُ.. تتناغمُ في سماءِ الحبِّ</div>
-            </div>
-        </section>
+    <section id="secretLove">
+      <span class="badge">مفتاحُ الكنزِ</span>
+      <p style="text-align:center;margin:12px 0 16px;font-size:18px">أَدْخِلي عامَ ميلادِكِ الفاتنِ لتقرأيَ ما كُتبَ لكِ بدمِ القلبِ.</p>
+      <div style="text-align:center;display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+        <input type="number" id="secretPass" class="pill" placeholder="الرمزُ السريّ" style="width:120px;text-align:center;font-size:24px" />
+        <button class="btn pink" id="unlockBtn">اِفْتَحي الصندوق</button>
+      </div>
+      <div id="secretContent" class="poem-box" style="display:none;margin-top:16px;border-color:#ff6b8b;min-height:auto;">
+        <p class="poem-line show" style="line-height:1.8;font-size:20px;font-weight:500;text-align:justify;">
+          ما كنتُ أحسبُ أنَّ العشقَ هندسةٌ، حتى رأيتُ في عينيها خريطةَ الكون. روانُ، يا غُفْلةَ الياسمين في غَيبوبةِ المدائن.. اسمكِ ليسَ حبرًا، بل هوَ تَوْقيعُ قصيدةٍ نُثِرتْ على جدارِ القلبِ بخطٍّ كوفيٍّ فاتن. في حضرتِكِ، ينسى الجناسُ تكرارَهُ، ويصبحُ الكونُ نبيذًا يشربهُ القلبُ لا الفم. أنتِ العاصمةُ التي لا يُغادِرُها وائل، والميناءُ الذي يرسو فيهِ تعبُ السنين. لكِ كلُّ الأبجديةِ، ومفتاحُ روحي، وتاجٌ من غارِ التقديرِ يُتوّجُ هذا الحبّ.
+        </p>
+      </div>
+    </section>
+    <section id="sky">
+      <span class="badge" id="skyBadge">سرُّ المجرة</span>
+      <p style="text-align:center;opacity:.9;margin:8px 0 14px" id="skyNote">أصابعُكِ نجمةٌ، وضغطتُكِ إيماءةٌ نحو ذكرانا.</p>
+      <div id="skyWrap">
+        <canvas id="skyCanvas" width="800" height="380"></canvas>
+        <span class="star-label" style="top:18%;left:30%" id="star1">ويغا</span>
+        <span class="star-label" style="top:10%;right:25%" id="star2">دنيب</span>
+        <span class="star-label" style="bottom:28%;left:42%" id="star3">الطائر</span>
+        <span class="star-label" style="top:60%;left:12%" id="star4">عرق الجاثا</span>
+        <span class="star-label" style="bottom:40%;right:35%" id="star5">سبيكا</span>
+      </div>
+    </section>
 
-        <section id="poems">
-            <span class="badge">نزار يُغنّي لروان</span>
-            <div class="poem-controls">
-                <input id="herName" class="pill" style="min-width:140px" placeholder="اسمُها الفاتن" value="روان" />
-                <select id="poemMode" class="pill">
-                    <option value="romantic">نزار الغزلي</option>
-                    <option value="elegant">نزار الرصين</option>
-                    <option value="passionate">نزار الجريء</option>
-                    <option value="promise">نزار الواعد</option>
-                </select>
-                <button class="btn pink" id="newPoem">
-                    <span id="generateText">انْشُرْ قصيدتي</span>
-                    <span id="loadingIndicator" style="display:none;"><span class="loading"></span>يتم التوليد...</span>
-                </button>
-            </div>
-            <div class="poem-box" id="poemBox" aria-live="polite">
-                <div class="poem-line show">انقر على "انشر قصيدتي" لإنشاء قصيدة فريدة بأسلوب نزار قباني</div>
-            </div>
-        </section>
+    <section id="s1"><span class="badge" id="b1">ميلادُ القصيدة</span><div class="lines" id="l1"></div></section>
+    <section id="s2"><span class="badge" id="b2">حلاوةُ الاسم</span><div class="lines" id="l2"></div></section>
+    <section id="s3"><span class="badge" id="b3">المرأةُ والعلم</span><div class="lines" id="l3"></div></section>
+    <section id="s4"><span class="badge" id="b4">العهدُ الكوني</span><div class="lines" id="l4"></div></section>
 
-        <section id="about" style="display: none;">
-            <span class="badge">عن هذه الصفحة</span>
-            <div class="lines">
-                <p>هذه الصفحة تقديرٌ شعريٌّ بأسلوب الشاعر الكبير نزار قباني، تجسيداً للحبِّ والجمالِ والأنوثةِ.</p>
-                <p class="quote">"كتبتُ عن المرأةِ لأنني لم أعرفْ كتابةً أجملَ منها" - نزار قباني</p>
-                <p>تمّ استخدام الذكاء الاصطناعي لتوليد النصوص الشعرية بأسلوب نزار قباني، مع الحفاظ على روحِ شعرهِ ونبرتِه الغزليةِ المميزةِ.</p>
-            </div>
-        </section>
-    </div>
+    <section id="poems">
+      <span class="badge">نزار يُغنِّي لروان</span>
+      <div class="poem-controls">
+        <input id="herName" class="pill" style="min-width:140px" placeholder="اسمُها الفاتن" value="روان" />
+        <select id="poemMode" class="pill">
+          <option value="qabbani" selected>نزار الكلاسيكي</option>
+          <option value="free">نزار الإيقاع الهادئ</option>
+          <option value="pledge">نزار الوعد الرشيق</option>
+          <option value="science">نزار الرصين الفاخر</option>
+        </select>
+        <button class="btn pink" id="newPoem">انْشُرْ قصيدتي</button>
+      </div>
+      <div class="poem-box" id="poemBox" aria-live="polite"></div>
+    </section>
 
-    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <section id="fortune">
+      <span class="badge">خُطَّتُنا لليلةِ الحبّ</span>
+      <div style="text-align:center">
+        <button class="btn pink" id="fortuneBtn">موعدٌ عشوائيٌّ راقٍ</button>
+      </div>
+      <div id="fortuneCard" style="display:none;margin-top:16px;background:#fff;padding:18px;border-radius:12px;box-shadow:var(--shadow)">
+        <p id="fText" style="font-size:20px;font-weight:700;margin:0"></p>
+      </div>
+    </section>
 
-    <div class="footer">
-        صنع بـ ❤️ لتكريم روح نزار قباني وشعره الخالد
-    </div>
+    <section id="game">
+      <span class="badge">رقصةُ القلوب</span>
+      <canvas id="gameCanvas"></canvas>
+      <div class="game-ui">
+        <button class="btn pink" id="gStart">فلتَبْدأ الرقصة</button>
+        <button class="btn outline" id="gReset">إعادة التوازن</button>
+        <span class="game-pill">النقاط: <b id="gScore">0</b></span>
+        <span class="game-pill">الوقت: <b id="gTime">30</b></span>
+        <span class="game-pill">الانسجام: <b id="gCombo">x1</b></span>
+        <span class="game-pill" id="gMsg" data-win="" data-again="" style="display:none"></span>
+      </div>
+    </section>
 
-    <script>
-        // ضبط عامل Cloudflare
-        const API_URL = "https://cf-ai.waeel-zahrani.workers.dev";
+    <section id="guest">
+      <span class="badge">دفترُ زوّارِ القلب</span>
+      <div style="margin-top:10px">
+        <script src="https://utteranc.es/client.js"
+          repo="waelalza/rawan"
+          issue-term="pathname"
+          label="comment"
+          theme="github-light"
+          crossorigin="anonymous"
+          async>
+        </script>
+      </div>
+    </section>
+  </div>
 
-        // وظائف المساعدة
-        function showToast(message) {
-            const toastEl = document.getElementById('toast');
-            toastEl.textContent = message;
-            toastEl.classList.add('show');
-            setTimeout(() => {
-                toastEl.classList.remove('show');
-            }, 3000);
+  <audio id="audio" preload="auto" playsinline webkit-playsinline src="./assets/audio/rawan-theme.mp3" loop></audio>
+  <button class="vinyl" id="vinylBtn" aria-label="تشغيل/إيقاف"><span class="vinyl-label">R♥W</span></button>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+// ======== Confetti Library (Integrated for quick use) ========
+// Simple implementation of Confetti from external source (no external file needed)
+var confetti = (function() {
+    var T = window.requestAnimationFrame || window.webkitRequestAnimationFrame || window.mozRequestAnimationFrame || window.oRequestAnimationFrame || window.msRequestAnimationFrame || function(callback) { return window.setTimeout(callback, 1000 / 60) }, E = window.cancelAnimationFrame || window.webkitCancelAnimationFrame || window.mozCancelAnimationFrame || window.oCancelAnimationFrame || window.msCancelAnimationFrame || function(id) { window.clearTimeout(id) };
+    var i = 0, n = 0, o = 0, a = 0;
+    var r = 3, s = 0.5, c = 2, f = 0.95, h = Math.pow(r, 2) + Math.pow(s, 2), u = 0, l = 0, p = 0, d = 0, g = 0.01, m = 1.2;
+    var v = ["#f44336", "#e91e63", "#9c27b0", "#673ab7", "#3f51b5", "#2196f3", "#03a9f4", "#00bcd4", "#009688", "#4caf50", "#8bc34a", "#cddc39", "#ffeb3b", "#ffc107", "#ff9800", "#ff5722", "#795548", "#9e9e9e", "#607d8b"];
+    var w = 15, x = 30, y = 5, b = 20;
+    var C = 1, k = 1.3;
+    var L = 0.1;
+    var S = 200, A = 100;
+    var j = 100;
+    var M = Math.PI / 2;
+    var B = 500, I = 500;
+    var P = 1;
+    var R = 0;
+    var O = {};
+    var F = [];
+    var $ = T;
+    var q = E;
+    var D = null;
+    var N = null;
+    function G(t, e) {
+        if (!D) {
+            D = document.createElement("canvas"), D.style.position = "fixed", D.style.top = "0", D.style.left = "0", D.style.pointerEvents = "none", D.style.zIndex = "100", document.body.appendChild(D), N = D.getContext("2d");
+            window.addEventListener("resize", function() { D.width = window.innerWidth, D.height = window.innerHeight });
+            D.width = window.innerWidth, D.height = window.innerHeight;
         }
+        var i = Object.assign({}, O, t);
+        var n = i.origin || {x: 0.5, y: 0.5};
+        var a = n.x * D.width, r = n.y * D.height;
+        var s = i.particleCount || S;
+        var c = i.colors || v;
+        var f = i.spread || A;
+        var h = i.startVelocity || j;
+        var u = i.decay || f;
+        var l = i.ticks || B;
+        var p = i.gravity || P;
+        var d = i.scalar || k;
+        var g = i.zIndex || R;
+        var m = i.flat || false;
+        var w = i.disableForReducedMotion || false;
+        var x = m ? Math.PI : M;
+        var y = Math.max(0, x - x * f / 360);
+        var b = Math.min(x, x + x * f / 360);
 
-        function showLoading() {
-            const generateText = document.getElementById('generateText');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const newPoemBtn = document.getElementById('newPoem');
-            
-            generateText.style.display = 'none';
-            loadingIndicator.style.display = 'inline';
-            newPoemBtn.disabled = true;
-        }
+        for (var C = 0; C < s; C++) {
+            var L = Math.random() * (b - y) + y;
+            var E = L * (f / 360);
+            var H = Math.random() * c.length;
+            var J = c[Math.floor(H)];
+            var K = Math.random() * (x - x * f / 360) + x * f / 360;
+            var Q = Math.random() * (b - y) + y;
+            var V = (Math.cos(Q) + Math.sin(Q)) * (f / 360);
+            var W = Math.random() * (Math.sin(L) * d * h) + Math.cos(L) * d * h;
+            var X = Math.random() * (Math.cos(L) * d * h) + Math.sin(L) * d * h;
+            var Y = Math.random() * (L - L * f / 360) + L * f / 360;
+            var Z = Math.random() * (Math.cos(Y) * d * h) + Math.sin(Y) * d * h;
+            var _ = Math.random() * (Math.sin(Y) * d * h) + Math.cos(Y) * d * h;
 
-        function hideLoading() {
-            const generateText = document.getElementById('generateText');
-            const loadingIndicator = document.getElementById('loadingIndicator');
-            const newPoemBtn = document.getElementById('newPoem');
-            
-            generateText.style.display = 'inline';
-            loadingIndicator.style.display = 'none';
-            newPoemBtn.disabled = false;
-        }
-
-        function addLine(box, text, i = 0) {
-            const lineElement = document.createElement('div');
-            lineElement.className = 'poem-line';
-            lineElement.textContent = text;
-            box.appendChild(lineElement);
-            setTimeout(() => {
-                lineElement.classList.add('show');
-            }, 300 * i);
-        }
-
-        // تنظيف مخرجات الذكاء الاصطناعي
-        function polish(txt) {
-            if (!txt) return "";
-            txt = txt.replace(/[A-Za-z[\]{}_*<>`~]/g, "").replace(/\s{2,}/g, " ").replace(/[“”"']/g, "").trim();
-            const banned = ["مساعدتك", "خدمتك", "كمساعدة", "الذكاء الاصطناعي", "إليك", "كمثال", "كمستخدم"];
-            if (banned.some(b => txt.includes(b))) return "";
-            return txt;
-        }
-
-        // استدعاء خدمة الذكاء الاصطناعي
-        async function aiPrompt(prompt) {
-            const style = "اكتب بأسلوب نزار قباني. لغة عربية فصيحة. قصيرة. رصينة. فاخرة. بلا حشو. بلا جمل خدمية. بلا أقواس أو تنصيص.";
-            const fullPrompt = `${prompt}\n${style}`;
-            
-            try {
-                const response = await fetch(API_URL, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ prompt: fullPrompt })
-                });
-                
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-                
-                const data = await response.json();
-                const result = data.response || (data.result && data.result.response) || "";
-                return polish(result);
-            } catch (error) {
-                console.error("Error calling AI service:", error);
-                throw error;
-            }
-        }
-
-        // توليد قصيدة جديدة باستخدام الذكاء الاصطناعي
-        async function composePoem() {
-            const name = document.getElementById('herName').value.trim() || "روان";
-            const mode = document.getElementById('poemMode').value;
-            
-            let modeText = "";
-            switch(mode) {
-                case "romantic": modeText = "غزلي"; break;
-                case "elegant": modeText = "رصين"; break;
-                case "passionate": modeText = "جريء"; break;
-                case "promise": modeText = "واعد"; break;
-            }
-            
-            const prompt = `اكتب قصيدة غزلية قصيرة بأسلوب نزار قباني عن ${name}. 
-                            استخدم لغة عربية فصيحة، صوراً شعرية مبتكرة، جناساً لطيفاً، 
-                            ونبرة ${modeText}. يجب أن تحتوي القصيدة على 5 أسطر.`;
-            
-            showLoading();
-            
-            try {
-                const poemText = await aiPrompt(prompt);
-                const poemBox = document.getElementById('poemBox');
-                poemBox.innerHTML = '';
-                
-                if (!poemText) {
-                    throw new Error("لم يتم إنشاء نص القصيدة");
-                }
-                
-                // تقسيم النص إلى أسطر
-                const lines = poemText.split(/\n/).filter(line => line.trim() !== '');
-                
-                // إذا كان النص عبارة عن فقرة واحدة، نقسمها إلى جمل
-                let finalLines = [];
-                if (lines.length === 1) {
-                    finalLines = lines[0].split(/[.!؟]\s*/).filter(line => line.trim() !== '').slice(0, 5);
-                } else {
-                    finalLines = lines.slice(0, 5);
-                }
-                
-                // إضافة الأسطر إلى الصندوق
-                finalLines.forEach((line, index) => {
-                    addLine(poemBox, line.trim(), index);
-                });
-                
-                showToast("تمّ إنشاء القصيدة بنجاح!");
-            } catch (error) {
-                console.error("Error generating poem:", error);
-                showToast("حدث خطأ أثناء إنشاء القصيدة. يرجى المحاولة مرة أخرى.");
-                
-                // عرض رسالة بديلة في حالة الخطأ
-                const poemBox = document.getElementById('poemBox');
-                poemBox.innerHTML = '';
-                addLine(poemBox, "عذراً، لم نتمكن من إنشاء القصيدة الآن.", 0);
-                addLine(poemBox, "يرجى المحاولة مرة أخرى لاحقاً.", 1);
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // توليد إلهام عشوائي باستخدام الذكاء الاصطناعي
-        async function generateInspiration() {
-            showLoading();
-            
-            try {
-                const prompt = "اكتب جملة واحدة رومانسية بأسلوب نزار قباني. يجب أن تكون قصيرة ومؤثرة.";
-                const inspiration = await aiPrompt(prompt);
-                
-                if (inspiration) {
-                    showToast(inspiration);
-                } else {
-                    throw new Error("لم يتم إنشاء النص");
-                }
-            } catch (error) {
-                console.error("Error generating inspiration:", error);
-                showToast("حدث خطأ أثناء توليد الإلهام. يرجى المحاولة مرة أخرى.");
-            } finally {
-                hideLoading();
-            }
-        }
-
-        // توليد نص ترحيبي باستخدام الذكاء الاصطناعي
-        async function generateWelcome() {
-            try {
-                const prompt = "اكتب ترحيباً قصيراً بأسلوب نزار قباني لا يتجاوز 10 كلمات.";
-                const welcomeText = await aiPrompt(prompt);
-                
-                if (welcomeText) {
-                    document.getElementById('heroTag').textContent = welcomeText;
-                }
-            } catch (error) {
-                console.error("Error generating welcome text:", error);
-                // نترك النص الافتراضي في حالة الخطأ
-            }
-        }
-
-        // إعداد معالجات الأحداث
-        document.getElementById('newPoem').addEventListener('click', composePoem);
-        document.getElementById('inspireBtn').addEventListener('click', generateInspiration);
-        
-        document.getElementById('aboutBtn').addEventListener('click', () => {
-            const aboutSection = document.getElementById('about');
-            aboutSection.style.display = aboutSection.style.display === 'none' ? 'block' : 'none';
-        });
-        
-        document.getElementById('startBtn').addEventListener('click', () => {
-            document.getElementById('intro').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // التهيئة الأولية
-        window.addEventListener('load', () => {
-            // إظهار أسطر المقدمة بتتابع
-            const introLines = document.querySelectorAll('#introLines .line');
-            introLines.forEach((line, index) => {
-                setTimeout(() => {
-                    line.classList.add('show');
-                }, 500 * index);
+            F.push({
+                x: a,
+                y: r,
+                w: w,
+                h: x,
+                velocity: { x: (Math.random() < 0.5 ? -1 : 1) * Math.cos(L) * h, y: (Math.random() < 0.5 ? -1 : 1) * Math.sin(L) * h },
+                terminalVelocity: 10,
+                color: J,
+                flat: m,
+                ticks: 0,
+                life: l,
+                decay: u,
+                gravity: p,
+                scalar: d,
+                rotation: Math.random() * 2 * Math.PI,
+                rotationVelocity: Math.random() * 0.1 + 0.05,
+                // Add velocity based on spread and startVelocity
+                vx: Math.cos(V) * h * d,
+                vy: Math.sin(V) * h * d,
             });
-            
-            // توليد ترحيب باستخدام الذكاء الاصطناعي
-            generateWelcome();
-            
-            showToast("مرحباً بك في عالم نزار قباني الشعري");
-        });
-    </script>
+        }
+        if (F.length > 0 && !e) {
+            $($);
+        }
+    }
+    function H() {
+        N.clearRect(0, 0, D.width, D.height);
+        for (var t = F.length - 1; t >= 0; t--) {
+            var e = F[t];
+            e.x += e.velocity.x;
+            e.y += e.velocity.y;
+            e.velocity.y += e.gravity;
+            e.velocity.x *= e.decay;
+            e.velocity.y *= e.decay;
+            e.ticks++;
+            e.rotation += e.rotationVelocity;
+            if (e.ticks > e.life) {
+                F.splice(t, 1);
+            }
+            if (e.y > D.height || e.x < 0 || e.x > D.width) {
+                 F.splice(t, 1);
+            }
+            N.save();
+            N.translate(e.x, e.y);
+            N.rotate(e.rotation);
+            N.fillStyle = e.color;
+            N.fillRect(-5, -5, 10, 10);
+            N.restore();
+        }
+        if (F.length > 0) {
+            $($);
+        } else {
+            D.remove();
+            D = null;
+        }
+    }
+    return G;
+})();
+// =======================================================
+
+
+(function(){
+  // ======== ضبط عامل Cloudflare ========
+  const API_URL = "https://cf-ai.waeel-zahrani.workers.dev";
+
+  // ======== أدوات ========
+  const $ = s => document.querySelector(s);
+  const toastEl = $('#toast');
+  const toast = (t) => { toastEl.textContent=t||""; toastEl.classList.add('show'); setTimeout(()=>toastEl.classList.remove('show'),1400); };
+  const splitLines = s => (s||"").split(/\n|[.!؟]\s*/).map(v=>v.trim()).filter(Boolean);
+  const short = (t,m)=> (t||"").slice(0,m).trim();
+
+  // تنظيف مخرجات الذكاء
+  function polish(txt){
+    if(!txt) return "";
+    txt = txt.replace(/[A-Za-z[\]{}_*<>`~]/g,"").replace(/\s{2,}/g," ").replace(/[“”"']/g,"").trim();
+    const banned = ["مساعدتك","خدمتك","كمساعدة","الذكاء الاصطناعي","إليك","كمثال","كمستخدم"];
+    if (banned.some(b=>txt.includes(b))) return "";
+    return txt;
+  }
+
+  // ======== استدعاء الذكاء (أسلوب نزار دائماً) ========
+  async function aiPrompt(p){
+    const style = "اكتب بأسلوب نزار قباني. لغة عربية فصيحة. قصيرة. رصينة. فاخرة. بلا حشو. بلا جمل خدمية. بلا أقواس أو تنصيص.";
+    const prompt = `${p}\n${style}`;
+    const res = await fetch(API_URL, {
+      method:"POST",
+      headers:{ "Content-Type":"application/json" },
+      body: JSON.stringify({ prompt })
+    });
+    const text = await res.text();
+    let data={}; try{ data=JSON.parse(text);}catch{return "";}
+    return polish(data.response || (data.result&&data.result.response) || "");
+  }
+
+  // ======== موسيقى وواجهة ========
+  const audio = $('#audio'), musicBtn = $('#musicBtn'), vinyl = $('#vinylBtn'), musicHint = $('#musicHint');
+  function syncMusic(p){ musicBtn.textContent = p ? "إيقاف الإيقاع" : "إيقاعُ الروح"; musicBtn.setAttribute("aria-pressed", p?"true":"false"); vinyl.classList.toggle("playing",p); }
+  async function tryPlay(){ try{ audio.muted=false; audio.volume=1; await audio.play(); syncMusic(true); musicHint.textContent=""; }catch{ musicHint.textContent="إذنٌ بالتشغيل مطلوبٌ من القلب."; } }
+  window.addEventListener("load", tryPlay);
+  musicBtn.onclick=async()=>{ if(audio.paused){ try{ await audio.play(); syncMusic(true);}catch{} } else { audio.pause(); syncMusic(false);} };
+  vinyl.onclick=musicBtn.onclick;
+  $('#startBtn').onclick=()=> $('#poems').scrollIntoView({behavior:'smooth'});
+  $('#toGuest').onclick=()=> $('#guest').scrollIntoView({behavior:'smooth'});
+  $('#copyLink').onclick=async()=>{ try{ await navigator.clipboard.writeText(location.href); toast("تم نسخُ العنوان ببراعة!"); }catch{} };
+
+
+  // ======== العد التنازلي للزواج (2026/1/1) ========
+  function updateCountdown() {
+    const targetDate = new Date('2026-01-01T00:00:00').getTime();
+    const now = new Date().getTime();
+    const distance = targetDate - now;
+
+    const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    $('#cDays').textContent = days > 0 ? days.toString().padStart(2, '0') : '00';
+    $('#cHrs').textContent = hours.toString().padStart(2, '0');
+    $('#cMins').textContent = minutes.toString().padStart(2, '0');
+    $('#cSeds').textContent = seconds.toString().padStart(2, '0');
+
+    if (distance < 0) {
+      clearInterval(countdownInterval);
+      $('#countdown').innerHTML = `<span class="badge" style="font-size:20px;">وائل و روان، حبٌّ أبديّ!</span>`;
+    }
+  }
+  const countdownInterval = setInterval(updateCountdown, 1000);
+  updateCountdown();
+
+  // ======== سماء ========
+  const sky = $('#skyCanvas'); const ctx = sky.getContext('2d');
+  const stars=[{x:150,y:100,s:3},{x:500,y:80,s:3},{x:300,y:250,s:2},{x:100,y:300,s:2},{x:250,y:330,s:2},{x:400,y:200,s:2}];
+  (function draw(){
+    ctx.clearRect(0,0,sky.width,sky.height);
+    stars.forEach(st=>{ ctx.beginPath(); ctx.arc(st.x,st.y,st.s,0,2*Math.PI); ctx.fillStyle='#fff'; ctx.fill(); });
+    ctx.beginPath(); ctx.moveTo(150,100); ctx.lineTo(500,80); ctx.lineTo(300,250); ctx.closePath();
+    ctx.strokeStyle='rgba(255,255,255,.28)'; ctx.lineWidth=1; ctx.stroke();
+    requestAnimationFrame(draw);
+  })();
+
+  // ======== خلفية أزهار الكرز (Cherry Blossom) ========
+  const cbs = $('#blossomCanvas');
+  const cbsCtx = cbs.getContext('2d');
+  let petals = [];
+  const PETAL_COUNT = 30;
+
+  function resizeBlossomCanvas() { cbs.width = window.innerWidth; cbs.height = window.innerHeight; }
+  window.addEventListener('resize', resizeBlossomCanvas);
+  resizeBlossomCanvas();
+
+  function Petal(x, y, s) {
+    this.x = x;
+    this.y = y;
+    this.size = s;
+    this.speed = 0.5 + Math.random() * 1.5;
+    this.angle = Math.random() * 2 * Math.PI;
+    this.angleSpeed = Math.random() * 0.02 - 0.01;
+    this.drift = Math.random() * 0.5 - 0.25;
+    this.color = 'rgba(255, 200, 220, 0.8)';
+  }
+
+  Petal.prototype.update = function() {
+    this.y += this.speed;
+    this.x += this.drift + Math.sin(this.angle) * 0.5;
+    this.angle += this.angleSpeed;
+
+    if (this.y > cbs.height) {
+      this.y = -20;
+      this.x = Math.random() * cbs.width;
+    }
+  };
+
+  Petal.prototype.draw = function() {
+    cbsCtx.save();
+    cbsCtx.translate(this.x, this.y);
+    cbsCtx.rotate(this.angle);
+    cbsCtx.fillStyle = this.color;
+    cbsCtx.beginPath();
+    cbsCtx.ellipse(0, 0, this.size * 1.5, this.size, 0, 0, Math.PI * 2);
+    cbsCtx.fill();
+    cbsCtx.restore();
+  };
+
+  for (let i = 0; i < PETAL_COUNT; i++) {
+    petals.push(new Petal(Math.random() * cbs.width, Math.random() * cbs.height, 5 + Math.random() * 3));
+  }
+
+  function animateBlossoms() {
+    cbsCtx.clearRect(0, 0, cbs.width, cbs.height);
+    petals.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animateBlossoms);
+  }
+  animateBlossoms();
+  // =======================================================
+
+
+  // ======== نصوص عليا (نزار) ========
+  async function fillHero(){
+    const tag = await aiPrompt("قصيدة رومانسية بكلمات قليلة جدًا (٤-٥ كلمات) تصف حبًا جارفًا.");
+    $('#heroTag').textContent = short(tag, 40);
+  }
+  async function fillSky(){
+    const badge = await aiPrompt("شارة شعرية بكلمتين فقط تلمّح لذكرى حبّ مقدّسة.");
+    const note  = await aiPrompt("تعليمات شاعرية من جملة واحدة: أشر إلى النجوم كي تسترجع سراً.");
+    $('#skyBadge').textContent = short(badge, 18);
+    $('#skyNote').textContent  = short(note, 70);
+  }
+  async function fillStars(){
+    const ids=['#star1','#star2','#star3','#star4','#star5'];
+    const names=['ويغا','دنيب','الطائر','عرق الجاثا','سبيكا'];
+    for(let i=0;i<ids.length;i++){
+      const el = document.querySelector(ids[i]);
+      const memo = await aiPrompt(`وسم قصير من ٣–٦ كلمات لنجمة اسمها "${names[i]}". يتضمن الغزل.`);
+      el.textContent = names[i];
+      el.dataset.msg = short(memo, 42);
+      el.onclick = ()=> toast(el.dataset.msg||"");
+    }
+  }
+
+  // ======== مشاهد قصيرة (نزار) ========
+  function addLine(box, text, i=0){ const d=document.createElement('div'); d.className='line'; d.textContent=text; box.appendChild(d); setTimeout(()=>d.classList.add('show'), 140*i); }
+  async function fillScene(bSel,lSel,bPrompt,lPrompt,maxLines=4){
+    const b = await aiPrompt(bPrompt);
+    document.querySelector(bSel).textContent = short(b, 16);
+    const t = await aiPrompt(lPrompt);
+    const lines = splitLines(t).slice(0,maxLines);
+    const box = document.querySelector(lSel); box.innerHTML = "";
+    lines.forEach((ln,i)=> addLine(box, ln, i));
+  }
+
+  // ======== القصائد (نزار) ========
+  const poemBox = $('#poemBox'), herName = $('#herName'), poemMode = $('#poemMode');
+  async function composePoem(){
+    poemBox.innerHTML = '<div class="poem-line show">…</div>';
+    const name = (herName.value||"روان").trim();
+    const tone =
+      poemMode.value==='qabbani' ? "بنَفَس نزار الكلاسيكي، ناعم ومقتضب. استخدام كلمة 'يا امرأة'" :
+      poemMode.value==='free'    ? "بنَفَس نزار الحديث، إيقاع هادئ. مصطلحات مدنية." :
+      poemMode.value==='pledge'  ? "وعد رشيق وغزلي على لسان عاشق بنَفَس نزار. نهاية بوعد مهذّب." :
+                                    "لغة نزار الرصينة، صور لطيفة وهادئة. استخدام مصطلح 'مخملي'.";
+    const p = `قصيدة قصيرة جداً عن ${name}. ${tone}. خمسة أسطر فقط. افصل الأسطر بسطر جديد. لا أقواس. لا كلام تعليقي.`;
+    const txt = await aiPrompt(p);
+    poemBox.innerHTML = "";
+    splitLines(txt).slice(0,5).forEach((ln,i)=>{
+      const d=document.createElement('div'); d.className='poem-line'; d.textContent=ln; poemBox.appendChild(d);
+      setTimeout(()=>d.classList.add('show'), 140*i);
+    });
+  }
+  $('#newPoem').addEventListener('click', composePoem);
+
+  // ======== الرسالة السرية (المفتاح 2003) ========
+  $('#unlockBtn').addEventListener('click', ()=>{
+    const pass = $('#secretPass').value.trim();
+    if (pass === '2003') {
+      $('#secretContent').style.display = 'block';
+      toast("انْفَتَحَتْ أبوابُ القلبِ");
+      confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
+      $('#unlockBtn').textContent = 'مُغْلَقٌ للأبد';
+      $('#unlockBtn').classList.add('success');
+      $('#unlockBtn').disabled = true;
+    } else {
+      toast("الرّمزُ خطأ... حاولي مجدداً يا فاتنتي.");
+    }
+  });
+
+
+  // ======== مولد الموعد الغرامي (Date Night Generator) ========
+  const fortuneCard = $('#fortuneCard');
+  const dateIdeas = [
+    "أعدّي لي قهوتكِ، وسأكتبُ لكِ قصيدةً جديدةً بأسلوبِ نزار.",
+    "سهرةُ فيلمٍ تحتَ الأغطيةِ، معَ وعودٍ ألّا ينامَ أحدٌ قبلَ الآخر.",
+    "تناولُ العشاءِ الذي تُحبينَه تحتَ ضوءِ الشموعِ، ونحنُ نتبادلُ أسرارنا.",
+    "جلسةُ رسمٍ سريعةٍ: ارسمي لي خريطةَ قلبِكِ، وسأرسمُ لكِ عينيكِ.",
+    "نُعيدُ الاستماعَ لأغنيةِ لقائنا الأولِ وكأنّ الزمانَ لم يَمضِ.",
+    "لعبةُ أسئلةٍ عميقةٍ: ما هوَ أكثرُ شيءٍ تحبّينَهُ في هذا الحبّ؟"
+  ];
+
+  $('#fortuneBtn').addEventListener('click', ()=>{
+    const randomDate = dateIdeas[Math.floor(Math.random() * dateIdeas.length)];
+    $('#fText').textContent = randomDate;
+    fortuneCard.style.display = 'block';
+    toast("خُطَّةُ العشقِ جاهزة!");
+  });
+
+
+  // ======== لعبة القلوب المختصرة ========
+  const cvs = $('#gameCanvas'), g = cvs.getContext('2d');
+  const gStart=$('#gStart'),gReset=$('#gReset'),gScore=$('#gScore'),gTime=$('#gTime'),gCombo=$('#gCombo'),gMsg=$('#gMsg');
+  let hearts=[],running=false,tLeft=30,score=0,combo=1,lastTap=0,spawnAcc=0,raf=0;
+  function fitGame(){ const dpr=Math.max(1,Math.min(2,window.devicePixelRatio||1)); const w=cvs.clientWidth,h=Math.round(w*0.53); cvs.style.height=h+'px'; cvs.width=Math.round(w*dpr); cvs.height=Math.round(h*dpr); g.setTransform(dpr,0,0,dpr,0,0); }
+  function heart(x,y,s,c){ g.save(); g.translate(x,y); g.scale(s/20,s/20); g.fillStyle=c; g.beginPath(); g.moveTo(0,-6); g.bezierCurveTo(8,-18,28,-10,28,6); g.bezierCurveTo(28,22,14,30,0,38); g.bezierCurveTo(-14,30,-28,22,-28,6); g.bezierCurveTo(-28,-10,-8,-18,0,-6); g.fill(); g.restore(); }
+  function spawn(special=false){ const w=cvs.clientWidth,h=cvs.clientHeight; hearts.push({x:20+Math.random()*(w-40),y:h+30,vx:(Math.random()-0.5)*1.0,vy:-(1.8+Math.random()*2.2),s:16+Math.random()*14,special}); }
+  function loop(){ if(!running) return; raf=requestAnimationFrame(loop); g.clearRect(0,0,cvs.clientWidth,cvs.clientHeight); spawnAcc+=16; if(spawnAcc>Math.max(350,800-score*15)){ spawnAcc=0; spawn(Math.random()<0.18); } for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i]; h.x+=h.vx; h.y+=h.vy; h.vy-=0.003; heart(h.x,h.y,h.s,h.special?'#FFD166':'#FF6B8B'); if(h.y<-40) hearts.splice(i,1); }
+    loop.t=(loop.t||performance.now()); const now=performance.now(); if(now-loop.t>=1000){ loop.t=now; tLeft--; gTime.textContent=tLeft; if(tLeft<=0){ running=false; cancelAnimationFrame(raf); gMsg.style.display='inline-block'; gMsg.textContent=score>=25?(gMsg.dataset.win||""): (gMsg.dataset.again||""); } } }
+  function startGame(){ score=0;combo=1;tLeft=30;gScore.textContent=0;gCombo.textContent='x1';gMsg.style.display='none';hearts=[];running=true;cancelAnimationFrame(raf);loop.t=performance.now();loop(); }
+  function hit(x,y){ const r=cvs.getBoundingClientRect(),px=x-r.left,py=y-r.top; let ok=false; for(let i=hearts.length-1;i>=0;i--){ const h=hearts[i],dx=px-h.x,dy=py-h.y,R=h.s*0.9; if(dx*dx+dy*dy<=R*R*1.1){ hearts.splice(i,1); ok=true; const now=performance.now(); combo=(now-lastTap<900)?Math.min(combo+1,7):1; lastTap=now; score+=combo; gScore.textContent=score; gCombo.textContent='x'+combo; break; } } if(!ok){ combo=1; gCombo.textContent='x1'; } }
+  cvs.addEventListener('pointerdown',e=>hit(e.clientX,e.clientY),{passive:true});
+  gStart.addEventListener('click',()=>{ fitGame(); running=true; startGame(); });
+  gReset.addEventListener('click',()=>{ running=false; cancelAnimationFrame(raf); score=0; gScore.textContent=0; });
+  window.addEventListener('resize', fitGame); fitGame();
+  (async function setMsgs(){
+    const w = await aiPrompt('عبارة فوز قصيرة جدًا رشيقة. ٣–٤ كلمات. بأسلوب نزار.');
+    const a = await aiPrompt('عبارة تشجيع قصيرة جدًا مهذبة. ٣–٤ كلمات. بأسلوب نزار.');
+    if (gMsg){ if(w) gMsg.dataset.win=short(w,18); if(a) gMsg.dataset.again=short(a,18); }
+  })();
+
+  // ======== تشغيل أوّل ========
+  (async function boot(){
+    await fillHero();
+    await fillSky();
+    await fillStars();
+    await fillScene('#b1','#l1','ميلادُ القصيدة','ثلاثة أسطر رشيقة عن أول لقاء أو أول نظرة.',3);
+    await fillScene('#b2','#l2','عذوبةُ الاسم','ثلاثة أسطر عن اسم روان وكيف يغيّر الأبجدية.',3);
+    await fillScene('#b3','#l3','الأنوثةُ والعلم','ثلاثة أسطر تمزج الأنوثة بالعلم والرقيّ.',3);
+    await fillScene('#b4','#l4','العهدُ الأبدي','أربعة أسطر وعدٌ أبديّ على طريقة نزار.',4);
+    await composePoem();
+  })();
+})();
+</script>
 </body>
 </html>
