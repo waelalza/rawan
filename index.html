@@ -53,11 +53,9 @@
   </style>
 </head>
 <body>
-  <!-- سماءٌ تروي عشقَ وائل وروان، حيث أزهارُ الكرز تتراقص كأنفاسِ القلب -->
   <canvas id="animeCanvas"></canvas>
   <canvas id="blossomCanvas"></canvas>
   <div class="wrap">
-    <!-- بداية الديوان: حيث يُكتب الحب -->
     <section class="hero" id="hero">
       <h1 class="title">وائل <span style="color:#FF6B8B">♥</span> روان</h1>
       <div class="tag" id="heroTag">أنتِ قصيدتي الأبدية</div>
@@ -69,7 +67,6 @@
       </div>
       <div class="hint" id="musicHint"></div>
     </section>
-    <!-- مفتاح القلب: سرٌ يُفتح بعامِها -->
     <section id="secretLove">
       <span class="badge">مفتاحُ القلب</span>
       <p style="text-align:center;margin:12px 0 16px;font-size:19px">يا روان، أدخلي عامَ ميلادِكِ لتُضيئي سرَّ القلب.</p>
@@ -83,7 +80,6 @@
         </p>
       </div>
     </section>
-    <!-- عدّاد الخلود: انتظارُ الوصال -->
     <section id="countdownSection">
       <span class="badge">عدّادُ الخلود</span>
       <div id="countdown">
@@ -93,7 +89,6 @@
         <div class="c-unit"><div class="c-val" id="cSeds">00</div><div class="c-label">ثانية</div></div>
       </div>
     </section>
-    <!-- نجوم العشق: ذكرياتٌ مضيئة -->
     <section id="sky">
       <span class="badge" id="skyBadge">نجومُ العشق</span>
       <p style="text-align:center;opacity:.9;margin:10px 0 16px" id="skyNote">انظري إلى النجوم، فهي حكايتنا.</p>
@@ -106,13 +101,9 @@
         <span class="star-label" style="bottom:40%;right:35%" id="star5">سبيكا</span>
       </div>
     </section>
-    <!-- بداية الوله: أول نبضة حب -->
     <section id="s1"><span class="badge" id="b1">بدايةُ الوله</span><div class="lines" id="l1"></div></section>
-    <!-- همس الاسم: روان، لحن الروح -->
     <section id="s2"><span class="badge" id="b2">همسُ الاسم</span><div class="lines" id="l2"></div></section>
-    <!-- عهد الخلود: وعدٌ أبدي -->
     <section id="s4"><span class="badge" id="b4">عهدُ الخلود</span><div class="lines" id="l4"></div></section>
-    <!-- ديوان الروح: قصائد لأجلها -->
     <section id="poems">
       <span class="badge">ديوانُ الروح</span>
       <div class="poem-controls">
@@ -127,7 +118,6 @@
       </div>
       <div class="poem-box" id="poemBox" aria-live="polite"></div>
     </section>
-    <!-- ليلة الوعد: موعدٌ رومانسي -->
     <section id="fortune">
       <span class="badge">ليلةُ الوعد</span>
       <div style="text-align:center">
@@ -137,7 +127,6 @@
         <p id="fText" style="font-size:21px;font-weight:700;margin:0"></p>
       </div>
     </section>
-    <!-- مغامرة الحب: لعبة ماريو الرومانسية -->
     <section id="game">
       <span class="badge">مغامرةُ الحب</span>
       <canvas id="marioCanvas"></canvas>
@@ -149,7 +138,6 @@
         <span class="game-pill">الأرواح: <b id="gLives">3</b></span>
       </div>
     </section>
-    <!-- دفتر الذكرى: كلماتها لنا -->
     <section id="guest">
       <span class="badge">دفترُ الذكرى</span>
       <div style="margin-top:12px">
@@ -164,7 +152,6 @@
       </div>
     </section>
   </div>
-  <!-- نغمة الحب: لحنٌ يُغنى لها -->
   <audio id="audio" preload="auto" playsinline webkit-playsinline src="./assets/audio/rawan-theme.mp3" loop></audio>
   <button class="vinyl" id="vinylBtn" aria-label="تشغيل/إيقاف النغمة"><span class="vinyl-label">R♥W</span></button>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
@@ -484,7 +471,6 @@ const أفكار_الموعد = [
 });
 
 // ======== مغامرة الحب: لعبة ماريو الرومانسية ========
-// ======== مغامرة الحب: لعبة ماريو الرومانسية (FIXED) ========
 const لوحة_المغامرة = document.querySelector('#marioCanvas');
 const فرشاة_المغامرة = لوحة_المغامرة.getContext('2d');
 const ابدأ_المغامرة = document.querySelector('#gStart');
@@ -627,7 +613,7 @@ function مغامرة_الحب(){
     الوقت.textContent = الوقت_المتبقي;
     if(الوقت_المتبقي <= 0 || الأرواح_المتبقية <= 0){
       تدور = false; cancelAnimationFrame(إطار);
-      const msg = النتيجة >= 5 ? "قلبي لكِ، يا روان!" : "حاولي مجددًا، يا فاتنتي!";
+      const msg = النتيجة >= 3 ? "قلبي لكِ، يا روان!" : "حاولي مجددًا، يا فاتنتي!";
       const همسة_الفرح = document.querySelector('#toast');
       همسة_الفرح.textContent = msg;
       همسة_الفرح.classList.add('show');
@@ -664,41 +650,6 @@ document.addEventListener('keyup', e=>{
 window.addEventListener('resize', ()=>{
   if(!تدور) { تهيئة_المغامرة(); إنتاج_منصات(); }
 });
-  // Check heart collection
-  for(let i=قلوب_المغامرة.length-1;i>=0;i--){
-    if(تحقق_التصادم(وائل,{x:قلوب_المغامرة[i].x-14,y:قلوب_المغامرة[i].y-38,عرض:28,ارتفاع:38})){
-      قلوب_المغامرة.splice(i,1); النتيجة++; القلوب.textContent=النتيجة;
-      إطلاق_الفرح({particleCount:50,spread:50,origin:{x:(وائل.x+8)/لوحة_المغامرة.clientWidth,y:وائل.y/لوحة_المغامرة.clientHeight}});
-    }
-  }
-  // Draw
-  فرشاة_المغامرة.fillStyle='#87CEEB'; فرشاة_المغامرة.fillRect(0,0,لوحة_المغامرة.clientWidth,لوحة_المغامرة.clientHeight);
-  منصات.forEach(منصة=>رسم_منصة(منصة.x,منصة.y,منصة.عرض)); قلوب_المغامرة.forEach(قلب=>رسم_قلب(قلب.x,قلب.y)); رسم_وائل(وائل.x,وائل.y);
-  // Time
-  مغامرة_الحب.t=(مغامرة_الحب.t||performance.now());
-  if(performance.now()-مغامرة_الحب.t>=1000){
-    مغامرة_الحب.t=performance.now(); الوقت_المتبقي--; الوقت.textContent=الوقت_المتبقي;
-    if(الوقت_المتبقي<=0 || الأرواح_المتبقية<=0){
-      تدور=false; cancelAnimationFrame(إطار); همس(النتيجة>=5?"قلبي لكِ، يا روان!":"حاولي مجددًا، يا فاتنتي!");
-    }
-  }
-}
-function بدء_المغامرة(){
-  وائل={x:50,y:200,vx:0,vy:0,عرض:16,ارتفاع:32,يقفز:false}; النتيجة=0; الأرواح_المتبقية=3; الوقت_المتبقي=60;
-  القلوب.textContent=0; الوقت.textContent=60; الأرواح.textContent=3; إنتاج_منصات(); إنتاج_قلوب();
-  تدور=true; cancelAnimationFrame(إطار); مغامرة_الحب.t=performance.now(); مغامرة_الحب();
-}
-document.addEventListener('keydown',e=>{
-  if(!تدور) return;
-  if(e.key==='ArrowLeft') وائل.vx=-3;
-  if(e.key==='ArrowRight') وائل.vx=3;
-  if(e.key===' ' && !وائل.يقفز){ وائل.vy=-10; وائل.يقفز=true; }
-});
-document.addEventListener('keyup',e=>{
-  if(e.key==='ArrowLeft' || e.key==='ArrowRight') وائل.vx=0;
-});
-ابدأ_المغامرة.addEventListener('click',()=>{ تهيئة_المغامرة(); بدء_المغامرة(); });
-أعد_الرحلة.addEventListener('click',()=>{ تدور=false; cancelAnimationFrame(إطار); النتيجة=0; القلوب.textContent=0; الأرواح.textContent=3; });
 
 // ======== بداية الديوان: حيث يُولد الحب ========
 (async function بداية_العشق(){
