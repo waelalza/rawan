@@ -1,128 +1,233 @@
-<!doctype html>
-<html lang="ar" dir="rtl">
-<head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-  <meta name="theme-color" content="#FF6B8B" />
-  <title>وائل و روان — ديوان الخلود</title>
-  <meta name="description" content="ديوانٌ ينبضُ بحبّ وائل وروان، حيثُ الحروفُ قصائدُ والنجومُ ذكريات، مكتوبٌ بروح نزار ودرويش." />
-  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Caveat:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <canvas id="animeCanvas"></canvas>
-  <canvas id="blossomCanvas"></canvas>
+// ======== main.js: القلب النابض للتطبيق ========
+import { initCloudAnimation, initBlossomAnimation } from './animations.js';
+import confetti from './confetti.js';
+import { initGame } from './game.js';
+
+// ======== إعداد الصوت ========
+const audio = document.getElementById('audio');
+const musicBtn = document.getElementById('musicBtn');
+const vinylBtn = document.getElementById('vinylBtn');
+let isPlaying = false;
+
+function toggleMusic() {
+  if (isPlaying) {
+    audio.pause();
+    isPlaying = false;
+    musicBtn.setAttribute('aria-pressed', 'false');
+    vinylBtn.classList.remove('playing');
+  } else {
+    audio.play().catch(e => console.log('Audio play failed:', e));
+    isPlaying = true;
+    musicBtn.setAttribute('aria-pressed', 'true');
+    vinylBtn.classList.add('playing');
+  }
+}
+
+musicBtn?.addEventListener('click', toggleMusic);
+vinylBtn?.addEventListener('click', toggleMusic);
+
+// ======== زر البداية ========
+document.getElementById('startBtn')?.addEventListener('click', () => {
+  confetti({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  showToast('انثري قهوة العشق يا روان! ☕');
+  if (!isPlaying) toggleMusic();
+});
+
+// ======== زر نسخ الرابط ========
+document.getElementById('copyLink')?.addEventListener('click', async () => {
+  const url = 'https://rawan.pages.dev/';
+  try {
+    await navigator.clipboard.writeText(url);
+    showToast('تم نسخ رابط الحب إلى قلبك 💕');
+    confetti({ x: window.innerWidth / 2, y: window.innerHeight / 3 });
+  } catch (err) {
+    showToast('فشل نسخ الرابط، حاولي مرة أخرى');
+  }
+});
+
+// ======== زر الانتقال للضيوف ========
+document.getElementById('toGuest')?.addEventListener('click', () => {
+  document.getElementById('guest')?.scrollIntoView({ behavior: 'smooth' });
+});
+
+// ======== القسم السري ========
+const secretBtn = document.getElementById('unlockBtn');
+const secretInput = document.getElementById('secretPass');
+const secretContent = document.getElementById('secretContent');
+
+secretBtn?.addEventListener('click', () => {
+  const pass = secretInput?.value;
+  if (pass === '2003') {
+    secretContent.style.display = 'block';
+    confetti({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+    showToast('فُتحَت أبوابُ القلب يا روان 💖');
+  } else {
+    showToast('رمز السر خاطئ، حاولي مرة أخرى 🔐');
+  }
+});
+
+// ======== العد التنازلي ========
+function updateCountdown() {
+  const target = new Date('2025-12-31T23:59:59');
+  const now = new Date();
+  const diff = target - now;
+
+  if (diff > 0) {
+    const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+    const secs = Math.floor((diff % (1000 * 60)) / 1000);
+
+    document.getElementById('cDays').textContent = String(days).padStart(2, '0');
+    document.getElementById('cHrs').textContent = String(hours).padStart(2, '0');
+    document.getElementById('cMins').textContent = String(mins).padStart(2, '0');
+    document.getElementById('cSeds').textContent = String(secs).padStart(2, '0');
+  }
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+
+// ======== السماء والنجوم ========
+const skyCanvas = document.getElementById('skyCanvas');
+const skyCtx = skyCanvas?.getContext('2d');
+
+function drawSky() {
+  if (!skyCtx) return;
   
-  <div class="wrap">
-    <section class="hero" id="hero">
-      <h1 class="title">وائل <span style="color:#FF6B8B">♥</span> روان</h1>
-      <div class="tag" id="heroTag">أنتِ قصيدتي الأبدية</div>
-      <div class="btns">
-        <button class="btn pink" id="startBtn">انثري قهوة العشق</button>
-        <button class="btn" id="musicBtn" aria-pressed="false">نغمة القلب</button>
-        <button class="btn outline" id="toGuest">ذكرى عابرة</button>
-        <button class="btn outline" id="copyLink">اقتباس الحب</button>
-      </div>
-      <div class="hint" id="musicHint"></div>
-    </section>
-
-    <section id="secretLove">
-      <span class="badge">مفتاحُ القلب</span>
-      <p style="text-align:center;margin:12px 0 16px;font-size:19px">يا روان، أدخلي عامَ ميلادِكِ لتُضيئي سرَّ القلب.</p>
-      <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <input type="number" id="secretPass" class="pill" placeholder="رمزُ السر" style="width:130px;text-align:center;font-size:24px" />
-        <button class="btn pink" id="unlockBtn">افتحي أبوابَ العشق</button>
-      </div>
-      <div id="secretContent" class="poem-box" style="display:none;margin-top:18px;border-color:#ff6b8b;min-height:auto;">
-        <p class="poem-line show" style="line-height:1.9;font-size:21px;font-weight:500;text-align:justify;">
-          روان، يا لحنَ الياسمين، اسمُكِ قصيدةٌ تُنقشُ على جدرانِ قلبي. أنتِ النجمةُ التي لا تغيب، والميناءُ الذي يُرسي وائلَ إلى الأبد.
-        </p>
-      </div>
-    </section>
-
-    <section id="countdownSection">
-      <span class="badge">عدّادُ الخلود</span>
-      <div id="countdown">
-        <div class="c-unit"><div class="c-val" id="cDays">00</div><div class="c-label">يوم</div></div>
-        <div class="c-unit"><div class="c-val" id="cHrs">00</div><div class="c-label">ساعة</div></div>
-        <div class="c-unit"><div class="c-val" id="cMins">00</div><div class="c-label">دقيقة</div></div>
-        <div class="c-unit"><div class="c-val" id="cSeds">00</div><div class="c-label">ثانية</div></div>
-      </div>
-    </section>
-
-    <section id="sky">
-      <span class="badge" id="skyBadge">نجومُ العشق</span>
-      <p style="text-align:center;opacity:.9;margin:10px 0 16px" id="skyNote">انظري إلى النجوم، فهي حكايتنا.</p>
-      <div id="skyWrap">
-        <canvas id="skyCanvas" width="800" height="380"></canvas>
-        <span class="star-label" style="top:18%;left:30%" id="star1">ويغا</span>
-        <span class="star-label" style="top:10%;right:25%" id="star2">دنيب</span>
-        <span class="star-label" style="bottom:28%;left:42%" id="star3">الطائر</span>
-        <span class="star-label" style="top:60%;left:12%" id="star4">عرق الجاثا</span>
-        <span class="star-label" style="bottom:40%;right:35%" id="star5">سبيكا</span>
-      </div>
-    </section>
-
-    <section id="s1"><span class="badge" id="b1">بدايةُ الوله</span><div class="lines" id="l1"></div></section>
-    <section id="s2"><span class="badge" id="b2">همسُ الاسم</span><div class="lines" id="l2"></div></section>
-    <section id="s4"><span class="badge" id="b4">عهدُ الخلود</span><div class="lines" id="l4"></div></section>
-
-    <section id="poems">
-      <span class="badge">ديوانُ الروح</span>
-      <div class="poem-controls">
-        <input id="herName" class="pill" style="min-width:150px" placeholder="اسمها الشاعري" value="روان" />
-        <select id="poemMode" class="pill">
-          <option value="qabbani" selected>نزار الكلاسيكي</option>
-          <option value="free">نزار الهادئ</option>
-          <option value="pledge">نزار الوعد</option>
-          <option value="velvet">نزار المخملي</option>
-        </select>
-        <button class="btn pink" id="newPoem">نظمي قصيدتي</button>
-      </div>
-      <div class="poem-box" id="poemBox" aria-live="polite"></div>
-    </section>
-
-    <section id="fortune">
-      <span class="badge">ليلةُ الوعد</span>
-      <div style="text-align:center">
-        <button class="btn pink" id="fortuneBtn">خططي ليلةَ الحب</button>
-      </div>
-      <div id="fortuneCard" style="display:none;margin-top:18px;background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow)">
-        <p id="fText" style="font-size:21px;font-weight:700;margin:0"></p>
-      </div>
-    </section>
-
-    <section id="game">
-      <span class="badge">مغامرةُ الحب</span>
-      <canvas id="marioCanvas"></canvas>
-      <div class="game-ui">
-        <button class="btn pink" id="gStart">ابدأي المغامرة</button>
-        <button class="btn outline" id="gReset">أعيدي الرحلة</button>
-        <span class="game-pill">النتيجة: <b id="gScore">0</b></span>
-        <span class="game-pill">الوقت: <b id="gTime">60</b></span>
-        <span class="game-pill">الأرواح: <b id="gLives">3</b></span>
-      </div>
-    </section>
-
-    <section id="guest">
-      <span class="badge">دفترُ الذكرى</span>
-      <div style="margin-top:12px">
-        <script src="https://utteranc.es/client.js"
-          repo="waelalza/rawan"
-          issue-term="pathname"
-          label="comment"
-          theme="github-light"
-          crossorigin="anonymous"
-          async>
-        </script>
-      </div>
-    </section>
-  </div>
+  const w = skyCanvas.width;
+  const h = skyCanvas.height;
   
-  <audio id="audio" preload="auto" playsinline webkit-playsinline src="./assets/audio/rawan-theme.mp3" loop></audio>
-  <button class="vinyl" id="vinylBtn" aria-label="تشغيل/إيقاف النغمة"><span class="vinyl-label">R♥W</span></button>
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  // خلفية السماء
+  const gradient = skyCtx.createLinearGradient(0, 0, 0, h);
+  gradient.addColorStop(0, '#001a33');
+  gradient.addColorStop(1, '#000814');
+  skyCtx.fillStyle = gradient;
+  skyCtx.fillRect(0, 0, w, h);
+  
+  // النجوم
+  const stars = [
+    { x: w * 0.3, y: h * 0.18, size: 4 },
+    { x: w * 0.75, y: h * 0.1, size: 4 },
+    { x: w * 0.42, y: h * 0.72, size: 3 },
+    { x: w * 0.12, y: h * 0.6, size: 3 },
+    { x: w * 0.65, y: h * 0.6, size: 3 }
+  ];
+  
+  stars.forEach(star => {
+    skyCtx.fillStyle = '#FFD700';
+    skyCtx.beginPath();
+    skyCtx.arc(star.x, star.y, star.size, 0, Math.PI * 2);
+    skyCtx.fill();
+    
+    skyCtx.fillStyle = 'rgba(255, 215, 0, 0.3)';
+    skyCtx.beginPath();
+    skyCtx.arc(star.x, star.y, star.size * 2, 0, Math.PI * 2);
+    skyCtx.fill();
+  });
+}
 
-  <script src="modules/main.js" type="module"></script>
-</body>
-</html>
+drawSky();
+
+// ======== الأقسام النصية ========
+const sections = {
+  s1: ['في لحظةٍ من لحظاتِ القدر، التقتْ عيونُنا', 'وكانَ القلبُ يعرفُ، قبلَ العقل، أنّكِ أنتِ'],
+  s2: ['روان... اسمٌ يُشبهُ الماء، يُشبهُ الحياة', 'ينسابُ في الروحِ كنهرٍ من الياسمين'],
+  s4: ['سأحبُّكِ اليوم وغداً وإلى الأبد', 'وأعِدُكِ بأن تكوني دائماً، ملكةً في قلبي']
+};
+
+Object.entries(sections).forEach(([id, lines]) => {
+  const container = document.getElementById(`l${id.slice(1)}`);
+  if (container) {
+    lines.forEach(line => {
+      const p = document.createElement('p');
+      p.className = 'poem-line';
+      p.textContent = line;
+      container.appendChild(p);
+      
+      setTimeout(() => p.classList.add('show'), 100);
+    });
+  }
+});
+
+// ======== مولد القصائد ========
+const poemModes = {
+  qabbani: [
+    'يا {name}، أنتِ القصيدةُ التي لم أكتبْها بعد',
+    'أنتِ الحبُّ الذي يُعيدُ تعريفَ الحب',
+    'في عينيكِ أرى كلَّ ما لم أفهمْهُ من الدنيا'
+  ],
+  free: [
+    '{name}... اسمٌ يكفي لملءِ السماء',
+    'كلُّ نجمةٍ في الليل تهمسُ باسمِك',
+    'وأنا هنا، أكتبُ الحبَّ من جديد'
+  ],
+  pledge: [
+    'أقسمُ، يا {name}، أن أحبَّكِ كما لم يُحَب أحد',
+    'سأكونُ ظِلَّكِ في الشمس، ونورَكِ في الليل',
+    'وسأبقى معكِ حتى آخرِ نبضة'
+  ],
+  velvet: [
+    'همسةٌ في أذنِك يا {name}: أنتِ كلُّ شيء',
+    'أنتِ السكونُ الذي أبحثُ عنه',
+    'والعاصفةُ التي أرغبُ فيها'
+  ]
+};
+
+document.getElementById('newPoem')?.addEventListener('click', () => {
+  const mode = document.getElementById('poemMode')?.value || 'qabbani';
+  const name = document.getElementById('herName')?.value || 'روان';
+  const poemBox = document.getElementById('poemBox');
+  
+  if (poemBox) {
+    const lines = poemModes[mode] || poemModes.qabbani;
+    poemBox.innerHTML = '';
+    
+    lines.forEach((line, i) => {
+      const p = document.createElement('p');
+      p.className = 'poem-line';
+      p.textContent = line.replace('{name}', name);
+      poemBox.appendChild(p);
+      
+      setTimeout(() => p.classList.add('show'), i * 300);
+    });
+  }
+});
+
+// ======== قارئة الطالع (Fortune) ========
+const fortunes = [
+  'الليلةَ، خذيها إلى مطعمٍ على البحر، واحكي لها عن النجوم',
+  'اصنعي لها هديةً بيديك، شيءٌ صغيرٌ لكنّه من القلب',
+  'اكتبي لها رسالةً بخط يدك، واتركيها تحتَ وسادتها',
+  'خذيها في نزهةٍ طويلة، فقط أنتما والطبيعة',
+  'احجزي ليلةً تحتَ النجوم، وارويْ لها حكايةَ حبّكما'
+];
+
+document.getElementById('fortuneBtn')?.addEventListener('click', () => {
+  const card = document.getElementById('fortuneCard');
+  const text = document.getElementById('fText');
+  
+  if (card && text) {
+    const randomFortune = fortunes[Math.floor(Math.random() * fortunes.length)];
+    text.textContent = randomFortune;
+    card.style.display = 'block';
+    confetti({ x: window.innerWidth / 2, y: window.innerHeight / 2 });
+  }
+});
+
+// ======== إظهار الرسائل المؤقتة ========
+function showToast(message) {
+  const toast = document.getElementById('toast');
+  if (toast) {
+    toast.textContent = message;
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 3000);
+  }
+}
+
+// ======== تهيئة الرسوم المتحركة ========
+initCloudAnimation();
+initBlossomAnimation();
+initGame();
+
+console.log('💕 مرحباً يا روان، هذا الموقع مصنوعٌ بحب من وائل 💕');
