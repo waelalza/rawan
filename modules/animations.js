@@ -1,174 +1,169 @@
-// ======== سماء الحب: خلفية الأنيمي (Clouds) ========
+// ======== سماء الحب: خلفية الأنيمي ========
+
+function Cloud(x, y, size, speed, canvasWidth, canvasHeight) {
+  this.x = x;
+  this.y = y;
+  this.size = size;
+  this.speed = speed;
+  this.canvasWidth = canvasWidth;
+  this.canvasHeight = canvasHeight;
+}
+
+Cloud.prototype.update = function() {
+  this.x += this.speed;
+  if (this.x > this.canvasWidth + this.size) {
+    this.x = -this.size;
+    this.y = Math.random() * this.canvasHeight * 0.4;
+  }
+};
+
+Cloud.prototype.draw = function(ctx) {
+  ctx.fillStyle = 'rgba(255,255,255,0.5)';
+  ctx.beginPath();
+  ctx.ellipse(this.x, this.y, this.size, this.size * 0.6, 0, 0, Math.PI * 2);
+  ctx.fill();
+};
+
 export function initCloudAnimation() {
-  const لوحة_السماء = document.querySelector('#animeCanvas');
-  const فرشاة_السماء = لوحة_السماء.getContext('2d');
-  let سحب_الغرام = [];
-  let isVisible = true;
-  let animationFrame = null;
-  
-  function إعادة_حجم_السماء() {
-    لوحة_السماء.width = window.innerWidth;
-    لوحة_السماء.height = window.innerHeight;
+  const canvas = document.querySelector('#animeCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  let clouds = [];
+  let animationFrameId = null;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initClouds();
   }
-  
-  window.addEventListener('resize', إعادة_حجم_السماء);
-  إعادة_حجم_السماء();
-  
-  function سحابة(x, y, حجم, سرعة) {
-    this.x = x;
-    this.y = y;
-    this.حجم = حجم;
-    this.سرعة = سرعة;
-  }
-  
-  سحابة.prototype.تحديث = function() {
-    this.x += this.سرعة;
-    if(this.x > لوحة_السماء.width + this.حجم) {
-      this.x = -this.حجم;
-      this.y = Math.random() * لوحة_السماء.height * 0.4;
-    }
-  };
-  
-  سحابة.prototype.رسم = function() {
-    فرشاة_السماء.fillStyle = 'rgba(255,255,255,0.5)';
-    فرشاة_السماء.beginPath();
-    فرشاة_السماء.ellipse(this.x, this.y, this.حجم, this.حجم * 0.6, 0, 0, Math.PI * 2);
-    فرشاة_السماء.fill();
-  };
-  
-  function بداية_السحب() {
-    سحب_الغرام = [];
-    for(let i = 0; i < 12; i++) {
-      سحب_الغرام.push(new سحابة(
-        Math.random() * لوحة_السماء.width,
-        Math.random() * لوحة_السماء.height * 0.4,
+
+  function initClouds() {
+    clouds = [];
+    for (let i = 0; i < 12; i++) {
+      clouds.push(new Cloud(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height * 0.4,
         40 + Math.random() * 60,
-        0.3 + Math.random() * 0.4
+        0.3 + Math.random() * 0.4,
+        canvas.width,
+        canvas.height
       ));
     }
   }
-  
-  function حركة_السماء() {
-    if (!isVisible) return;
-    
-    فرشاة_السماء.clearRect(0, 0, لوحة_السماء.width, لوحة_السماء.height);
-    const تدرج = فرشاة_السماء.createLinearGradient(0, 0, 0, لوحة_السماء.height);
-    تدرج.addColorStop(0, '#FFB6C1');
-    تدرج.addColorStop(1, '#ADD8E6');
-    فرشاة_السماء.fillStyle = تدرج;
-    فرشاة_السماء.fillRect(0, 0, لوحة_السماء.width, لوحة_السماء.height);
-    
-    سحب_الغرام.forEach(سحابة => {
-      سحابة.تحديث();
-      سحابة.رسم();
+
+  function animateClouds() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
+    gradient.addColorStop(0, '#FFB6C1');
+    gradient.addColorStop(1, '#ADD8E6');
+    ctx.fillStyle = gradient;
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    clouds.forEach(cloud => {
+      cloud.update();
+      cloud.draw(ctx);
     });
-    
-    animationFrame = requestAnimationFrame(حركة_السماء);
+    animationFrameId = requestAnimationFrame(animateClouds);
   }
-  
-  // Use IntersectionObserver for performance optimization
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  // Optimization: Only run animation when canvas is visible
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      isVisible = entry.isIntersecting;
-      if (isVisible && !animationFrame) {
-        animationFrame = requestAnimationFrame(حركة_السماء);
-      } else if (!isVisible && animationFrame) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-      }
-    });
+    if (entries[0].isIntersecting) {
+      animateClouds();
+    } else {
+      cancelAnimationFrame(animationFrameId);
+    }
   }, { threshold: 0 });
-  
-  observer.observe(لوحة_السماء);
-  
-  بداية_السحب();
-  حركة_السماء();
+
+  observer.observe(canvas);
 }
 
-// ======== أزهار الكرز: رقصة الياسمين (Blossoms) ========
+
+// ======== أزهار الكرز: رقصة الياسمين ========
+
+function Petal(x, y, size, canvasWidth, canvasHeight) {
+  this.x = x;
+  this.y = y;
+  this.size = size;
+  this.speed = 1 + Math.random() * 2.5;
+  this.angle = Math.random() * 2 * Math.PI;
+  this.angleSpeed = Math.random() * 0.04 - 0.02;
+  this.drift = Math.random() * 1 - 0.5;
+  this.color = Math.random() > 0.5 ? 'rgba(255,200,220,0.9)' : 'rgba(255,255,255,0.9)';
+  this.canvasWidth = canvasWidth;
+  this.canvasHeight = canvasHeight;
+}
+
+Petal.prototype.update = function() {
+  this.y += this.speed;
+  this.x += this.drift + Math.sin(this.angle) * 1.2;
+  this.angle += this.angleSpeed;
+  if (this.y > this.canvasHeight) {
+    this.y = -20;
+    this.x = Math.random() * this.canvasWidth;
+  }
+};
+
+Petal.prototype.draw = function(ctx) {
+  ctx.save();
+  ctx.translate(this.x, this.y);
+  ctx.rotate(this.angle);
+  ctx.fillStyle = this.color;
+  ctx.beginPath();
+  ctx.ellipse(0, 0, this.size * 1.5, this.size, 0, 0, Math.PI * 2);
+  ctx.fill();
+  ctx.restore();
+};
+
 export function initBlossomAnimation() {
-  const لوحة_الأزهار = document.querySelector('#blossomCanvas');
-  const فرشاة_الأزهار = لوحة_الأزهار.getContext('2d');
-  let بتلات_الياسمين = [];
-  const عدد_البتلات = 80;
-  let isVisible = true;
-  let animationFrame = null;
-  
-  function إعادة_حجم_الأزهار() {
-    لوحة_الأزهار.width = window.innerWidth;
-    لوحة_الأزهار.height = window.innerHeight;
+  const canvas = document.querySelector('#blossomCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const petalCount = 80;
+  let petals = [];
+  let animationFrameId = null;
+
+  function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    initPetals();
   }
-  
-  window.addEventListener('resize', إعادة_حجم_الأزهار);
-  إعادة_حجم_الأزهار();
-  
-  function بتلة(x, y, حجم) {
-    this.x = x;
-    this.y = y;
-    this.حجم = حجم;
-    this.سرعة = 1 + Math.random() * 2.5;
-    this.زاوية = Math.random() * 2 * Math.PI;
-    this.سرعة_الزاوية = Math.random() * 0.04 - 0.02;
-    this.انجراف = Math.random() * 1 - 0.5;
-    this.لون = Math.random() > 0.5 ? 'rgba(255,200,220,0.9)' : 'rgba(255,255,255,0.9)';
-  }
-  
-  بتلة.prototype.تحديث = function() {
-    this.y += this.سرعة;
-    this.x += this.انجراف + Math.sin(this.زاوية) * 1.2;
-    this.زاوية += this.سرعة_الزاوية;
-    
-    if(this.y > لوحة_الأزهار.height) {
-      this.y = -20;
-      this.x = Math.random() * لوحة_الأزهار.width;
+
+  function initPetals() {
+    petals = [];
+    for (let i = 0; i < petalCount; i++) {
+      petals.push(new Petal(
+        Math.random() * canvas.width,
+        Math.random() * canvas.height,
+        4 + Math.random() * 5,
+        canvas.width,
+        canvas.height
+      ));
     }
-  };
-  
-  بتلة.prototype.رسم = function() {
-    فرشاة_الأزهار.save();
-    فرشاة_الأزهار.translate(this.x, this.y);
-    فرشاة_الأزهار.rotate(this.زاوية);
-    فرشاة_الأزهار.fillStyle = this.لون;
-    فرشاة_الأزهار.beginPath();
-    فرشاة_الأزهار.ellipse(0, 0, this.حجم * 1.5, this.حجم, 0, 0, Math.PI * 2);
-    فرشاة_الأزهار.fill();
-    فرشاة_الأزهار.restore();
-  };
-  
-  for(let i = 0; i < عدد_البتلات; i++) {
-    بتلات_الياسمين.push(new بتلة(
-      Math.random() * لوحة_الأزهار.width,
-      Math.random() * لوحة_الأزهار.height,
-      4 + Math.random() * 5
-    ));
   }
-  
-  function رقصة_الأزهار() {
-    if (!isVisible) return;
-    
-    فرشاة_الأزهار.clearRect(0, 0, لوحة_الأزهار.width, لوحة_الأزهار.height);
-    بتلات_الياسمين.forEach(p => {
-      p.تحديث();
-      p.رسم();
+
+  function animateBlossoms() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    petals.forEach(p => {
+      p.update();
+      p.draw(ctx);
     });
-    
-    animationFrame = requestAnimationFrame(رقصة_الأزهار);
+    animationFrameId = requestAnimationFrame(animateBlossoms);
   }
-  
-  // Use IntersectionObserver for performance optimization
+
+  window.addEventListener('resize', resizeCanvas);
+  resizeCanvas();
+
+  // Optimization: Only run animation when canvas is visible
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      isVisible = entry.isIntersecting;
-      if (isVisible && !animationFrame) {
-        animationFrame = requestAnimationFrame(رقصة_الأزهار);
-      } else if (!isVisible && animationFrame) {
-        cancelAnimationFrame(animationFrame);
-        animationFrame = null;
-      }
-    });
+    if (entries[0].isIntersecting) {
+      animateBlossoms();
+    } else {
+      cancelAnimationFrame(animationFrameId);
+    }
   }, { threshold: 0 });
-  
-  observer.observe(لوحة_الأزهار);
-  
-  رقصة_الأزهار();
+
+  observer.observe(canvas);
 }
