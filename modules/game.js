@@ -44,12 +44,13 @@ export function initGame(){
   const lerp = (a,b,t)=> a + (b-a)*t;
   const easeOut = (t)=> 1- Math.pow(1-t, 3);
 
+  let toastTimeout;
   function showToast(msg){
     if(!toastEl) return;
     toastEl.textContent = msg;
     toastEl.style.display = 'block';
-    clearTimeout(showToast.t);
-    showToast.t = setTimeout(()=> toastEl.style.display='none', 1500);
+    clearTimeout(toastTimeout);
+    toastTimeout = setTimeout(()=> toastEl.style.display='none', 1500);
   }
 
   // Layout
@@ -115,7 +116,7 @@ export function initGame(){
       o.type = 'triangle'; o.frequency.value = 720;
       g.gain.value = 0.08; o.connect(g); g.connect(ac.destination);
       o.start();
-      setTimeout(()=>{ o.stop(); }, 100);
+      setTimeout(()=>{ try{ o.stop(); }catch{} }, 100);
     }catch{ /* ignore */ }
   }
 
@@ -167,7 +168,6 @@ export function initGame(){
     t0 = performance.now(); last = t0; timeLeft = GAME_SECONDS; score = 0; lives = 3;
     updateHUD();
     showToast && showToast('ابدئي اللعب — التقطي اليراعات');
-    loop(t0);
   }
 
   function reset(){
@@ -188,19 +188,24 @@ export function initGame(){
 
   // Main loop
   function loop(now){
-    if(!started){ raf = requestAnimationFrame(loop); return; }
     const dt = Math.min(32, now - last); last = now;
-    timeLeft -= dt/1000; if(timeLeft<=0){ gameOver(); }
-
-    // wind control
-    wind = lerp(wind, (keys.D?1:0) - (keys.A?1:0), 0.05);
-
-    update(dt);
+    
+    if(started){
+      timeLeft -= dt/1000; 
+      if(timeLeft<=0){ gameOver(); }
+      // wind control
+      wind = lerp(wind, (keys.D?1:0) - (keys.A?1:0), 0.05);
+      update(dt);
+    }
+    
     drawBG();
     drawScene(dt);
-    updateHUD();
+    if(started) updateHUD();
     raf = requestAnimationFrame(loop);
   }
+
+  // Start animation loop
+  raf = requestAnimationFrame(loop);
 
   function gameOver(){
     started=false; over=true;
