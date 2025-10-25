@@ -3,6 +3,9 @@ import { initCloudAnimation, initBlossomAnimation } from './animations.js';
 import confetti from './confetti.js';
 import { initGame } from './game.js';
 
+// ======== الإعدادات ========
+const SITE_URL = 'https://rawan.pages.dev/';
+
 // ======== إعداد الصوت ========
 const audio = document.getElementById('audio');
 const musicBtn = document.getElementById('musicBtn');
@@ -35,9 +38,8 @@ document.getElementById('startBtn')?.addEventListener('click', () => {
 
 // ======== زر نسخ الرابط ========
 document.getElementById('copyLink')?.addEventListener('click', async () => {
-  const url = 'https://rawan.pages.dev/';
   try {
-    await navigator.clipboard.writeText(url);
+    await navigator.clipboard.writeText(SITE_URL);
     showToast('تم نسخ رابط الحب إلى قلبك 💕');
     confetti({ x: window.innerWidth / 2, y: window.innerHeight / 3 });
   } catch (err) {
