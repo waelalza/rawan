@@ -1,0 +1,42 @@
+:root{--pink:#FF6B8B;--lav:#8B88FF;--ink:#2B2530;--glass:rgba(255,255,255,.64);--glass-b:rgba(255,255,255,.28);--shadow:0 12px 40px rgba(43,37,48,.15);--r:20px}
+*{box-sizing:border-box}html,body{height:100%}
+body{margin:0;font-family:"Tajawal",system-ui,-apple-system,Segoe UI,Roboto,Arial;color:var(--ink);background:#FFF;-webkit-font-smoothing:antialiased;overflow-x:hidden;position:relative}
+#animeCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-4;pointer-events:none;}
+#blossomCanvas{position:fixed;top:0;left:0;width:100%;height:100%;z-index:-2;pointer-events:none;}
+.wrap{max-width:900px;margin:auto;padding:20px 20px 120px;position:relative;z-index:2}
+section{margin:32px auto;background:var(--glass);border:1px solid var(--glass-b);border-radius:var(--r);box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);padding:28px 24px}
+.hero{text-align:center;padding:60px 20px 28px}
+.title{font-size:clamp(32px,8vw,64px);font-weight:800;letter-spacing:1px}
+.tag{margin-top:12px;font-size:clamp(18px,4.5vw,26px);font-weight:500;min-height:1.8em}
+.btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center;margin-top:20px}
+.btn{border:none;border-radius:999px;padding:12px 18px;font-weight:700;cursor:pointer;background:#2B2530;color:#fff;box-shadow:var(--shadow);transition:transform 0.2s}
+.btn:hover{transform:scale(1.05)}
+.btn.pink{background:var(--pink)}
+.btn.outline{background:transparent;color:#2B2530;border:1px solid #d8d1dc}
+.hint{font-size:13px;opacity:.75;margin-top:10px}
+.badge{font-weight:800;color:#fff;background:linear-gradient(135deg,var(--pink),var(--lav));padding:10px 14px;border-radius:999px;font-size:15px;box-shadow:0 8px 20px rgba(255,107,139,.28);margin-bottom:12px;display:inline-block}
+.lines{font-size:24px;line-height:2;min-height:6em}
+.line{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease}
+.line.show{opacity:1;transform:translateY(0)}
+#skyWrap{position:relative}
+#skyCanvas{width:100%;height:auto;border-radius:var(--r);background:radial-gradient(ellipse at bottom,#1b2735 0%,#090a0f 100%);box-shadow:0 0 25px rgba(255,107,139,.25)}
+.star-label{position:absolute;color:#fff;font-family:'Caveat',cursive;font-size:15px;text-shadow:0 0 6px rgba(255,255,255,.9);cursor:pointer}
+.pill{background:#fff;border:1px solid #efe5f3;padding:12px 14px;border-radius:12px;min-width:80px;text-align:center;box-shadow:var(--shadow);font-weight:700;font-size:18px}
+.poem-controls{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin:14px 0}
+.poem-box{border-radius:18px;border:1px solid #eeddf0;background:#fff;box-shadow:var(--shadow);padding:20px;min-height:8em}
+.poem-line{opacity:0;transform:translateY(12px);transition:opacity .5s ease,transform .5s ease;font-size:24px;line-height:2}
+.poem-line.show{opacity:1;transform:translateY(0)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%) translateY(20px);background:#111;color:#fff;padding:14px 18px;border-radius:999px;font-weight:700;opacity:0;transition:.4s;box-shadow:0 10px 25px rgba(0,0,0,.4);z-index:50}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.vinyl{position:fixed;left:16px;bottom:20px;z-index:40;width:60px;height:60px;border-radius:50%;background:radial-gradient(circle at 30% 30%,#333 20%,#111 60%,#000 61%),conic-gradient(#000 0 25%,#111 0 50%,#000 0 75%,#111 0);box-shadow:0 12px 25px rgba(0,0,0,.25);border:2px solid #222;display:grid;place-items:center;color:#fff}
+.vinyl.playing{animation:spin 5s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.vinyl-label{width:26px;height:26px;border-radius:50%;background:#FF6B8B;display:grid;place-items:center;font-weight:900;font-size:13px;box-shadow:inset 0 0 0 2px rgba(255,255,255,.7)}
+#marioCanvas{width:100%;height:auto;border-radius:var(--r);background:#87CEEB;box-shadow:var(--shadow);border:1px solid #eeddf0}
+.game-ui{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:center;margin-top:12px}
+.game-pill{background:#fff;border:1px solid #efe5f3;padding:10px 14px;border-radius:999px;min-width:70px;text-align:center;font-weight:700}
+#countdown{display:flex;justify-content:center;gap:12px;margin-top:24px;font-weight:800}
+.c-unit{text-align:center;background:#fff;padding:10px 14px;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,.08);min-width:70px}
+.c-val{font-size:26px;color:var(--pink)}
+.c-label{font-size:13px;opacity:.7}
+#unlockBtn.success{background:#4CAF50;}
