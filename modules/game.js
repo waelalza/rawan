@@ -1,233 +1,250 @@
-// ======== مغامرة الحب: لعبة ماريو الرومانسية ========
-import confetti from './confetti.js';
+// ======== مغامرة الحب: 8-Bit Platformer ========
 
 export function initGame() {
-  const لوحة_المغامرة = document.querySelector('#marioCanvas');
-  const فرشاة_المغامرة = لوحة_المغامرة.getContext('2d');
-  const ابدأ_المغامرة = document.querySelector('#gStart');
-  const أعد_الرحلة = document.querySelector('#gReset');
-  const القلوب = document.querySelector('#gScore');
-  const الوقت = document.querySelector('#gTime');
-  const الأرواح = document.querySelector('#gLives');
-  
-  let وائل, منصات = [], قلوب_المغامرة = [];
-  let تدور = false;
-  let الوقت_المتبقي = 60;
-  let النتيجة = 0;
-  let الأرواح_المتبقية = 3;
-  let إطار = 0;
-  let gameInitialized = false;
-  
-  function مستطيل(x, y, عرض, ارتفاع) {
-    return {x, y, عرض, ارتفاع};
+  // DOM Elements
+  const canvas = document.querySelector('#marioCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const scoreEl = document.querySelector('#gScore');
+  const timeEl = document.querySelector('#gTime');
+  const livesEl = document.querySelector('#gLives');
+  const startBtn = document.querySelector('#gStart');
+  const resetBtn = document.querySelector('#gReset');
+  const toastEl = document.querySelector('#toast');
+
+  // Game State
+  let player, platforms, enemies, score, lives, timeLeft, isRunning, keys, timerInterval, animationFrameId;
+  let isInvincible = false, invincibilityTimer = 0;
+  const gravity = 0.5;
+  const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
+  let canvasWidth, canvasHeight;
+
+  // Utility to show toast
+  const showToast = (t) => {
+    toastEl.textContent = t || "";
+    toastEl.classList.add('show');
+    setTimeout(() => toastEl.classList.remove('show'), 1400);
+  };
+
+  function setupCanvas() {
+    const cssW = canvas.clientWidth;
+    const cssH = Math.round(cssW * 0.53); // Aspect ratio
+    canvas.style.height = cssH + 'px';
+    canvas.width = Math.round(cssW * dpr);
+    canvas.height = Math.round(cssH * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    canvasWidth = cssW;
+    canvasHeight = cssH;
   }
-  
-  function يصطدم(a, b) {
-    return a.x < b.x + b.عرض && 
-           a.x + a.عرض > b.x && 
-           a.y < b.y + b.ارتفاع && 
-           a.y + a.ارتفاع > b.y;
-  }
-  
-  function تهيئة_المغامرة() {
-    const dpr = Math.max(1, Math.min(2, window.devicePixelRatio || 1));
-    const cssW = لوحة_المغامرة.clientWidth;
-    const cssH = Math.round(cssW * 0.53);
-    لوحة_المغامرة.style.height = cssH + 'px';
-    لوحة_المغامرة.width = Math.round(cssW * dpr);
-    لوحة_المغامرة.height = Math.round(cssH * dpr);
-    فرشاة_المغامرة.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  
-  function رسم_وائل() {
-    فرشاة_المغامرة.fillStyle = '#FF6B8B';
-    فرشاة_المغامرة.fillRect(وائل.x, وائل.y, وائل.عرض, وائل.ارتفاع);
-    فرشاة_المغامرة.fillStyle = '#000';
-    فرشاة_المغامرة.fillRect(وائل.x + 4, وائل.y + 8, 4, 4);
-  }
-  
-  function رسم_منصة(m) {
-    فرشاة_المغامرة.fillStyle = '#228B22';
-    فرشاة_المغامرة.fillRect(m.x, m.y, m.عرض, m.ارتفاع);
-  }
-  
-  function رسم_قلب(h) {
-    فرشاة_المغامرة.fillStyle = '#FF4040';
-    فرشاة_المغامرة.beginPath();
-    فرشاة_المغامرة.moveTo(h.x, h.y - 6);
-    فرشاة_المغامرة.bezierCurveTo(h.x + 8, h.y - 18, h.x + 28, h.y - 10, h.x + 28, h.y + 6);
-    فرشاة_المغامرة.bezierCurveTo(h.x + 28, h.y + 22, h.x + 14, h.y + 30, h.x, h.y + 38);
-    فرشاة_المغامرة.bezierCurveTo(h.x - 14, h.y + 30, h.x - 28, h.y + 22, h.x - 28, h.y + 6);
-    فرشاة_المغامرة.bezierCurveTo(h.x - 28, h.y - 10, h.x - 8, h.y - 18, h.x, h.y - 6);
-    فرشاة_المغامرة.fill();
-  }
-  
-  function إنتاج_منصات() {
-    const W = لوحة_المغامرة.clientWidth;
-    const H = لوحة_المغامرة.clientHeight;
-    منصات = [مستطيل(0, H - 10, W, 10)];
-    for(let i = 0; i < 5; i++) {
-      const x = 100 + i * 150;
-      const y = 150 + Math.random() * 50;
-      منصات.push(مستطيل(x, y, 80, 10));
-    }
-  }
-  
-  function إنتاج_قلوب() {
-    قلوب_المغامرة = [];
-    for(let i = 0; i < 3; i++) {
-      قلوب_المغامرة.push({
-        x: 150 + i * 150,
-        y: 100 + Math.random() * 50,
-        r: 18
-      });
-    }
-  }
-  
-  function بدء_المغامرة() {
-    وائل = {
-      x: 50,
-      y: 200,
-      vx: 0,
-      vy: 0,
-      عرض: 16,
-      ارتفاع: 32,
-      يقفز: false
-    };
-    النتيجة = 0;
-    الأرواح_المتبقية = 3;
-    الوقت_المتبقي = 60;
-    القلوب.textContent = 0;
-    الوقت.textContent = 60;
-    الأرواح.textContent = 3;
-    تهيئة_المغامرة();
-    إنتاج_منصات();
-    إنتاج_قلوب();
-    تدور = true;
-    cancelAnimationFrame(إطار);
-    مغامرة_الحب.آخر_ثانية = performance.now();
-    مغامرة_الحب();
-  }
-  
-  function مغامرة_الحب() {
-    if(!تدور) return;
-    إطار = requestAnimationFrame(مغامرة_الحب);
+
+  function resetGame() {
+    isRunning = false;
+    if (timerInterval) clearInterval(timerInterval);
+    if (animationFrameId) cancelAnimationFrame(animationFrameId);
     
-    const W = لوحة_المغامرة.clientWidth;
-    const H = لوحة_المغامرة.clientHeight;
+    setupCanvas();
     
-    فرشاة_المغامرة.clearRect(0, 0, W, H);
-    فرشاة_المغامرة.fillStyle = '#87CEEB';
-    فرشاة_المغامرة.fillRect(0, 0, W, H);
+    score = 0;
+    lives = 3;
+    timeLeft = 60;
+    isInvincible = false;
+    invincibilityTimer = 0;
+    keys = { ArrowLeft: false, ArrowRight: false };
+
+    player = { x: 50, y: canvasHeight - 50, w: 16, h: 32, vx: 0, vy: 0, onGround: false };
     
-    وائل.x += وائل.vx;
-    وائل.y += وائل.vy;
-    وائل.vy += 0.5;
+    platforms = [
+      { x: 0, y: canvasHeight - 10, w: canvasWidth, h: 10 }, // Floor
+      { x: 150, y: canvasHeight - 60, w: 80, h: 10 },
+      { x: 300, y: canvasHeight - 110, w: 80, h: 10 },
+      { x: 450, y: canvasHeight - 60, w: 80, h: 10 },
+      { x: 600, y: canvasHeight - 110, w: 80, h: 10 }
+    ];
+
+    enemies = [
+      { x: 150, y: canvasHeight - 76, w: 16, h: 16, vx: -0.5, initialX: 150, range: 64 }, // On platform 1
+      { x: 300, y: canvasHeight - 126, w: 16, h: 16, vx: -0.5, initialX: 300, range: 64 }, // On platform 2
+      { x: 450, y: canvasHeight - 26, w: 16, h: 16, vx: -0.5, initialX: 450, range: 64 }, // On floor
+      { x: 600, y: canvasHeight - 126, w: 16, h: 16, vx: -0.5, initialX: 600, range: 64 } // On platform 4
+    ];
+
+    updateUI();
+    draw(); // Initial draw
+  }
+
+  function startGame() {
+    if (isRunning) return;
+    resetGame();
+    isRunning = true;
     
-    if(وائل.x < 0) وائل.x = 0;
-    if(وائل.x > W - وائل.عرض) وائل.x = W - وائل.عرض;
-    
-    if(وائل.y > H - وائل.ارتفاع) {
-      وائل.y = H - وائل.ارتفاع;
-      وائل.vy = 0;
-      وائل.يقفز = false;
-    }
-    
-    for(const p of منصات) {
-      const قبل = {...وائل};
-      if(يصطدم(وائل, p) && وائل.vy > 0 && قبل.y + قبل.ارتفاع <= p.y + 5) {
-        وائل.y = p.y - وائل.ارتفاع;
-        وائل.vy = 0;
-        وائل.يقفز = false;
+    timerInterval = setInterval(() => {
+      if (!isRunning) return;
+      timeLeft--;
+      updateUI();
+      if (timeLeft <= 0) {
+        endGame(false);
       }
-      رسم_منصة(p);
-    }
+    }, 1000);
     
-    for(let i = قلوب_المغامرة.length - 1; i >= 0; i--) {
-      const h = قلوب_المغامرة[i];
-      const cx = Math.max(وائل.x, Math.min(h.x, وائل.x + وائل.عرض));
-      const cy = Math.max(وائل.y, Math.min(h.y, وائل.y + وائل.ارتفاع));
-      const dx = h.x - cx;
-      const dy = h.y - cy;
-      if(dx * dx + dy * dy <= h.r * h.r) {
-        قلوب_المغامرة.splice(i, 1);
-        النتيجة++;
-        القلوب.textContent = النتيجة;
-        confetti({
-          particleCount: 50,
-          spread: 50,
-          origin: {x: (وائل.x + 8) / W, y: (وائل.y + 16) / H}
-        });
-      }
-      رسم_قلب(h);
-    }
-    
-    رسم_وائل();
-    
-    const الآن = performance.now();
-    if(الآن - مغامرة_الحب.آخر_ثانية >= 1000) {
-      مغامرة_الحب.آخر_ثانية = الآن;
-      الوقت_المتبقي--;
-      الوقت.textContent = الوقت_المتبقي;
-      if(الوقت_المتبقي <= 0 || الأرواح_المتبقية <= 0) {
-        تدور = false;
-        cancelAnimationFrame(إطار);
-        const msg = النتيجة >= 3 ? "قلبي لكِ، يا روان!" : "حاولي مجددًا، يا فاتنتي!";
-        const همسة_الفرح = document.querySelector('#toast');
-        همسة_الفرح.textContent = msg;
-        همسة_الفرح.classList.add('show');
-        setTimeout(() => همسة_الفرح.classList.remove('show'), 1400);
+    gameLoop();
+  }
+
+  function endGame(didWin) {
+    isRunning = false;
+    clearInterval(timerInterval);
+    cancelAnimationFrame(animationFrameId);
+    const msg = didWin ? "قلبي لكِ، يا روان!" : "حاولي مجددًا، يا فاتنتي!";
+    showToast(msg);
+  }
+
+  function updateUI() {
+    scoreEl.textContent = score;
+    timeEl.textContent = timeLeft;
+    livesEl.textContent = lives;
+  }
+
+  function drawRect(obj, color) {
+    ctx.fillStyle = color;
+    ctx.fillRect(obj.x, obj.y, obj.w, obj.h);
+  }
+
+  function checkCollision(a, b) {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  }
+
+  function update() {
+    if (!isRunning) return;
+
+    // Handle horizontal movement
+    if (keys.ArrowLeft) player.vx = -3;
+    else if (keys.ArrowRight) player.vx = 3;
+    else player.vx = 0;
+
+    // Apply gravity
+    player.vy += gravity;
+    player.onGround = false;
+
+    // Update position
+    player.x += player.vx;
+    player.y += player.vy;
+
+    // Screen bounds
+    if (player.x < 0) player.x = 0;
+    if (player.x + player.w > canvasWidth) player.x = canvasWidth - player.w;
+
+    // Check platform collisions
+    for (const p of platforms) {
+      if (checkCollision(player, p) && player.vy > 0 && (player.y + player.h - player.vy) <= p.y) {
+        player.y = p.y - player.h;
+        player.vy = 0;
+        player.onGround = true;
       }
     }
+
+    // Fall off screen
+    if (player.y > canvasHeight) {
+      loseLife();
+    }
+
+    // Invincibility timer
+    if (isInvincible) {
+      invincibilityTimer--;
+      if (invincibilityTimer <= 0) {
+        isInvincible = false;
+      }
+    }
+
+    // Update and check enemy collisions
+    for (let i = enemies.length - 1; i >= 0; i--) {
+      const e = enemies[i];
+      
+      // Move enemy
+      e.x += e.vx;
+      if (e.x < e.initialX - e.range || e.x + e.w > e.initialX + e.range + 80) { // 80 is platform width
+          e.vx *= -1;
+      }
+      
+      if (checkCollision(player, e)) {
+        // Stomp
+        if (player.vy > 0 && (player.y + player.h - player.vy) <= e.y) {
+          enemies.splice(i, 1);
+          score += 10;
+          player.vy = -5; // Bounce
+          updateUI();
+        } 
+        // Got hit
+        else if (!isInvincible) {
+          loseLife();
+        }
+      }
+    }
+    
+    // Check for win
+    if (enemies.length === 0) {
+        endGame(true);
+    }
   }
-  
-  function handleKeyDown(e) {
-    if(!تدور) return;
-    if(e.key === 'ArrowLeft') وائل.vx = -3;
-    if(e.key === 'ArrowRight') وائل.vx = 3;
-    if((e.code === 'Space' || e.key === ' ') && !وائل.يقفز) {
+
+  function loseLife() {
+    lives--;
+    updateUI();
+    if (lives <= 0) {
+      endGame(false);
+    } else {
+      isInvincible = true;
+      invincibilityTimer = 120; // 2 seconds (60fps)
+      player.x = 50;
+      player.y = canvasHeight - 50;
+      player.vy = 0;
+    }
+  }
+
+  function draw() {
+    // Clear canvas
+    ctx.fillStyle = '#87CEEB';
+    ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+    // Draw platforms
+    platforms.forEach(p => drawRect(p, '#228B22'));
+
+    // Draw enemies
+    enemies.forEach(e => drawRect(e, '#D2691E')); // Brown
+
+    // Draw player
+    if (isInvincible && Math.floor(invincibilityTimer / 6) % 2 === 0) {
+      // Flash by not drawing
+    } else {
+      drawRect(player, '#FF6B8B'); // Pink
+    }
+  }
+
+  function gameLoop() {
+    if (!isRunning) return;
+    update();
+    draw();
+    animationFrameId = requestAnimationFrame(gameLoop);
+  }
+
+  // --- Setup Event Listeners ---
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowLeft') keys.ArrowLeft = true;
+    if (e.key === 'ArrowRight') keys.ArrowRight = true;
+    if ((e.code === 'Space' || e.key === ' ') && player.onGround) {
       e.preventDefault();
-      وائل.vy = -10;
-      وائل.يقفز = true;
+      player.vy = -10;
+      player.onGround = false;
     }
-  }
+  });
+
+  document.addEventListener('keyup', e => {
+    if (e.key === 'ArrowLeft') keys.ArrowLeft = false;
+    if (e.key === 'ArrowRight') keys.ArrowRight = false;
+  });
   
-  function handleKeyUp(e) {
-    if(e.key === 'ArrowLeft' || e.key === 'ArrowRight') وائل.vx = 0;
-  }
-  
-  function handleResize() {
-    if(!تدور) {
-      تهيئة_المغامرة();
-      إنتاج_منصات();
-    }
-  }
-  
-  // Only initialize event listeners once
-  if (!gameInitialized) {
-    document.addEventListener('keydown', handleKeyDown);
-    document.addEventListener('keyup', handleKeyUp);
-    window.addEventListener('resize', handleResize);
-    
-    ابدأ_المغامرة.addEventListener('click', بدء_المغامرة);
-    أعد_الرحلة.addEventListener('click', () => {
-      تدور = false;
-      cancelAnimationFrame(إطار);
-      النتيجة = 0;
-      القلوب.textContent = 0;
-      الأرواح_المتبقية = 3;
-      الأرواح.textContent = 3;
-      الوقت_المتبقي = 60;
-      الوقت.textContent = 60;
-      تهيئة_المغامرة();
-      إنتاج_منصات();
-      إنتاج_قلوب();
-    });
-    
-    gameInitialized = true;
-  }
-  
-  // Initialize canvas size
-  تهيئة_المغامرة();
-  إنتاج_منصات();
+  startBtn.addEventListener('click', startGame);
+  resetBtn.addEventListener('click', resetGame);
+  window.addEventListener('resize', resetGame);
+
+  // Initial setup
+  resetGame();
 }
