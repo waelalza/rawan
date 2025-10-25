@@ -5,246 +5,196 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
   <meta name="theme-color" content="#FF6B8B" />
   <title>وائل و روان — ديوان الخلود</title>
-  <meta name="description" content="ديوانٌ ينبضُ بحبّ وائل وروان، حيثُ الحروفُ قصائدُ والنجومُ ذكريات، مكتوبٌ بروح نزار ودرويش." />
+  <meta name="description" content="ديوانٌ رقميّ يخلّد حبّ وائل وروان بتجربة أنيقة وسريعة، مع نجوم تفاعلية وقصائد مُولّدة." />
+
+  <!-- SEO / Share -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="وائل و روان — ديوان الخلود" />
+  <meta property="og:description" content="تجربة أنيقة وسريعة، نجوم تفاعلية، قصائد، وعدّاد موعد." />
+  <meta property="og:image" content="./assets/og-cover.jpg" />
+  <meta property="og:locale" content="ar_AR" />
+  <meta name="twitter:card" content="summary_large_image" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Caveat:wght@400&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="style.css" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="./assets/favicon.ico" />
 </head>
 <body>
-  <canvas id="animeCanvas"></canvas>
-  <canvas id="blossomCanvas"></canvas>
-  <div class="wrap">
-    <section class="hero" id="hero">
-      <h1 class="title">وائل <span style="color:#FF6B8B">♥</span> روان</h1>
-      <div class="tag" id="heroTag">أنتِ قصيدتي الأبدية</div>
-      <div class="btns">
-        <button class="btn pink" id="startBtn">انثري قهوة العشق</button>
-        <button class="btn" id="musicBtn" aria-pressed="false">نغمة القلب</button>
-        <button class="btn outline" id="toGuest">ذكرى عابرة</button>
-        <button class="btn outline" id="copyLink">اقتباس الحب</button>
-      </div>
-      <div class="hint" id="musicHint"></div>
-    </section>
-    <section id="secretLove">
-      <span class="badge">مفتاحُ القلب</span>
-      <p style="text-align:center;margin:12px 0 16px;font-size:19px">يا روان، أدخلي عامَ ميلادِكِ لتُضيئي سرَّ القلب.</p>
-      <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-        <input type="number" id="secretPass" class="pill" placeholder="رمزُ السر" style="width:130px;text-align:center;font-size:24px" />
-        <button class="btn pink" id="unlockBtn">افتحي أبوابَ العشق</button>
-      </div>
-      <div id="secretContent" class="poem-box" style="display:none;margin-top:18px;border-color:#ff6b8b;min-height:auto;">
-        <p class="poem-line show" style="line-height:1.9;font-size:21px;font-weight:500;text-align:justify;">
-          روان، يا لحنَ الياسمين، اسمُكِ قصيدةٌ تُنقشُ على جدرانِ قلبي. أنتِ النجمةُ التي لا تغيب، والميناءُ الذي يُرسي وائلَ إلى الأبد.
-        </p>
-      </div>
-    </section>
-    <section id="countdownSection">
-      <span class="badge">عدّادُ الخلود</span>
-      <div id="countdown">
-        <div class="c-unit"><div class="c-val" id="cDays">00</div><div class="c-label">يوم</div></div>
-        <div class="c-unit"><div class="c-val" id="cHrs">00</div><div class="c-label">ساعة</div></div>
-        <div class="c-unit"><div class="c-val" id="cMins">00</div><div class="c-label">دقيقة</div></div>
-        <div class="c-unit"><div class="c-val" id="cSeds">00</div><div class="c-label">ثانية</div></div>
+  <!-- Background canvases -->
+  <canvas id="animeCanvas" aria-hidden="true"></canvas>
+  <canvas id="blossomCanvas" aria-hidden="true"></canvas>
+
+  <header class="site-header" role="banner">
+    <nav class="container nav" aria-label="التنقل">
+      <a href="#hero" class="brand" aria-label="العودة إلى البداية">R♥W</a>
+      <ul class="nav-list">
+        <li><a href="#poems">القصائد</a></li>
+        <li><a href="#sky">النجوم</a></li>
+        <li><a href="#game">اللعبة</a></li>
+        <li><a href="#guest">الذكرى</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main" class="wrap" role="main">
+    <!-- HERO -->
+    <section class="hero section" id="hero" aria-labelledby="hero-title">
+      <div class="container">
+        <h1 class="title" id="hero-title">وائل <span class="heart" aria-hidden="true">♥</span> روان</h1>
+        <p class="tag" id="heroTag">أنتِ قصيدتي الأبدية</p>
+        <div class="btns">
+          <button class="btn btn--primary" id="startBtn" data-action="start">انثري قهوة العشق</button>
+          <button class="btn" id="musicBtn" aria-pressed="false" aria-controls="audio">نغمة القلب</button>
+          <button class="btn btn--ghost" id="toGuest" data-action="scroll" data-target="#guest">دفتر الزائرين</button>
+          <button class="btn btn--ghost" id="copyLink" data-action="copy">انسخي الرابط</button>
+        </div>
+        <p class="hint" id="musicHint" role="status" aria-live="polite"></p>
       </div>
     </section>
-    <section id="sky">
-      <span class="badge" id="skyBadge">نجومُ العشق</span>
-      <p style="text-align:center;opacity:.9;margin:10px 0 16px" id="skyNote">انظري إلى النجوم، فهي حكايتنا.</p>
-      <div id="skyWrap">
-        <canvas id="skyCanvas" width="800" height="380"></canvas>
-        <span class="star-label" style="top:18%;left:30%" id="star1">ويغا</span>
-        <span class="star-label" style="top:10%;right:25%" id="star2">دنيب</span>
-        <span class="star-label" style="bottom:28%;left:42%" id="star3">الطائر</span>
-        <span class="star-label" style="top:60%;left:12%" id="star4">عرق الجاثا</span>
-        <span class="star-label" style="bottom:40%;right:35%" id="star5">سبيكا</span>
+
+    <!-- SECRET -->
+    <section id="secretLove" class="section" aria-labelledby="secret-title">
+      <div class="container">
+        <h2 class="badge" id="secret-title">مفتاح القلب</h2>
+        <p class="section-intro">أدخلي عام ميلادكِ لفتح الرسالة الخاصة.</p>
+        <form class="inline-form" id="secretForm" novalidate>
+          <div class="field">
+            <label class="visually-hidden" for="secretPass">رمز السر</label>
+            <input type="number" inputmode="numeric" id="secretPass" name="secretPass" class="pill input" placeholder="مثال: 1999" aria-describedby="secretHelp" required />
+            <span id="secretHelp" class="help">أربع خانات</span>
+          </div>
+          <button class="btn btn--primary" id="unlockBtn" type="submit">افتحي الرسالة</button>
+        </form>
+        <div id="secretContent" class="poem-box is-hidden" aria-live="polite">
+          <p class="poem-line">
+            روان، اسمُكِ يوقظُ الفجر في صدري. في حضورِكِ يهدأ كلُّ شيء، ويكتبُ وائل: لقد وجدتُ بيتي.
+          </p>
+        </div>
       </div>
     </section>
-    <section id="s1"><span class="badge" id="b1">بدايةُ الوله</span><div class="lines" id="l1"></div></section>
-    <section id="s2"><span class="badge" id="b2">همسُ الاسم</span><div class="lines" id="l2"></div></section>
-    <section id="s4"><span class="badge" id="b4">عهدُ الخلود</span><div class="lines" id="l4"></div></section>
-    <section id="poems">
-      <span class="badge">ديوانُ الروح</span>
-      <div class="poem-controls">
-        <input id="herName" class="pill" style="min-width:150px" placeholder="اسمها الشاعري" value="روان" />
-        <select id="poemMode" class="pill">
-          <option value="qabbani" selected>نزار الكلاسيكي</option>
-          <option value="free">نزار الهادئ</option>
-          <option value="pledge">نزار الوعد</option>
-          <option value="velvet">نزار المخملي</option>
-        </select>
-        <button class="btn pink" id="newPoem">نظمي قصيدتي</button>
-      </div>
-      <div class="poem-box" id="poemBox" aria-live="polite"></div>
-    </section>
-    <section id="fortune">
-      <span class="badge">ليلةُ الوعد</span>
-      <div style="text-align:center">
-        <button class="btn pink" id="fortuneBtn">خططي ليلةَ الحب</button>
-      </div>
-      <div id="fortuneCard" style="display:none;margin-top:18px;background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow)">
-        <p id="fText" style="font-size:21px;font-weight:700;margin:0"></p>
+
+    <!-- COUNTDOWN -->
+    <section id="countdownSection" class="section" aria-labelledby="countdown-title">
+      <div class="container">
+        <h2 class="badge" id="countdown-title">عدّاد الموعد</h2>
+        <div id="countdown" class="countdown" role="timer" aria-live="polite">
+          <div class="c-unit"><div class="c-val" id="cDays">00</div><div class="c-label">يوم</div></div>
+          <div class="c-unit"><div class="c-val" id="cHrs">00</div><div class="c-label">ساعة</div></div>
+          <div class="c-unit"><div class="c-val" id="cMins">00</div><div class="c-label">دقيقة</div></div>
+          <div class="c-unit"><div class="c-val" id="cSeds">00</div><div class="c-label">ثانية</div></div>
+        </div>
       </div>
     </section>
-    <section id="game">
-      <span class="badge">مغامرةُ الحب</span>
-      <canvas id="marioCanvas"></canvas>
-      <div class="game-ui">
-        <button class="btn pink" id="gStart">ابدأي المغامرة</button>
-        <button class="btn outline" id="gReset">أعيدي الرحلة</button>
-        <span class="game-pill">القلوب: <b id="gScore">0</b></span>
-        <span class="game-pill">الوقت: <b id="gTime">60</b></span>
-        <span class="game-pill">الأرواح: <b id="gLives">3</b></span>
+
+    <!-- SKY -->
+    <section id="sky" class="section" aria-labelledby="sky-title">
+      <div class="container">
+        <h2 class="badge" id="sky-title">نجوم العشق</h2>
+        <p class="section-intro" id="skyNote">كل نجمة هنا شاهدة على وعدنا.</p>
+        <div id="skyWrap" class="sky-wrap">
+          <canvas id="skyCanvas" width="800" height="380" role="img" aria-label="لوحة نجوم تفاعلية"></canvas>
+          <span class="star-label" style="top:18%;left:30%" id="star1">ويغا</span>
+          <span class="star-label" style="top:10%;right:25%" id="star2">دنيب</span>
+          <span class="star-label" style="bottom:28%;left:42%" id="star3">الطائر</span>
+          <span class="star-label" style="top:60%;left:12%" id="star4">عرق الجاثا</span>
+          <span class="star-label" style="bottom:40%;right:35%" id="star5">سبيكا</span>
+        </div>
       </div>
     </section>
-    <section id="guest">
-      <span class="badge">دفترُ الذكرى</span>
-      <div style="margin-top:12px">
-        <script src="https://utteranc.es/client.js"
-          repo="waelalza/rawan"
-          issue-term="pathname"
-          label="comment"
-          theme="github-light"
-          crossorigin="anonymous"
-          async>
-        </script>
+
+    <!-- LINES -->
+    <section id="s1" class="section" aria-labelledby="b1"><div class="container"><h2 class="badge" id="b1">بداية الوله</h2><div class="lines" id="l1"></div></div></section>
+    <section id="s2" class="section" aria-labelledby="b2"><div class="container"><h2 class="badge" id="b2">همس الاسم</h2><div class="lines" id="l2"></div></div></section>
+    <section id="s4" class="section" aria-labelledby="b4"><div class="container"><h2 class="badge" id="b4">عهد الخلود</h2><div class="lines" id="l4"></div></div></section>
+
+    <!-- POEMS -->
+    <section id="poems" class="section" aria-labelledby="poems-title">
+      <div class="container">
+        <h2 class="badge" id="poems-title">ديوان الروح</h2>
+        <form class="poem-controls" id="poemForm">
+          <div class="field">
+            <label class="visually-hidden" for="herName">الاسم الشاعري</label>
+            <input id="herName" class="pill input" placeholder="اسمها" value="روان" />
+          </div>
+          <div class="field">
+            <label class="visually-hidden" for="poemMode">النمط</label>
+            <select id="poemMode" class="pill input">
+              <option value="qabbani" selected>نزار الكلاسيكي</option>
+              <option value="free">نزار الهادئ</option>
+              <option value="pledge">نزار الوعد</option>
+              <option value="velvet">نزار المخملي</option>
+            </select>
+          </div>
+          <button class="btn btn--primary" id="newPoem" type="submit">أنشئي القصيدة</button>
+        </form>
+        <div class="poem-box" id="poemBox" aria-live="polite"></div>
       </div>
     </section>
-  </div>
+
+    <!-- FORTUNE / PLAN -->
+    <section id="fortune" class="section" aria-labelledby="fortune-title">
+      <div class="container">
+        <h2 class="badge" id="fortune-title">ليلة الوعد</h2>
+        <div class="center">
+          <button class="btn btn--primary" id="fortuneBtn">خططي الليلة</button>
+        </div>
+        <div id="fortuneCard" class="card is-hidden" aria-live="polite">
+          <p id="fText" class="lead"></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- GAME -->
+    <section id="game" class="section" aria-labelledby="game-title">
+      <div class="container">
+        <h2 class="badge" id="game-title">مغامرة الحب</h2>
+        <canvas id="marioCanvas" aria-label="لعبة مصغّرة"></canvas>
+        <div class="game-ui">
+          <button class="btn btn--primary" id="gStart">ابدأي</button>
+          <button class="btn btn--ghost" id="gReset">إعادة</button>
+          <span class="game-pill">القلوب: <b id="gScore">0</b></span>
+          <span class="game-pill">الوقت: <b id="gTime">60</b></span>
+          <span class="game-pill">الأرواح: <b id="gLives">3</b></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- GUESTBOOK -->
+    <section id="guest" class="section" aria-labelledby="guest-title">
+      <div class="container">
+        <h2 class="badge" id="guest-title">دفتر الذكرى</h2>
+        <div class="embed">
+          <script src="https://utteranc.es/client.js"
+            repo="waelalza/rawan"
+            issue-term="pathname"
+            label="comment"
+            theme="github-light"
+            crossorigin="anonymous"
+            async>
+          </script>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Audio -->
   <audio id="audio" preload="auto" playsinline webkit-playsinline src="./assets/audio/rawan-theme.mp3" loop></audio>
-  <button class="vinyl" id="vinylBtn" aria-label="تشغيل/إيقاف النغمة"><span class="vinyl-label">R♥W</span></button>
+
+  <!-- Floating controls -->
+  <button class="vinyl" id="vinylBtn" aria-label="تشغيل أو إيقاف النغمة"><span class="vinyl-label">R♥W</span></button>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-  <script src="modules/main.js" type="module"></script>
+  <!-- Scripts -->
+  <script src="modules/main.js" type="module" defer></script>
+  <noscript>
+    <div class="noscript">هذه الصفحة تحتاج إلى جافاسكريبت لعرض التجربة الكاملة.</div>
+  </noscript>
 </body>
 </html>
-diff --git a/index.html b/index.html
-index 8b137891791fe96927ad78e64b0aad7bded08bdc..de00b66897da407c729261245c6d368640fa3965 100644
---- a/index.html
-+++ b/index.html
-@@ -1 +1,127 @@
-+<!doctype html>
-+<html lang="ar" dir="rtl">
-+<head>
-+  <meta charset="utf-8" />
-+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-+  <meta name="theme-color" content="#FF6B8B" />
-+  <title>وائل و روان — حدائق الخلود</title>
-+  <meta name="description" content="حكاية حبّ وائل وروان، مكتوبة بنبض القلب وعبق الشعر، حيث تتفتح القصائد كالورود وتلمع النجوم كالعهد الأزلي." />
-+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800&family=Caveat:wght@400&display=swap" rel="stylesheet">
-+  <link rel="stylesheet" href="style.css">
-+</head>
-+<body>
-+  <canvas id="animeCanvas"></canvas>
-+  <canvas id="blossomCanvas"></canvas>
-+  <div class="wrap">
-+    <section class="hero" id="hero">
-+      <h1 class="title">وائل <span style="color:#FF6B8B">♥</span> روان</h1>
-+      <div class="tag" id="heroTag">يا زهرةَ عمري، أنتِ سِري الأعذب</div>
-+      <div class="btns">
-+        <button class="btn pink" id="startBtn">انثري عطر البدايات</button>
-+        <button class="btn" id="musicBtn" aria-pressed="false">شغّلي نبضنا</button>
-+        <button class="btn outline" id="toGuest">دفتر العابرين</button>
-+        <button class="btn outline" id="copyLink">انسخي وعدي</button>
-+      </div>
-+      <div class="hint" id="musicHint">اضغطي النغمة، فكلّ وترٍ يعزف اسمكِ.</div>
-+    </section>
- 
-+    <section id="secretLove">
-+      <span class="badge">بوابة السِرّ</span>
-+      <p style="text-align:center;margin:12px 0 16px;font-size:19px">يا روان، اكتبي عام ولادتكِ، ودعي الكواكب تبوح بما أخفيت.</p>
-+      <div style="text-align:center;display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
-+        <input type="number" id="secretPass" class="pill" placeholder="رمز القلب" style="width:130px;text-align:center;font-size:24px" />
-+        <button class="btn pink" id="unlockBtn">افتحي النشيد</button>
-+      </div>
-+      <div id="secretContent" class="poem-box" style="display:none;margin-top:18px;border-color:#ff6b8b;min-height:auto;">
-+        <p class="poem-line show" style="line-height:1.9;font-size:21px;font-weight:500;text-align:justify;">
-+          روان، يا حورية الندى، اسمُكِ يوقظُ الفجر في صدري. في حضوركِ يطمئنُّ البحر، وتغفو المدن، ويكتبُ وائلُ في مذكّراته: "ما عرفتُ معنى الخلود إلا حين التقيتُ عينيها".
-+        </p>
-+      </div>
-+    </section>
-+
-+    <section id="countdownSection">
-+      <span class="badge">ساعة اللقاء الأبدي</span>
-+      <div id="countdown">
-+        <div class="c-unit"><div class="c-val" id="cDays">00</div><div class="c-label">يوم</div></div>
-+        <div class="c-unit"><div class="c-val" id="cHrs">00</div><div class="c-label">ساعة</div></div>
-+        <div class="c-unit"><div class="c-val" id="cMins">00</div><div class="c-label">دقيقة</div></div>
-+        <div class="c-unit"><div class="c-val" id="cSeds">00</div><div class="c-label">ثانية</div></div>
-+      </div>
-+    </section>
-+
-+    <section id="sky">
-+      <span class="badge" id="skyBadge">مجرة الحنين</span>
-+      <p style="text-align:center;opacity:.9;margin:10px 0 16px" id="skyNote">كل نجمة هنا تشهد أننا وعدٌ لا ينطفئ.</p>
-+      <div id="skyWrap">
-+        <canvas id="skyCanvas" width="800" height="380"></canvas>
-+        <span class="star-label" style="top:18%;left:30%" id="star1">ويغا</span>
-+        <span class="star-label" style="top:10%;right:25%" id="star2">دنيب</span>
-+        <span class="star-label" style="bottom:28%;left:42%" id="star3">الطائر</span>
-+        <span class="star-label" style="top:60%;left:12%" id="star4">عرق الجاثا</span>
-+        <span class="star-label" style="bottom:40%;right:35%" id="star5">سبيكا</span>
-+      </div>
-+    </section>
-+
-+    <section id="s1"><span class="badge" id="b1">ميلاد الحكاية</span><div class="lines" id="l1"></div></section>
-+    <section id="s2"><span class="badge" id="b2">نبرات اسمك</span><div class="lines" id="l2"></div></section>
-+    <section id="s4"><span class="badge" id="b4">قسم الخلود</span><div class="lines" id="l4"></div></section>
-+
-+    <section id="poems">
-+      <span class="badge">ديوان الروح</span>
-+      <div class="poem-controls">
-+        <input id="herName" class="pill" style="min-width:150px" placeholder="اسمها الشاعري" value="روان" />
-+        <select id="poemMode" class="pill">
-+          <option value="qabbani" selected>نزار الكلاسيكي</option>
-+          <option value="free">نزار الهادئ</option>
-+          <option value="pledge">نزار الوعد</option>
-+          <option value="velvet">نزار المخملي</option>
-+        </select>
-+        <button class="btn pink" id="newPoem">انسجي القصيدة</button>
-+      </div>
-+      <div class="poem-box" id="poemBox" aria-live="polite"></div>
-+    </section>
-+
-+    <section id="fortune">
-+      <span class="badge">طقوس الوعد</span>
-+      <div style="text-align:center">
-+        <button class="btn pink" id="fortuneBtn">اخترعي ليلتنا</button>
-+      </div>
-+      <div id="fortuneCard" style="display:none;margin-top:18px;background:#fff;padding:20px;border-radius:12px;box-shadow:var(--shadow)">
-+        <p id="fText" style="font-size:21px;font-weight:700;margin:0"></p>
-+      </div>
-+    </section>
-+
-+    <section id="game">
-+      <span class="badge">مغامرة الأبد</span>
-+      <canvas id="marioCanvas"></canvas>
-+      <div class="game-ui">
-+        <button class="btn pink" id="gStart">ابدأي الرحلة</button>
-+        <button class="btn outline" id="gReset">أعيدي النبض</button>
-+        <span class="game-pill">القلوب: <b id="gScore">0</b></span>
-+        <span class="game-pill">الوقت: <b id="gTime">60</b></span>
-+        <span class="game-pill">الأرواح: <b id="gLives">3</b></span>
-+      </div>
-+    </section>
-+
-+    <section id="guest">
-+      <span class="badge">دفتر الذكرى</span>
-+      <div style="margin-top:12px">
-+        <script src="https://utteranc.es/client.js"
-+          repo="waelalza/rawan"
-+          issue-term="pathname"
-+          label="comment"
-+          theme="github-light"
-+          crossorigin="anonymous"
-+          async>
-+        </script>
-+      </div>
-+    </section>
-+  </div>
-+
-+  <audio id="audio" preload="auto" playsinline webkit-playsinline src="./assets/audio/rawan-theme.mp3" loop></audio>
-+  <button class="vinyl" id="vinylBtn" aria-label="تشغيل/إيقاف النغمة"><span class="vinyl-label">R♥W</span></button>
-+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
-+
-+  <script src="modules/main.js" type="module"></script>
-+</body>
-+</html>
